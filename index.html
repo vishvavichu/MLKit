@@ -121,7 +121,7 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 
 /* ===== MAIN ===== */
 #main { margin-left:260px; }
-.page { max-width:1320px; margin:0 auto; padding:48px 24px 80px; }
+.page { max-width:1320px; margin:0 auto; padding:48px 24px 32px; }
 
 /* ===== HERO ===== */
 .hero { text-align:center; padding:60px 0 44px; background:var(--hero-gradient); border-bottom:1px solid var(--border); margin-bottom:0; }
@@ -274,8 +274,51 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   #sidebar.open { transform:translateX(0); }
   #menu-btn { display:block; }
   #main { margin-left:0; }
-  .page { padding:56px 16px 60px; }
+  .page { padding:56px 16px 32px; }
   .what-why { grid-template-columns:1fr; }
+
+  /* Fix code blocks overflowing their containers */
+  .code { overflow-x:auto; white-space:pre; max-width:100%; word-break:normal; }
+  .code-wrap { overflow:hidden; max-width:100%; }
+
+  /* Fix cards and grids */
+  .card { overflow:hidden; word-break:break-word; }
+  .g2,.g3,.g4 { grid-template-columns:1fr; }
+
+  /* Fix tables overflowing */
+  .tbl { display:block; overflow-x:auto; white-space:nowrap; }
+
+  /* Fix formula overflow */
+  .formula { overflow-x:auto; white-space:nowrap; font-size:12px; }
+
+  /* Fix metric cards */
+  .metric-header { flex-wrap:wrap; }
+  .metric-formula { font-size:10px; word-break:break-all; }
+
+  /* Fix split viz bars */
+  .split-seg { font-size:9px; }
+
+  /* Fix VIF intuitive example and nested cards */
+  .card .card { overflow:hidden; }
+
+  /* Fix range bars */
+  .rbar { flex-wrap:nowrap; }
+  .rl { width:60px; font-size:10px; flex-shrink:0; }
+  .rp { width:60px; font-size:10px; }
+
+  /* Fix flow boxes */
+  .frow { flex-direction:column; align-items:center; }
+  .fbox { min-width:unset; width:100%; max-width:260px; }
+
+  /* Fix hero stats */
+  .hero-stats { gap:8px; }
+  .hero-stat { padding:6px 12px; }
+
+  /* Fix section header */
+  .sec-title { font-size:18px; }
+
+  /* Fix g3 inside cards (VIF fix options) */
+  .g3 { grid-template-columns:1fr; }
 }
 
 /* ===== FAST SCROLL STRIP ===== */
@@ -748,7 +791,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 
 <!-- S1: AI/ML/DL -->
 <section class="section" id="s-ai">
-  <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">🤖</span><span class="sec-title">AI, ML &amp; Deep Learning</span></div>
+  <div class="sec-header"><span class="sec-title">AI, ML &amp; Deep Learning</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>AI is the broad field of making machines simulate human intelligence. ML is a subset where machines learn from data. DL uses deep neural networks for complex patterns.</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Understanding the hierarchy helps you choose the right approach — rule-based AI, statistical ML, or deep neural nets — based on your data size, interpretability needs, and compute budget.</p></div>
@@ -772,7 +815,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 
 <!-- S2: TYPES OF ML -->
 <section class="section" id="s-types">
-  <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🎓</span><span class="sec-title">Types of Machine Learning</span></div>
+  <div class="sec-header"><span class="sec-title">Types of Machine Learning</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>ML is categorized by the type of feedback a model receives during learning — labeled data (supervised), no labels (unsupervised), or rewards from actions (reinforcement).</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Choosing the wrong type means your model can't learn at all. A supervised model needs labels — if you don't have them, you need a different approach entirely.</p></div>
@@ -795,7 +838,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 
 <!-- S3: DATA TYPES -->
 <section class="section" id="s-data">
-  <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">📋</span><span class="sec-title">Types of Data</span></div>
+  <div class="sec-header"><span class="sec-title">Types of Data</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Data can be categorical (labels/groups) or numerical (measured quantities). Each subtype — nominal, ordinal, discrete, continuous — determines how you can process and model it.</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Data type determines which encoding to apply, which algorithms work, and which statistical tests are valid. Treating ordinal as nominal (or vice versa) leads to wrong models.</p></div>
@@ -820,7 +863,7 @@ Salary: ₹45,230.50</div>
 
 <!-- S4: PANDAS -->
 <section class="section" id="s-pandas">
-  <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">🐼</span><span class="sec-title">Pandas — Data Manipulation</span></div>
+  <div class="sec-header"><span class="sec-title">Pandas — Data Manipulation</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Pandas is Python's most powerful data manipulation library. It provides DataFrame and Series structures for loading, cleaning, transforming, and exploring tabular data.</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>80% of ML work is data preparation. Pandas is how you inspect nulls, filter rows, encode features, merge datasets, and create new columns — all before training begins.</p></div>
@@ -850,7 +893,7 @@ df[[<span class="str">'Name'</span>,<span class="str">'Score'</span>]] <span cla
      DATA PREPROCESSING — NEW
 ============================= -->
 <section class="section" id="s-nulldup">
-  <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon">🧹</span><span class="sec-title">Null &amp; Duplicate Value Treatment</span></div>
+  <div class="sec-header"><span class="sec-title">Null &amp; Duplicate Value Treatment</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Data preprocessing step where missing values (nulls/NaN) and duplicate rows are detected and handled before any analysis or modeling. Dirty data = wrong models. Clean data = reliable results.</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Most ML algorithms cannot handle NaN values — they either crash or produce silently wrong results. Duplicate rows bias your model by over-representing certain patterns and inflating evaluation metrics.</p></div>
@@ -1018,7 +1061,7 @@ df.isnull().sum()  <span class="cm"># Should be all zeros</span></div>
 
 <!-- S5: WHAT IS EDA -->
 <section class="section" id="s-eda">
-  <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon">🔬</span><span class="sec-title">EDA — Exploratory Data Analysis</span></div>
+  <div class="sec-header"><span class="sec-title">EDA — Exploratory Data Analysis</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is EDA?</div><p>EDA is the process of <strong>systematically investigating your dataset</strong> before building any model. You examine shape, distributions, relationships, missing values, and anomalies using statistics and visualizations.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need EDA?</div><p>Without EDA, you're modeling blindly. EDA prevents you from feeding garbage to your model — you catch outliers, skewed distributions, data leakage, encoding issues, and multicollinearity early.</p></div>
@@ -1043,7 +1086,7 @@ df.isnull().sum()  <span class="cm"># Should be all zeros</span></div>
 
 <!-- S6: UNIVARIATE -->
 <section class="section" id="s-univariate">
-  <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon">📊</span><span class="sec-title">Univariate Analysis</span></div>
+  <div class="sec-header"><span class="sec-title">Univariate Analysis</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Analyzing <strong>one variable at a time</strong>. You look at how values of a single column are distributed — their shape, center, spread, and extreme values.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Before comparing features, you need to understand each individually. A bimodal distribution, heavy skew, or extreme outlier in a single column can break models if not addressed.</p></div>
@@ -1062,7 +1105,7 @@ df.isnull().sum()  <span class="cm"># Should be all zeros</span></div>
 
 <!-- IQR & STATS -->
 <section class="section" id="s-stats">
-  <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon">📐</span><span class="sec-title">IQR, Variance &amp; Standard Deviation</span></div>
+  <div class="sec-header"><span class="sec-title">IQR, Variance &amp; Standard Deviation</span></div>
   <div class="card"><div class="card-title" style="color:var(--orange)">📦 IQR — Interquartile Range</div>
     <p>Measures the <strong>spread of the middle 50%</strong> of data. Robust to extreme outliers.</p>
     <div class="formula">IQR = Q3 − Q1 &nbsp;|&nbsp; Lower = Q1 − 1.5×IQR &nbsp;|&nbsp; Upper = Q3 + 1.5×IQR</div>
@@ -1109,7 +1152,7 @@ Lower = 7 − 19.5 = −12.5  |  Upper = 20 + 19.5 = 39.5
 
 <!-- S8: OUTLIER DETECTION -->
 <section class="section" id="s-outlier">
-  <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon">⚠️</span><span class="sec-title">Outlier Detection</span></div>
+  <div class="sec-header"><span class="sec-title">Outlier Detection</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Identifying data points that deviate significantly from the rest. Methods include IQR fences (box plot whiskers) and Z-score thresholds based on standard deviations from the mean.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Outliers distort model coefficients, inflate RMSE, and skew correlations. A single extreme value can move a regression line significantly. Must detect and decide: fix or remove.</p></div>
@@ -1137,7 +1180,7 @@ Lower = 7 − 19.5 = −12.5  |  Upper = 20 + 19.5 = 39.5
 
 <!-- S9: BIVARIATE -->
 <section class="section" id="s-bivariate">
-  <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon">🔗</span><span class="sec-title">Bivariate Analysis</span></div>
+  <div class="sec-header"><span class="sec-title">Bivariate Analysis</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Analyzing the <strong>relationship between two variables</strong> simultaneously — how they move together (numerical vs numerical), differ across groups (categorical vs numerical), or associate (categorical vs categorical).</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Feature selection, correlation detection, and hypothesis testing all start here. You find which features actually relate to the target — and which are noise.</p></div>
@@ -1193,7 +1236,7 @@ Lower = 7 − 19.5 = −12.5  |  Upper = 20 + 19.5 = 39.5
 
 <!-- S10: CAT VS NUM -->
 <section class="section" id="s-catnum">
-  <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon">📊</span><span class="sec-title">Categorical vs Numerical</span></div>
+  <div class="sec-header"><span class="sec-title">Categorical vs Numerical</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Testing whether a numerical variable (e.g. salary, score) significantly differs across categories (e.g. department, gender). We set up a null hypothesis H₀ and use a test statistic to decide whether to reject it.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Tells you whether a categorical feature has real predictive power for a numerical target. If salary doesn't differ by department, that feature is noise.</p></div>
@@ -1240,7 +1283,7 @@ Lower = 7 − 19.5 = −12.5  |  Upper = 20 + 19.5 = 39.5
 
 <!-- S11: CAT VS CAT -->
 <section class="section" id="s-catcat">
-  <div class="sec-header"><span class="sec-num">12</span><span class="sec-icon">χ²</span><span class="sec-title">Categorical vs Categorical</span></div>
+  <div class="sec-header"><span class="sec-title">Categorical vs Categorical</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Testing whether two categorical variables are <strong>associated or independent</strong>. We compare observed data to what we would <em>expect</em> if the variables had absolutely no relationship.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Tells you if a categorical feature is related to a categorical target. If Gender and Movie Preference are independent, Gender won't help predict preferences.</p></div>
@@ -1291,7 +1334,7 @@ Expected(Male, Action) = (100 × 75) / 200 = 37.5
 
 <!-- S12: MULTIVARIATE -->
 <section class="section" id="s-multi">
-  <div class="sec-header"><span class="sec-num">13</span><span class="sec-icon">🌐</span><span class="sec-title">Multivariate Analysis</span></div>
+  <div class="sec-header"><span class="sec-title">Multivariate Analysis</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Examining <strong>3 or more variables simultaneously</strong>. The key tool is the <strong>correlation heatmap</strong> — a matrix where each cell shows Pearson's r between two features, color-coded by strength and direction.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Reveals <strong>multicollinearity</strong> (features too similar to each other), which bloats variance and hurts models. Also shows which features correlate with the target.</p></div>
@@ -1482,7 +1525,7 @@ X_clean = X.drop(columns=high_vif)</div>
 
 <!-- S13: LOG / BOX-COX -->
 <section class="section" id="s-transform">
-  <div class="sec-header"><span class="sec-num">14</span><span class="sec-icon">📈</span><span class="sec-title">Outlier Treatment — Log &amp; Box-Cox</span></div>
+  <div class="sec-header"><span class="sec-title">Outlier Treatment — Log &amp; Box-Cox</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Mathematical transformations applied to a column's values to reduce skewness. They compress large values, making the distribution closer to normal so models work better.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Many ML algorithms assume normally distributed features. Highly skewed data gives disproportionate weight to extreme values. Log and Box-Cox transformations fix this without removing any rows.</p></div>
@@ -1573,7 +1616,7 @@ df[<span class="str">'col_cbrt'</span>] = np.cbrt(df[<span class="str">'col'</sp
 
 <!-- S14: PCA -->
 <section class="section" id="s-pca">
-  <div class="sec-header"><span class="sec-num">15</span><span class="sec-icon">🔻</span><span class="sec-title">PCA — Dimensionality Reduction</span></div>
+  <div class="sec-header"><span class="sec-title">PCA — Dimensionality Reduction</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Principal Component Analysis transforms many correlated features into fewer uncorrelated "principal components" that capture the maximum variance in the data.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Too many correlated features (multicollinearity) cause unstable model weights and slow training. PCA compresses information into independent components — directly eliminating multicollinearity.</p></div>
@@ -1603,7 +1646,7 @@ X_pca = pca.fit_transform(X_scaled)</div>
 
 <!-- S15: SMOTE -->
 <section class="section" id="s-smote">
-  <div class="sec-header"><span class="sec-num">16</span><span class="sec-icon">⚖️</span><span class="sec-title">SMOTE — Class Imbalance</span></div>
+  <div class="sec-header"><span class="sec-title">SMOTE — Class Imbalance</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Synthetic Minority Over-sampling Technique creates new <strong>artificial minority samples</strong> by interpolating between existing real minority samples — making class sizes more equal.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>When 99% of samples are class 0 and 1% are class 1, a model can achieve 99% accuracy by just predicting 0 always — useless! SMOTE forces the model to actually learn the minority class.</p></div>
@@ -1633,7 +1676,7 @@ X_pca = pca.fit_transform(X_scaled)</div>
 
 <!-- S16: MODEL TYPES -->
 <section class="section" id="s-models">
-  <div class="sec-header"><span class="sec-num">17</span><span class="sec-icon">🧮</span><span class="sec-title">ML Model Types — When to Use What</span></div>
+  <div class="sec-header"><span class="sec-title">ML Model Types — When to Use What</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>A structured overview of the major ML model families — what problem each solves, what data it expects, and which real-world use cases it's best suited for.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Choosing the wrong model type is the single most common ML mistake. The model is a tool — match the tool to the job.</p></div>
@@ -1744,7 +1787,7 @@ X_pca = pca.fit_transform(X_scaled)</div>
 
 <!-- S18: TRAIN TEST SPLIT -->
 <section class="section" id="s-split">
-  <div class="sec-header"><span class="sec-num">18</span><span class="sec-icon">✂️</span><span class="sec-title">Train / Test / Validation Split</span></div>
+  <div class="sec-header"><span class="sec-title">Train / Test / Validation Split</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Dividing your dataset into separate subsets so the model is trained on one portion and evaluated on data it has <strong>never seen before</strong>. This simulates real-world performance.</p></div>
     <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>If you evaluate on training data, your model looks perfect — it just memorized the answers. A separate test set reveals if it <strong>actually learned</strong> the pattern or just memorized noise.</p></div>
@@ -1785,7 +1828,7 @@ scores = cross_val_score(model, X, y, cv=<span class="num">5</span>, scoring=<sp
 
 <!-- S19: OVERFITTING & UNDERFITTING — NOW AFTER TRAIN/TEST -->
 <section class="section" id="s-reg">
-  <div class="sec-header"><span class="sec-num">19</span><span class="sec-icon">📉</span><span class="sec-title">Overfitting, Underfitting &amp; Regularization</span></div>
+  <div class="sec-header"><span class="sec-title">Overfitting, Underfitting &amp; Regularization</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>The two fundamental problems in model training. <strong>Underfitting</strong> = model is too simple to learn the pattern. <strong>Overfitting</strong> = model memorizes training noise instead of learning the real pattern. Regularization is the fix for overfitting.</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>A model that performs perfectly on training data but fails on new data is useless. The goal is <strong>generalization</strong> — learning the real underlying pattern. This is the core challenge of ML.</p></div>
@@ -1878,7 +1921,7 @@ ElasticNet:   Combine both L1 + L2</div>
 
 <!-- S20: EVALUATION METRICS -->
 <section class="section" id="s-eval">
-  <div class="sec-header"><span class="sec-num">20</span><span class="sec-icon">📏</span><span class="sec-title">Evaluation Metrics</span></div>
+  <div class="sec-header"><span class="sec-title">Evaluation Metrics</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>Quantitative measures that tell you <strong>how well your model performs</strong>. Different metrics are appropriate for regression vs classification vs forecasting models.</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Accuracy alone is misleading (class imbalance). RMSE penalizes large errors more than MAE. R² tells you proportion of variance explained. Choosing the right metric defines what "good" means for your problem.</p></div>
@@ -1984,8 +2027,8 @@ FN = predicted negative but was positive (missed)</div>
 <hr class="divider">
 
 <!-- S21: BEST PRACTICES -->
-<section class="section" id="s-bestpractices">
-  <div class="sec-header"><span class="sec-num">21</span><span class="sec-icon">🏆</span><span class="sec-title">Best Practices — Train a Better Model</span></div>
+<section class="section" id="s-bestpractices" style="margin-bottom:0">
+  <div class="sec-header"><span class="sec-title">Best Practices — Train a Better Model</span></div>
   <div class="what-why">
     <div class="ww-box"><div class="ww-label what">What is it?</div><p>A consolidated checklist of the most important habits, rules, and decisions that separate a model that actually works in production from one that only looks good on paper.</p></div>
     <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Knowing individual techniques is not enough. How you combine them, in what order, and what mistakes to avoid determines whether your model generalizes or fails silently on real data.</p></div>
@@ -2067,7 +2110,7 @@ FN = predicted negative but was positive (missed)</div>
     <div class="note yellow mt">A model with Train=98%, Test=62% is overfit. A model with Train=78%, Test=76% is production-ready.</div>
   </div>
 
-  <div class="card mt"><div class="card-title" style="color:var(--teal)">🚀 7. The Golden Checklist Before Training</div>
+  <div class="card mt" style="margin-bottom:0"><div class="card-title" style="color:var(--teal)">🚀 7. The Golden Checklist Before Training</div>
     <div class="steps">
       <div class="step"><div class="step-body"><strong>Clean data</strong> — nulls handled, duplicates removed, types correct</div></div>
       <div class="step"><div class="step-body"><strong>Split train/test</strong> — before any transformation or encoding</div></div>
@@ -2083,12 +2126,11 @@ FN = predicted negative but was positive (missed)</div>
   </div>
 </section>
 
-<hr class="divider">
 </div></div>
 
 <footer>
   <div style="margin-bottom:10px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:800;color:var(--t2);letter-spacing:0.5px;">
-    🎓 Thanks for Visiting! Hope this is a great learning journey for you. 🚀
+    Thanks for Visiting! Hope this is a great learning journey for you.❤️ 
   </div>
   <div style="margin-bottom:4px;font-size:10px;color:var(--accent);font-family:'Source Code Pro',monospace;font-weight:600;letter-spacing:1.5px;">
     Dev by &nbsp;<span style="background:var(--accent-light);border:1px solid var(--accent-border);padding:1px 8px;border-radius:10px;font-size:9.5px;">vishva_vichu_</span>
