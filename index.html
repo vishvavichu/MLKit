@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feature Engineering — Complete Guide</title>
+<title>MLKit — Machine Learning Study Guides</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&family=Nunito:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== THEME VARIABLES (identical to ML Guide) ===== */
+/* ===== THEME VARIABLES ===== */
 [data-theme="dark"] {
   --bg: #0f1117;
   --bg2: #161b22;
@@ -36,14 +36,7 @@
   --code-bg: #161b22;
   --shadow: 0 1px 3px rgba(0,0,0,0.4);
   --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
-  --sidebar-bg: #161b22;
   --hero-gradient: radial-gradient(ellipse at 50% 0%, rgba(46,160,67,0.08) 0%, transparent 65%);
-  /* FE accent map */
-  --accent1: #e3b341;
-  --accent2: #388bfd;
-  --accent3: #a371f7;
-  --accent4: #2ea043;
-  --accent5: #f778ba;
 }
 
 [data-theme="light"] {
@@ -75,1322 +68,262 @@
   --code-bg: #f6f8fa;
   --shadow: 0 1px 3px rgba(31,35,40,0.12);
   --shadow-lg: 0 8px 24px rgba(31,35,40,0.12);
-  --sidebar-bg: #f6f8fa;
   --hero-gradient: radial-gradient(ellipse at 50% 0%, rgba(26,127,55,0.06) 0%, transparent 65%);
-  --accent1: #9a6700;
-  --accent2: #0969da;
-  --accent3: #8250df;
-  --accent4: #1a7f37;
-  --accent5: #bf3989;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; font-size:16px; line-height:1.7; overflow-x:hidden; transition:background 0.3s, color 0.3s; }
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--t1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-::-webkit-scrollbar { width:5px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
-
-/* ===== SIDEBAR ===== */
-#sidebar {
-  position:fixed; top:0; left:0; width:240px; height:100vh;
-  background:var(--sidebar-bg); border-right:1px solid var(--border);
-  overflow-y:auto; z-index:200; padding-bottom:40px;
-  scrollbar-width:thin; transition:transform 0.3s, background 0.3s;
+/* ===== HEADER ===== */
+.header {
+  width: 100%;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.sb-header {
-  padding:16px 16px 14px;
-  border-bottom:1px solid var(--border);
-  background:var(--sidebar-bg);
-  position:sticky; top:0; z-index:10;
+.logo {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--accent);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.sb-brand { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-.sb-brand-icon {
-  width:32px; height:32px; background:var(--accent);
-  border-radius:8px; display:flex; align-items:center;
-  justify-content:center; font-size:16px; flex-shrink:0;
-}
-.sb-brand-text { font-family:'Nunito',sans-serif; font-size:15px; font-weight:800; color:var(--t1); }
-.sb-brand-sub { font-size:10px; color:var(--t3); font-family:'Source Code Pro',monospace; margin-top:1px; }
+.logo span { color: var(--t1); }
 .theme-toggle {
-  display:flex; align-items:center; justify-content:space-between;
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:8px; padding:6px 10px; cursor:pointer;
-  font-size:12px; color:var(--t2); font-weight:600; transition:all 0.2s;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--t2);
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  transition: all 0.2s;
 }
-.theme-toggle:hover { border-color:var(--accent); color:var(--accent); }
-.toggle-track {
-  width:34px; height:18px; background:var(--surface3);
-  border-radius:9px; position:relative; transition:background 0.3s;
-}
-[data-theme="light"] .toggle-track { background:var(--accent); }
-.toggle-thumb {
-  width:12px; height:12px; background:white;
-  border-radius:50%; position:absolute; top:3px; left:3px;
-  transition:transform 0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.3);
-}
-[data-theme="light"] .toggle-thumb { transform:translateX(16px); }
-
-.sb-section {
-  padding:12px 12px 2px; font-size:10px; letter-spacing:1.5px;
-  text-transform:uppercase; color:var(--t3);
-  font-family:'Source Code Pro',monospace; font-weight:600;
-}
-.sb-item {
-  display:flex; align-items:center; gap:8px;
-  width:calc(100% - 16px); margin:1px 8px;
-  padding:7px 10px; border-radius:6px;
-  border:none; background:none; color:var(--t2);
-  font-size:13px; font-family:'Outfit',sans-serif;
-  cursor:pointer; text-align:left; transition:all 0.15s;
-  text-decoration:none;
-}
-.sb-item:hover { background:var(--surface2); color:var(--t1); }
-.sb-item.active { background:var(--accent-light); color:var(--accent); font-weight:600; }
-.sb-item .ic { font-size:12px; flex-shrink:0; opacity:0.8; }
-
-/* MOBILE */
-#menu-btn {
-  display:none; position:fixed; top:12px; left:12px; z-index:300;
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:8px; padding:8px 11px; cursor:pointer;
-  color:var(--t1); font-size:16px; line-height:1; box-shadow:var(--shadow);
-}
-#overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:150; }
-#overlay.show { display:block; }
-
-/* ===== PROGRESS BAR ===== */
-.progress-bar {
-  position:fixed; top:0; left:240px; right:0; height:2px;
-  background:var(--border); z-index:300;
-}
-.progress-fill {
-  height:100%; background:linear-gradient(90deg, var(--accent), var(--blue));
-  width:0%; transition:width 0.1s;
-}
-
-/* ===== MAIN ===== */
-#main { margin-left:240px; }
-.main { max-width:1320px; margin:0 auto; padding:48px 24px 80px; }
-
-/* ===== BACK TO TOP ===== */
-#back-top {
-  position:fixed; bottom:24px; right:24px; z-index:100;
-  background:var(--accent); color:white; border:none;
-  border-radius:50%; width:44px; height:44px;
-  cursor:pointer; font-size:18px; display:none;
-  align-items:center; justify-content:center;
-  box-shadow:0 4px 12px rgba(46,160,67,0.4); transition:all 0.2s;
-}
-#back-top.show { display:flex; }
-#back-top:hover { transform:translateY(-2px); }
+.theme-toggle:hover { border-color: var(--accent); color: var(--t1); }
 
 /* ===== HERO ===== */
 .hero {
-  padding:56px 0 40px;
-  background:var(--hero-gradient);
-  border-bottom:1px solid var(--border);
-  margin-bottom:36px;
+  text-align: center;
+  padding: 80px 24px 48px;
+  max-width: 720px;
+  background: var(--hero-gradient);
 }
 .hero-tag {
-  display:inline-flex; align-items:center; gap:6px;
-  background:var(--accent-light); border:1px solid var(--accent-border);
-  color:var(--accent); padding:4px 12px; border-radius:20px;
-  font-size:11px; font-weight:700; letter-spacing:1px;
-  text-transform:uppercase; margin-bottom:16px;
-  font-family:'Source Code Pro',monospace;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
 }
 .hero h1 {
-  font-family:'Nunito',sans-serif; font-weight:800;
-  font-size:clamp(30px,4vw,46px); line-height:1.1;
-  margin-bottom:10px; color:var(--t1);
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
 }
-.hero h1 em { color:var(--accent); font-style:normal; }
-.hero p { color:var(--t2); font-size:14px; max-width:480px; }
-
-/* ===== SECTION ===== */
-.section { margin-bottom:64px; scroll-margin-top:20px; }
-.section-header {
-  display:flex; align-items:flex-start; gap:14px;
-  margin-bottom:24px; padding-bottom:12px;
-  border-bottom:2px solid var(--border);
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
 }
-.section-num {
-  font-family:'Source Code Pro',monospace; font-size:10px; font-weight:600;
-  color:var(--accent); background:var(--accent-light);
-  border:1px solid var(--accent-border); padding:3px 8px;
-  border-radius:4px; margin-top:4px; white-space:nowrap;
-}
-.section-title {
-  font-family:'Nunito',sans-serif; font-size:22px; font-weight:800;
-  color:var(--t1); line-height:1.1;
-}
-.section-sub { font-size:13px; color:var(--t2); margin-top:4px; }
-
-/* ===== ENCODING CARD ===== */
-.enc-card {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:8px; padding:18px; margin-bottom:16px;
-  position:relative; overflow:hidden;
-  transition:border-color 0.2s;
-}
-.enc-card:hover { border-color:var(--border2); }
-.enc-card::before {
-  content:''; position:absolute;
-  top:0; left:0; right:0; height:3px;
-}
-.acc-y::before { background:var(--yellow); }
-.acc-b::before { background:var(--blue); }
-.acc-p::before { background:var(--violet); }
-.acc-g::before { background:var(--accent); }
-.acc-r::before { background:var(--pink); }
-
-.card-label {
-  font-family:'Nunito',sans-serif; font-size:15.5px; font-weight:700;
-  margin-bottom:10px;
-}
-.card-meta { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
-.badge {
-  font-family:'Source Code Pro',monospace; font-size:11px;
-  padding:3px 10px; border-radius:20px; font-weight:600; border:1px solid;
-}
-.badge-when { background:var(--blue-light); color:var(--blue); border-color:rgba(56,139,253,0.3); }
-.badge-cols { background:var(--yellow-light); color:var(--yellow); border-color:rgba(227,179,65,0.3); }
-.desc { color:var(--t2); font-size:14.5px; margin-bottom:16px; line-height:1.65; }
-
-/* ===== TABLE ===== */
-.table-wrap { overflow-x:auto; border-radius:6px; border:1px solid var(--border); }
-.data-table { width:100%; border-collapse:collapse; font-family:'Source Code Pro',monospace; font-size:12px; }
-.data-table th {
-  background:var(--surface2); color:var(--accent);
-  padding:8px 12px; text-align:left; font-weight:600;
-  letter-spacing:.5px; font-size:10.5px; text-transform:uppercase;
-  border-bottom:2px solid var(--accent);
-}
-.data-table td { padding:7px 12px; border-bottom:1px solid var(--border); color:var(--t2); }
-.data-table tr:last-child td { border-bottom:none; }
-.data-table tr:hover td { background:var(--surface2); }
-td.hl-y { color:var(--yellow); font-weight:600; }
-td.hl-b { color:var(--blue); font-weight:600; }
-td.hl-p { color:var(--violet); font-weight:600; }
-td.hl-g { color:var(--accent); font-weight:600; }
-td.hl-r { color:var(--pink); font-weight:600; }
-
-/* ===== ARROW ===== */
-.arrow-row {
-  display:flex; align-items:center; justify-content:center;
-  padding:12px 0; gap:10px; color:var(--t3); font-size:13px;
-  font-family:'Source Code Pro',monospace;
-}
-.arrow-line { flex:1; height:1px; background:var(--border); max-width:120px; }
-
-/* ===== CODE BLOCK ===== */
-.code-block {
-  background:var(--code-bg); border:1px solid var(--border);
-  border-left:3px solid var(--accent);
-  border-radius:0 6px 6px 0; padding:14px 18px; margin-top:14px;
-  font-family:'Source Code Pro',monospace; font-size:12px;
-  color:var(--t1); overflow-x:auto; line-height:1.7; white-space:pre;
-}
-.code-block .c { color:var(--t3); font-style:italic; }
-.code-block .k { color:var(--red); }
-.code-block .s { color:var(--blue); }
-.code-block .f { color:var(--blue); }
-.code-block .n { color:var(--orange); }
-.code-block .o { color:var(--pink); }
-
-/* ===== INSIGHT BOX ===== */
-.insight {
-  display:flex; gap:12px; background:var(--yellow-light);
-  border:1px solid rgba(227,179,65,0.3); border-radius:6px;
-  padding:12px 16px; margin-top:14px;
-}
-.insight-icon { font-size:16px; padding-top:2px; flex-shrink:0; }
-.insight-text { font-size:13px; color:var(--t2); line-height:1.6; }
-.insight-text strong { color:var(--yellow); }
-
-.insight-blue { background:var(--blue-light); border-color:rgba(56,139,253,0.3); }
-.insight-blue .insight-text strong { color:var(--blue); }
-.insight-green { background:var(--accent-light); border-color:var(--accent-border); }
-.insight-green .insight-text strong { color:var(--accent); }
-.insight-pink { background:var(--red-light); border-color:rgba(248,81,73,0.3); }
-.insight-pink .insight-text strong { color:var(--red); }
-
-/* ===== COMPARE ===== */
-.compare { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
-.compare-box {
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:6px; padding:14px 16px;
-}
-.compare-box h4 {
-  font-size:10.5px; text-transform:uppercase; letter-spacing:1px;
-  color:var(--t3); margin-bottom:10px;
-  font-family:'Source Code Pro',monospace; font-weight:600;
+.hero p {
+  font-size: 1.1rem;
+  color: var(--t2);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
 }
 
-/* ===== FORMULA ===== */
-.formula {
-  font-family:'Source Code Pro',monospace; font-size:12.5px;
-  background:var(--code-bg); padding:10px 16px; border-radius:6px;
-  color:var(--blue); border-left:3px solid var(--blue); margin:10px 0;
+/* ===== GUIDES GRID ===== */
+.guides-section {
+  width: 100%;
+  max-width: 960px;
+  padding: 0 24px 80px;
+}
+.section-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.75rem;
+  color: var(--t3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  padding-left: 4px;
+}
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.guide-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.guide-card:hover {
+  border-color: var(--accent-border);
+  background: var(--surface2);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.guide-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.guide-card h3 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.guide-card p {
+  font-size: 0.9rem;
+  color: var(--t2);
+  line-height: 1.6;
+}
+.guide-tag {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 3px 10px;
+  border-radius: 20px;
+  width: fit-content;
+  letter-spacing: 0.5px;
+}
+.guide-card.coming-soon {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.guide-card.coming-soon .guide-tag {
+  color: var(--t3);
+  background: var(--surface3);
 }
 
-/* ===== FAST SCROLL STRIP ===== */
-#fast-scroll {
-  position:fixed; right:0; top:0;
-  width:6px; height:100vh;
-  background:var(--surface2);
-  z-index:190; cursor:pointer;
-}
-#fs-thumb {
-  width:100%; background:var(--accent);
-  border-radius:3px; position:absolute;
-  left:0; top:0; min-height:30px;
-  opacity:0.7; transition:opacity 0.2s;
-}
-#fast-scroll:hover #fs-thumb { opacity:1; }
-@media(max-width:768px) { #fast-scroll { display:none; } }
-
-/* ===== DIVIDER ===== */
-.divider { border:none; border-top:1px solid var(--border); margin:48px 0; }
-.dataset-banner {
-  background:var(--surface); border:1px solid var(--border);
-  border-top:3px solid var(--accent);
-  border-radius:0 0 8px 8px; padding:18px 22px; margin-bottom:28px;
-  display:flex; align-items:flex-start; gap:18px;
-}
-.dataset-icon { font-size:26px; }
-.dataset-text h3 {
-  font-family:'Nunito',sans-serif; font-size:16px; font-weight:800;
-  margin-bottom:4px; color:var(--t1);
-}
-.dataset-text p { font-size:13px; color:var(--t2); }
-.dataset-cols { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
-.col-chip {
-  font-family:'Source Code Pro',monospace; font-size:11px;
-  padding:2px 9px; border-radius:4px;
-  background:var(--surface2); border:1px solid var(--border); color:var(--t2);
+/* ===== FOOTER ===== */
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--t3);
 }
 
-/* ===== MISC ===== */
-p { color:var(--t2); margin-bottom:8px; font-size:14.5px; }
-ul, ol { color:var(--t2); padding-left:18px; font-size:14.5px; margin-bottom:8px; }
-li { margin-bottom:3px; }
-strong { color:var(--t1); }
-code {
-  font-family:'Source Code Pro',monospace; font-size:12px;
-  background:var(--surface2); border:1px solid var(--border);
-  padding:1px 6px; border-radius:4px; color:var(--accent);
-}
-h3 { font-family:'Nunito',sans-serif; font-weight:800; color:var(--t1); margin:14px 0 8px; font-size:16px; }
-.btn-primary {
-  background:var(--accent); border:none; color:white;
-  padding:8px 18px; border-radius:6px; font-size:13px;
-  font-weight:700; cursor:pointer; font-family:'Outfit',sans-serif;
-  transition:all 0.2s;
-}
-.btn-primary:hover { filter:brightness(1.1); }
-
-@media(max-width:768px) {
-  #sidebar { transform:translateX(-100%); }
-  #sidebar.open { transform:translateX(0); }
-  #menu-btn { display:block; }
-  #main { margin-left:0; }
-  .main { padding:56px 16px 60px; }
-  .progress-bar { left:0; }
-  .compare { grid-template-columns:1fr; }
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .header { padding: 12px 16px; }
+  .hero { padding: 48px 16px 32px; }
+  .guides-section { padding: 0 16px 48px; }
+  .guides-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<button id="menu-btn" onclick="toggleSB()">☰</button>
-<div id="overlay" onclick="toggleSB()"></div>
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+<header class="header">
+  <a class="logo" href="/">
+    <span>ML</span>Kit
+  </a>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span id="theme-icon">Light Mode</span>
+  </button>
+</header>
 
-<!-- FAST SCROLL STRIP -->
-<div id="fast-scroll"><div id="fs-thumb"></div></div>
+<section class="hero">
+  <div class="hero-tag">Machine Learning Study Hub</div>
+  <h1>Learn <em>ML</em><br>Step by Step</h1>
+  <p>A collection of comprehensive, hands-on study guides covering key machine learning topics — from feature engineering to model evaluation and beyond.</p>
+</section>
 
-<!-- SIDEBAR -->
-<nav id="sidebar">
-  <div class="sb-header">
-    <div class="sb-brand">
-      <div class="sb-brand-icon">📐</div>
-      <div>
-        <div class="sb-brand-text">Feature Engineering</div>
-        <div class="sb-brand-sub">MLKit</div>
+<section class="guides-section">
+  <div class="section-label">Study Guides</div>
+  <div class="guides-grid">
+
+    <a class="guide-card" href="Feature_engineering/feature_engineering_guide.html">
+      <div class="guide-icon" style="background: var(--yellow-light); color: var(--yellow);">
+        <span>&#9881;</span>
       </div>
+      <h3>Feature Engineering</h3>
+      <p>Encoding, feature selection, transformation, and creation — taught through a consistent real-world dataset.</p>
+      <span class="guide-tag">Complete Guide</span>
+    </a>
+
+    <div class="guide-card coming-soon">
+      <div class="guide-icon" style="background: var(--blue-light); color: var(--blue);">
+        <span>&#9733;</span>
+      </div>
+      <h3>Supervised Learning</h3>
+      <p>Regression, classification, decision trees, SVMs, and ensemble methods explained with examples.</p>
+      <span class="guide-tag">Coming Soon</span>
     </div>
-    <div class="theme-toggle" onclick="toggleTheme()">
-      <span id="theme-label">🌙 Dark Mode</span>
-      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+
+    <div class="guide-card coming-soon">
+      <div class="guide-icon" style="background: var(--violet-light); color: var(--violet);">
+        <span>&#9673;</span>
+      </div>
+      <h3>Model Evaluation</h3>
+      <p>Metrics, cross-validation, bias-variance tradeoff, and hyperparameter tuning strategies.</p>
+      <span class="guide-tag">Coming Soon</span>
     </div>
+
   </div>
+</section>
 
-  <div class="sb-section">Back to</div>
-  <a class="sb-item" href="../index.html"><span class="ic">←</span>MLKit Home Page</a>
-
-  <div class="sb-section">Encoding</div>
-  <a class="sb-item" href="#label"><span class="ic">🏷️</span> Label Encoding</a>
-  <a class="sb-item" href="#onehot"><span class="ic">🔲</span> One-Hot Encoding</a>
-  <a class="sb-item" href="#binary"><span class="ic">01</span> Binary Encoding</a>
-  <a class="sb-item" href="#target"><span class="ic">🎯</span> Target Encoding</a>
-  <a class="sb-item" href="#freq"><span class="ic">📊</span> Frequency Encoding</a>
-  <a class="sb-item" href="#other"><span class="ic">➕</span> Other Encodings</a>
-
-  <div class="sb-section">Feature Engineering</div>
-  <a class="sb-item" href="#selection"><span class="ic">🔍</span> Feature Selection</a>
-  <a class="sb-item" href="#transform"><span class="ic">📈</span> Feature Transformation</a>
-  <a class="sb-item" href="#creation"><span class="ic">✨</span> Feature Creation</a>
-
-  <div class="sb-section">Cheat Sheet</div>
-  <a class="sb-item" href="#summary"><span class="ic">📋</span> When to Use What</a>
-</nav>
-
-<div id="main">
-<main class="main">
-
-  <div class="hero">
-    <div class="hero-tag">Machine Learning · Feature Engineering</div>
-    <h1>Feature<br><em>Engineering</em></h1>
-    <p>A complete hands-on guide to encoding, selecting, transforming, and creating features — taught through a consistent real-world dataset.</p>
-  </div>
-
-  <!-- DATASET -->
-  <div class="dataset-banner">
-    <div class="dataset-icon">🏠</div>
-    <div class="dataset-text">
-      <h3>Our Working Dataset: House Price Prediction</h3>
-      <p>We'll use the same dataset throughout every topic so you can see how each technique transforms the same raw data.</p>
-      <div class="dataset-cols">
-        <span class="col-chip">City</span>
-        <span class="col-chip">Neighborhood Quality</span>
-        <span class="col-chip">House Style</span>
-        <span class="col-chip">Year Built</span>
-        <span class="col-chip">Area (sqft)</span>
-        <span class="col-chip">Bedrooms</span>
-        <span class="col-chip">Has Pool</span>
-        <span class="col-chip">Price ($)</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ════════════════════════ RAW DATASET ════════════════════════ -->
-  <div style="margin-bottom:40px;">
-    <div style="font-size:12px; color:var(--t3); font-family:'Source Code Pro',monospace; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Raw Dataset (8 rows)</div>
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>#</th><th>City</th><th>Neighborhood Quality</th><th>House Style</th>
-            <th>Year Built</th><th>Area (sqft)</th><th>Bedrooms</th><th>Has Pool</th><th>Price ($)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Mumbai</td><td>Excellent</td><td>Bungalow</td><td>2010</td><td>1800</td><td>3</td><td>Yes</td><td>82,000</td></tr>
-          <tr><td>2</td><td>Delhi</td><td>Good</td><td>Apartment</td><td>2015</td><td>950</td><td>2</td><td>No</td><td>45,000</td></tr>
-          <tr><td>3</td><td>Bangalore</td><td>Average</td><td>Villa</td><td>2005</td><td>2500</td><td>4</td><td>Yes</td><td>110,000</td></tr>
-          <tr><td>4</td><td>Mumbai</td><td>Poor</td><td>Apartment</td><td>2000</td><td>700</td><td>1</td><td>No</td><td>28,000</td></tr>
-          <tr><td>5</td><td>Chennai</td><td>Good</td><td>Bungalow</td><td>2018</td><td>1600</td><td>3</td><td>No</td><td>67,000</td></tr>
-          <tr><td>6</td><td>Delhi</td><td>Excellent</td><td>Villa</td><td>2020</td><td>3000</td><td>5</td><td>Yes</td><td>145,000</td></tr>
-          <tr><td>7</td><td>Bangalore</td><td>Average</td><td>Apartment</td><td>2012</td><td>1100</td><td>2</td><td>No</td><td>52,000</td></tr>
-          <tr><td>8</td><td>Chennai</td><td>Poor</td><td>Bungalow</td><td>1998</td><td>1200</td><td>3</td><td>No</td><td>31,000</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ════════════════════════ SECTION 1: ENCODING ════════════════════════ -->
-  <div class="section" id="label">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <div>
-        <div class="section-title">Label Encoding</div>
-        <div class="section-sub">For <strong>Ordinal</strong> data — where order matters</div>
-      </div>
-    </div>
-
-    <div class="enc-card acc-y">
-      <div class="card-label" style="color:var(--accent1)">Label / Ordinal Encoding</div>
-      <div class="card-meta">
-        <span class="badge badge-when">✓ Use for: Ordinal (ordered) categories</span>
-        <span class="badge badge-cols">Column: Neighborhood Quality</span>
-      </div>
-      <p class="desc">
-        We assign a <strong>whole number</strong> to each category, preserving their natural order.
-        <em>Poor &lt; Average &lt; Good &lt; Excellent</em> becomes <em>0 &lt; 1 &lt; 2 &lt; 3</em>.
-        The model can now understand that Excellent is "greater than" Good — which is exactly true here.
-      </p>
-
-      <div class="compare">
-        <div class="compare-box">
-          <h4>Before</h4>
-          <div class="table-wrap" style="margin-top:0; border:none;">
-            <table class="data-table" style="font-size:12px;">
-              <thead><tr><th>#</th><th>Neighborhood Quality</th></tr></thead>
-              <tbody>
-                <tr><td>1</td><td>Excellent</td></tr>
-                <tr><td>2</td><td>Good</td></tr>
-                <tr><td>3</td><td>Average</td></tr>
-                <tr><td>4</td><td>Poor</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="compare-box">
-          <h4>After Label Encoding</h4>
-          <div class="table-wrap" style="margin-top:0; border:none;">
-            <table class="data-table" style="font-size:12px;">
-              <thead><tr><th>#</th><th>Neighborhood Quality</th></tr></thead>
-              <tbody>
-                <tr><td>1</td><td class="hl-y">3</td></tr>
-                <tr><td>2</td><td class="hl-y">2</td></tr>
-                <tr><td>3</td><td class="hl-y">1</td></tr>
-                <tr><td>4</td><td class="hl-y">0</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="insight">
-        <span class="insight-icon">📋</span>
-        <span class="insight-text"><strong>Mapping:</strong> Poor=0 · Average=1 · Good=2 · Excellent=3 &nbsp;—&nbsp; Notice the numbers respect the real-world rank. This is what makes it "ordinal."</span>
-      </div>
-
-      <div class="code-block">
-<span class="c"># Python — Label Encoding for Ordinal Data</span>
-<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> OrdinalEncoder
-<span class="k">import</span> pandas <span class="k">as</span> pd
-
-order = [[<span class="s">'Poor'</span>, <span class="s">'Average'</span>, <span class="s">'Good'</span>, <span class="s">'Excellent'</span>]]
-enc = OrdinalEncoder(categories=order)
-
-df[<span class="s">'Neighborhood_Encoded'</span>] = enc.<span class="f">fit_transform</span>(df[[<span class="s">'Neighborhood Quality'</span>]])
-<span class="c"># Poor→0, Average→1, Good→2, Excellent→3</span>
-      </div>
-    </div>
-    
-    <div class="insight insight-pink">
-      <span class="insight-icon">⚠️</span>
-      <span class="insight-text"><strong>Never use Label Encoding on nominal data</strong> (like City). If you encode Mumbai=0, Delhi=1, Bangalore=2 — the model wrongly assumes Bangalore > Delhi > Mumbai. Use One-Hot instead.</span>
-    </div>
-  </div>
-
-  <!-- ════ ONE HOT ════ -->
-  <div class="section" id="onehot">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <div>
-        <div class="section-title">One-Hot Encoding</div>
-        <div class="section-sub">For <strong>Nominal</strong> data — where order doesn't matter</div>
-      </div>
-    </div>
-
-    <div class="enc-card acc-b">
-      <div class="card-label" style="color:var(--accent2)">One-Hot Encoding</div>
-      <div class="card-meta">
-        <span class="badge badge-when">✓ Use for: Nominal (unordered) categories</span>
-        <span class="badge badge-cols">Column: City (4 unique values)</span>
-      </div>
-      <p class="desc">
-        Creates one <strong>binary column per category</strong>. A row gets <code>1</code> in its city's column and <code>0</code> everywhere else.
-        No false ordering is implied — Mumbai is not "greater than" Delhi.
-      </p>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>#</th><th>City (original)</th><th class="hl-b">City_Mumbai</th><th class="hl-b">City_Delhi</th><th class="hl-b">City_Bangalore</th><th class="hl-b">City_Chennai</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>Mumbai</td><td class="hl-b">1</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">0</td></tr>
-            <tr><td>2</td><td>Delhi</td><td class="hl-b">0</td><td class="hl-b">1</td><td class="hl-b">0</td><td class="hl-b">0</td></tr>
-            <tr><td>3</td><td>Bangalore</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">1</td><td class="hl-b">0</td></tr>
-            <tr><td>4</td><td>Mumbai</td><td class="hl-b">1</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">0</td></tr>
-            <tr><td>5</td><td>Chennai</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">1</td></tr>
-            <tr><td>6</td><td>Delhi</td><td class="hl-b">0</td><td class="hl-b">1</td><td class="hl-b">0</td><td class="hl-b">0</td></tr>
-            <tr><td>7</td><td>Bangalore</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">1</td><td class="hl-b">0</td></tr>
-            <tr><td>8</td><td>Chennai</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">0</td><td class="hl-b">1</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="insight insight-blue">
-        <span class="insight-icon">💡</span>
-        <span class="insight-text"><strong>Dummy Variable Trap:</strong> Drop one column (e.g., City_Chennai) when using linear models, since if all other city columns are 0, we already know it's Chennai. Use <code>drop_first=True</code> in pandas.</span>
-      </div>
-
-      <div class="code-block">
-<span class="c"># One-Hot Encoding — 2 ways</span>
-pd.<span class="f">get_dummies</span>(df, columns=[<span class="s">'City'</span>], drop_first=<span class="k">True</span>)
-
-<span class="c"># OR using sklearn</span>
-<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> OneHotEncoder
-enc = OneHotEncoder(sparse_output=<span class="k">False</span>, drop=<span class="s">'first'</span>)
-enc.<span class="f">fit_transform</span>(df[[<span class="s">'City'</span>]])
-      </div>
-
-      <div class="insight insight-pink" style="margin-top:16px;">
-        <span class="insight-icon">⚠️</span>
-        <span class="insight-text"><strong>Problem with high cardinality:</strong> If City had 500 unique values, you'd get 500 new columns. That's the curse of dimensionality. Use Binary or Target Encoding instead for high-cardinality columns.</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ════ BINARY ════ -->
-  <div class="section" id="binary">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <div>
-        <div class="section-title">Binary Encoding</div>
-        <div class="section-sub">For <strong>High-Cardinality</strong> nominal data — saves columns</div>
-      </div>
-    </div>
-
-    <div class="enc-card acc-p">
-      <div class="card-label" style="color:var(--accent3)">Binary Encoding</div>
-      <div class="card-meta">
-        <span class="badge badge-when">✓ Use for: Nominal with many categories (50+)</span>
-        <span class="badge badge-cols">Example: City (imagine 500 cities)</span>
-      </div>
-      <p class="desc">
-        Binary Encoding first converts each category to a number (like Label Encoding), then converts that number into its <strong>binary representation</strong>, and splits each binary digit into a separate column. 
-        4 categories → 2 bits (columns). 8 categories → 3 bits. 1000 categories → just 10 columns!
-      </p>
-
-      <div class="formula">Step 1: Assign integer → Mumbai=1, Delhi=2, Bangalore=3, Chennai=4<br>Step 2: Convert to binary → 1=001, 2=010, 3=011, 4=100<br>Step 3: Each bit becomes a column → col_1, col_2, col_3</div>
-
-      <div class="table-wrap" style="margin-top:16px;">
-        <table class="data-table">
-          <thead>
-            <tr><th>City</th><th>Integer</th><th>Binary</th><th class="hl-p">City_b1</th><th class="hl-p">City_b2</th><th class="hl-p">City_b3</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Mumbai</td><td>1</td><td>001</td><td class="hl-p">0</td><td class="hl-p">0</td><td class="hl-p">1</td></tr>
-            <tr><td>Delhi</td><td>2</td><td>010</td><td class="hl-p">0</td><td class="hl-p">1</td><td class="hl-p">0</td></tr>
-            <tr><td>Bangalore</td><td>3</td><td>011</td><td class="hl-p">0</td><td class="hl-p">1</td><td class="hl-p">1</td></tr>
-            <tr><td>Chennai</td><td>4</td><td>100</td><td class="hl-p">1</td><td class="hl-p">0</td><td class="hl-p">0</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="insight" style="margin-top:16px; background:rgba(192,96,240,.06); border-color:rgba(192,96,240,.2);">
-        <span class="insight-icon">🎯</span>
-        <span class="insight-text"><strong>Key advantage:</strong> One-Hot for 4 cities = 4 columns. Binary Encoding = only 3 columns. For 1000 cities: One-Hot needs 1000 columns, Binary needs only 10. Massive saving!</span>
-      </div>
-
-      <div class="code-block">
-<span class="c"># pip install category_encoders</span>
-<span class="k">import</span> category_encoders <span class="k">as</span> ce
-
-encoder = ce.<span class="f">BinaryEncoder</span>(cols=[<span class="s">'City'</span>])
-df_encoded = encoder.<span class="f">fit_transform</span>(df)
-      </div>
-    </div>
-  </div>
-
-  <!-- ════ TARGET ════ -->
-  <div class="section" id="target">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <div>
-        <div class="section-title">Target Encoding</div>
-        <div class="section-sub">Replace category with <strong>mean of target variable</strong></div>
-      </div>
-    </div>
-
-    <div class="enc-card acc-g">
-      <div class="card-label" style="color:var(--accent4)">Target Encoding (Mean Encoding)</div>
-      <div class="card-meta">
-        <span class="badge badge-when">✓ Use for: High-cardinality nominal, regression tasks</span>
-        <span class="badge badge-cols">Column: City → Target: Price</span>
-      </div>
-      <p class="desc">
-        Replace each category with the <strong>mean of the target variable</strong> for rows in that category.
-        If Mumbai houses average ₹55,000, every row with City=Mumbai gets replaced with 55,000.
-        This directly encodes the relationship between category and target.
-      </p>
-
-      <div class="compare">
-        <div class="compare-box">
-          <h4>Step 1: Calculate Mean Price per City</h4>
-          <div class="table-wrap" style="margin-top:0; border:none;">
-            <table class="data-table" style="font-size:12px;">
-              <thead><tr><th>City</th><th>Rows</th><th>Avg Price</th></tr></thead>
-              <tbody>
-                <tr><td>Mumbai</td><td>1, 4</td><td class="hl-g">$55,000</td></tr>
-                <tr><td>Delhi</td><td>2, 6</td><td class="hl-g">$95,000</td></tr>
-                <tr><td>Bangalore</td><td>3, 7</td><td class="hl-g">$81,000</td></tr>
-                <tr><td>Chennai</td><td>5, 8</td><td class="hl-g">$49,000</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="compare-box">
-          <h4>Step 2: Replace City with Mean</h4>
-          <div class="table-wrap" style="margin-top:0; border:none;">
-            <table class="data-table" style="font-size:12px;">
-              <thead><tr><th>#</th><th>City (original)</th><th>City_encoded</th></tr></thead>
-              <tbody>
-                <tr><td>1</td><td>Mumbai</td><td class="hl-g">55,000</td></tr>
-                <tr><td>2</td><td>Delhi</td><td class="hl-g">95,000</td></tr>
-                <tr><td>3</td><td>Bangalore</td><td class="hl-g">81,000</td></tr>
-                <tr><td>4</td><td>Mumbai</td><td class="hl-g">55,000</td></tr>
-                <tr><td>5</td><td>Chennai</td><td class="hl-g">49,000</td></tr>
-                <tr><td>6</td><td>Delhi</td><td class="hl-g">95,000</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="insight insight-pink" style="margin-top:16px;">
-        <span class="insight-icon">⚠️</span>
-        <span class="insight-text"><strong>Target Leakage!</strong> If you compute the mean on the same data you train on, the model learns the target directly. Always use <strong>cross-fold target encoding</strong> (compute mean from other folds) or add smoothing. Use <code>category_encoders.TargetEncoder</code> which handles this.</span>
-      </div>
-
-      <div class="code-block">
-<span class="k">import</span> category_encoders <span class="k">as</span> ce
-
-enc = ce.<span class="f">TargetEncoder</span>(cols=[<span class="s">'City'</span>], smoothing=<span class="n">10</span>)
-<span class="c"># smoothing blends category mean with global mean for rare categories</span>
-df[<span class="s">'City_encoded'</span>] = enc.<span class="f">fit_transform</span>(df[<span class="s">'City'</span>], df[<span class="s">'Price'</span>])
-      </div>
-    </div>
-  </div>
-
-  <!-- ════ FREQUENCY ════ -->
-  <div class="section" id="freq">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <div>
-        <div class="section-title">Frequency Encoding</div>
-        <div class="section-sub">Replace category with <strong>how often it appears</strong></div>
-      </div>
-    </div>
-
-    <div class="enc-card acc-r">
-      <div class="card-label" style="color:var(--accent5)">Frequency / Count Encoding</div>
-      <div class="card-meta">
-        <span class="badge badge-when">✓ Use for: Nominal where frequency carries signal</span>
-        <span class="badge badge-cols">Column: City · House Style</span>
-      </div>
-      <p class="desc">
-        Replace each category with either its <strong>count</strong> (how many rows have that value) or its <strong>frequency</strong> (proportion of total). 
-        No target variable needed — purely unsupervised. Mumbai appears 2 times → 2 (count) or 0.25 (frequency).
-      </p>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>#</th><th>City</th><th>House Style</th><th class="hl-r">City Count</th><th class="hl-r">City Freq</th><th class="hl-r">Style Count</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>Mumbai</td><td>Bungalow</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">3</td></tr>
-            <tr><td>2</td><td>Delhi</td><td>Apartment</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">3</td></tr>
-            <tr><td>3</td><td>Bangalore</td><td>Villa</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">2</td></tr>
-            <tr><td>4</td><td>Mumbai</td><td>Apartment</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">3</td></tr>
-            <tr><td>5</td><td>Chennai</td><td>Bungalow</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">3</td></tr>
-            <tr><td>6</td><td>Delhi</td><td>Villa</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">2</td></tr>
-            <tr><td>7</td><td>Bangalore</td><td>Apartment</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">3</td></tr>
-            <tr><td>8</td><td>Chennai</td><td>Bungalow</td><td class="hl-r">2</td><td class="hl-r">0.25</td><td class="hl-r">3</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="insight insight-blue" style="margin-top:16px;">
-        <span class="insight-icon">💡</span>
-        <span class="insight-text"><strong>When is this useful?</strong> When rare categories might indicate anomalies or special cases (e.g., a city that appears only once in loan data might indicate geographic outlier). Also useful when no target exists (unsupervised preprocessing).</span>
-      </div>
-
-      <div class="code-block">
-<span class="c"># Frequency Encoding — simple manual approach</span>
-freq_map = df[<span class="s">'City'</span>].<span class="f">value_counts</span>() / <span class="f">len</span>(df)
-df[<span class="s">'City_Freq'</span>] = df[<span class="s">'City'</span>].<span class="f">map</span>(freq_map)
-
-count_map = df[<span class="s">'City'</span>].<span class="f">value_counts</span>()
-df[<span class="s">'City_Count'</span>] = df[<span class="s">'City'</span>].<span class="f">map</span>(count_map)
-      </div>
-    </div>
-  </div>
-
-  <!-- ════ OTHER ════ -->
-  <div class="section" id="other">
-    <div class="section-header">
-      <span class="section-num">06</span>
-      <div>
-        <div class="section-title">Other Encodings</div>
-        <div class="section-sub">Hash, Helmert, Leave-One-Out & more</div>
-      </div>
-    </div>
-
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-      <div class="enc-card acc-y" style="padding:20px 24px;">
-        <div class="card-label" style="color:var(--accent1); font-size:16px;">Hashing Encoding</div>
-        <p class="desc" style="margin-bottom:12px; margin-top:8px;">Applies a hash function to categories, maps them to a fixed number of columns. Handles unseen categories. Memory efficient. Used in NLP feature hashing.</p>
-        <div class="formula" style="font-size:11px;">n_categories → fixed n_components (e.g., 8)</div>
-      </div>
-      <div class="enc-card acc-b" style="padding:20px 24px;">
-        <div class="card-label" style="color:var(--accent2); font-size:16px;">Leave-One-Out</div>
-        <p class="desc" style="margin-bottom:12px; margin-top:8px;">Like Target Encoding but computes the mean excluding the current row. Significantly reduces target leakage. Best for small datasets.</p>
-        <div class="formula" style="font-size:11px;">val = mean(target) where City=X, excluding current row</div>
-      </div>
-      <div class="enc-card acc-p" style="padding:20px 24px;">
-        <div class="card-label" style="color:var(--accent3); font-size:16px;">Helmert Encoding</div>
-        <p class="desc" style="margin-bottom:12px; margin-top:8px;">Compares each level of a category to the mean of all subsequent levels. Useful in ANOVA-style statistical analysis. Rarely used in ML.</p>
-        <div class="formula" style="font-size:11px;">Statistical contrasts between ordered groups</div>
-      </div>
-      <div class="enc-card acc-g" style="padding:20px 24px;">
-        <div class="card-label" style="color:var(--accent4); font-size:16px;">Boolean / Binary Flag</div>
-        <p class="desc" style="margin-bottom:12px; margin-top:8px;">For columns like <em>Has Pool</em> (Yes/No), simply map to 0 and 1. This is actually a special case of label encoding for binary nominal data.</p>
-        <div class="formula" style="font-size:11px;">Yes → 1, No → 0 (or True/False)</div>
-      </div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ════════════════════════ FEATURE SELECTION ════════════════════════ -->
-  <div class="section" id="selection">
-    <div class="section-header">
-      <span class="section-num">07</span>
-      <div>
-        <div class="section-title">Feature Selection</div>
-        <div class="section-sub">Choose only the columns that actually help predict the target</div>
-      </div>
-    </div>
-
-    <p style="color:var(--t2); margin-bottom:28px; font-size:14px;">Feature Selection = picking the RIGHT features. Too many features = overfitting, slow training, noise. Three main approaches:</p>
-
-    <!-- Filter Methods -->
-    <div class="enc-card acc-y">
-      <div class="card-label" style="color:var(--accent1)">① Filter Methods — Fastest, No Model Needed</div>
-      <p class="desc">Score each feature independently using statistical tests. Select top-k features based on score.</p>
-
-      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-bottom:16px;">
-        <div class="compare-box" style="padding:14px 16px;">
-          <h4>Correlation</h4>
-          <p style="font-size:12px; color:var(--t2); margin-top:6px;">For numeric features. Drop if |corr| with target &lt; 0.1, or if two features have |corr| > 0.9 with each other.</p>
-        </div>
-        <div class="compare-box" style="padding:14px 16px;">
-          <h4>Chi-Square (χ²)</h4>
-          <p style="font-size:12px; color:var(--t2); margin-top:6px;">For categorical features + categorical target. Tests statistical independence between feature and target.</p>
-        </div>
-        <div class="compare-box" style="padding:14px 16px;">
-          <h4>ANOVA F-test</h4>
-          <p style="font-size:12px; color:var(--t2); margin-top:6px;">For numeric features + categorical target. Variance between groups vs within groups.</p>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>Feature</th><th>Correlation with Price</th><th>Decision</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Area (sqft)</td><td class="hl-g">+0.94</td><td class="hl-g">✓ Keep — strong positive correlation</td></tr>
-            <tr><td>Bedrooms</td><td class="hl-g">+0.87</td><td class="hl-g">✓ Keep</td></tr>
-            <tr><td>Year Built</td><td class="hl-y">+0.71</td><td class="hl-y">✓ Keep</td></tr>
-            <tr><td>Neighborhood Quality</td><td class="hl-y">+0.82</td><td class="hl-y">✓ Keep (ordinal encoded)</td></tr>
-            <tr><td>Has Pool</td><td class="hl-r">+0.12</td><td class="hl-r">✗ Maybe drop — weak signal</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="code-block">
-<span class="c"># Correlation filter</span>
-corr = df.<span class="f">corr</span>()[<span class="s">'Price'</span>].<span class="f">abs</span>().<span class="f">sort_values</span>(ascending=<span class="k">False</span>)
-keep = corr[corr > <span class="n">0.2</span>].<span class="f">index</span>.<span class="f">tolist</span>()
-
-<span class="c"># SelectKBest with ANOVA</span>
-<span class="k">from</span> sklearn.feature_selection <span class="k">import</span> SelectKBest, f_regression
-selector = <span class="f">SelectKBest</span>(f_regression, k=<span class="n">4</span>)
-X_new = selector.<span class="f">fit_transform</span>(X, y)
-      </div>
-    </div>
-
-    <!-- Wrapper Methods -->
-    <div class="enc-card acc-b" style="margin-top:20px;">
-      <div class="card-label" style="color:var(--accent2)">② Wrapper Methods — Model-based, More Accurate</div>
-      <p class="desc">Train a model with different subsets of features, pick the subset that gives best performance. Expensive but powerful.</p>
-
-      <div class="compare">
-        <div class="compare-box">
-          <h4>RFE (Recursive Feature Elimination)</h4>
-          <p style="font-size:12px; color:var(--t2); margin-top:6px;">Train model → remove weakest feature → retrain → repeat until k features remain. Like peeling an onion.</p>
-        </div>
-        <div class="compare-box">
-          <h4>Forward / Backward Selection</h4>
-          <p style="font-size:12px; color:var(--t2); margin-top:6px;">Start empty, add best feature each step (Forward). OR start full, remove worst feature each step (Backward).</p>
-        </div>
-      </div>
-
-      <div class="code-block">
-<span class="k">from</span> sklearn.feature_selection <span class="k">import</span> RFE
-<span class="k">from</span> sklearn.linear_model <span class="k">import</span> LinearRegression
-
-model = <span class="f">LinearRegression</span>()
-rfe = <span class="f">RFE</span>(model, n_features_to_select=<span class="n">3</span>)
-rfe.<span class="f">fit</span>(X, y)
-
-<span class="f">print</span>(dict(<span class="f">zip</span>(X.columns, rfe.ranking_)))
-<span class="c"># ranking_ = 1 means SELECTED, >1 means eliminated</span>
-      </div>
-    </div>
-
-    <!-- Embedded Methods -->
-    <div class="enc-card acc-g" style="margin-top:20px;">
-      <div class="card-label" style="color:var(--accent4)">③ Embedded Methods — Best of Both Worlds</div>
-      <p class="desc">Feature selection happens INSIDE the model training itself. Lasso (L1 regularization) drives useless feature weights to exactly zero. Tree models provide feature importances.</p>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>Feature</th><th>Random Forest Importance</th><th>Lasso Coefficient</th><th>Decision</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Area (sqft)</td><td class="hl-g">0.42</td><td class="hl-g">18.5</td><td class="hl-g">✓ Most important</td></tr>
-            <tr><td>Neighborhood Quality</td><td class="hl-g">0.28</td><td class="hl-g">12.1</td><td class="hl-g">✓ Important</td></tr>
-            <tr><td>Year Built</td><td class="hl-y">0.16</td><td class="hl-y">8.3</td><td class="hl-y">✓ Moderate</td></tr>
-            <tr><td>Bedrooms</td><td class="hl-y">0.11</td><td class="hl-y">3.2</td><td class="hl-y">✓ Keep</td></tr>
-            <tr><td>Has Pool</td><td class="hl-r">0.03</td><td class="hl-r">0.0</td><td class="hl-r">✗ Lasso set to 0 — drop</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="code-block">
-<span class="k">from</span> sklearn.ensemble <span class="k">import</span> RandomForestRegressor
-
-rf = <span class="f">RandomForestRegressor</span>(n_estimators=<span class="n">100</span>)
-rf.<span class="f">fit</span>(X, y)
-
-importances = pd.<span class="f">Series</span>(rf.feature_importances_, index=X.columns)
-importances.<span class="f">sort_values</span>().<span class="f">plot</span>(kind=<span class="s">'barh'</span>)  <span class="c"># Visualize</span>
-
-<span class="c"># Keep features with importance > 0.05</span>
-good_features = importances[importances > <span class="n">0.05</span>].<span class="f">index</span>
-      </div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ════════════════════════ FEATURE TRANSFORMATION ════════════════════════ -->
-  <div class="section" id="transform">
-    <div class="section-header">
-      <span class="section-num">08</span>
-      <div>
-        <div class="section-title">Feature Transformation</div>
-        <div class="section-sub">Change the scale or distribution of existing features</div>
-      </div>
-    </div>
-
-    <p style="color:var(--t2); margin-bottom:28px; font-size:14px;">Many ML algorithms assume features are on similar scales or have a Gaussian distribution. Transformation fixes skewed or differently-scaled features.</p>
-
-    <div class="enc-card acc-b">
-      <div class="card-label" style="color:var(--accent2)">① Scaling — Normalize the Range</div>
-      <p class="desc">Area ranges 700–3000, but Bedrooms ranges 1–5. Without scaling, Area dominates the model unfairly.</p>
-
-      <div class="compare" style="margin-bottom:16px;">
-        <div class="compare-box">
-          <h4>Min-Max Scaling (Normalization)</h4>
-          <div class="formula" style="font-size:11px; margin:8px 0;">x_new = (x − min) / (max − min) → range [0, 1]</div>
-          <p style="font-size:12px; color:var(--t2);">Use when: Neural networks, KNN, SVM. Sensitive to outliers.</p>
-        </div>
-        <div class="compare-box">
-          <h4>Standard Scaling (Standardization)</h4>
-          <div class="formula" style="font-size:11px; margin:8px 0; border-left-color:var(--accent4); color:var(--accent4);">x_new = (x − mean) / std → mean=0, std=1</div>
-          <p style="font-size:12px; color:var(--t2);">Use when: Linear regression, Logistic regression, PCA. Robust to outliers.</p>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>#</th><th>Area (original)</th><th class="hl-b">Area MinMax</th><th class="hl-g">Area StandardScaled</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>1800</td><td class="hl-b">0.48</td><td class="hl-g">+0.04</td></tr>
-            <tr><td>2</td><td>950</td><td class="hl-b">0.11</td><td class="hl-g">−0.77</td></tr>
-            <tr><td>3</td><td>2500</td><td class="hl-b">0.78</td><td class="hl-g">+0.71</td></tr>
-            <tr><td>4</td><td>700</td><td class="hl-b">0.00</td><td class="hl-g">−1.01</td></tr>
-            <tr><td>5</td><td>1600</td><td class="hl-b">0.39</td><td class="hl-g">−0.15</td></tr>
-            <tr><td>6</td><td>3000</td><td class="hl-b">1.00</td><td class="hl-g">+1.19</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="code-block">
-<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> MinMaxScaler, StandardScaler
-
-mm = <span class="f">MinMaxScaler</span>()
-df[<span class="s">'Area_minmax'</span>] = mm.<span class="f">fit_transform</span>(df[[<span class="s">'Area'</span>]])
-
-ss = <span class="f">StandardScaler</span>()
-df[<span class="s">'Area_std'</span>] = ss.<span class="f">fit_transform</span>(df[[<span class="s">'Area'</span>]])
-      </div>
-    </div>
-
-    <div class="enc-card acc-y" style="margin-top:20px;">
-      <div class="card-label" style="color:var(--accent1)">② Log / Power Transform — Fix Skewed Distributions</div>
-      <p class="desc">House prices are often right-skewed (a few very expensive homes pull the distribution right). Log transform brings them closer to Gaussian, which many models prefer.</p>
-
-      <div class="compare">
-        <div class="compare-box">
-          <h4>Before (Right-Skewed)</h4>
-          <div style="font-family:'Source Code Pro',monospace; font-size:11px; color:var(--t2); margin-top:8px; line-height:2;">
-            28,000 ·  31,000 ·  45,000<br>52,000 ·  67,000 ·  82,000<br>110,000 · 145,000
-          </div>
-          <p style="font-size:11px; color:var(--t3); margin-top:8px;">Skew: +1.2 (right-skewed)</p>
-        </div>
-        <div class="compare-box">
-          <h4>After Log Transform</h4>
-          <div style="font-family:'Source Code Pro',monospace; font-size:11px; color:var(--accent1); margin-top:8px; line-height:2;">
-            10.24 · 10.34 · 10.71<br>10.86 · 11.11 · 11.31<br>11.61 · 11.88
-          </div>
-          <p style="font-size:11px; color:var(--t3); margin-top:8px;">Skew: −0.1 (near-normal ✓)</p>
-        </div>
-      </div>
-
-      <div class="code-block">
-<span class="k">import</span> numpy <span class="k">as</span> np
-
-df[<span class="s">'Log_Price'</span>] = np.<span class="f">log1p</span>(df[<span class="s">'Price'</span>])    <span class="c"># log(1+x) avoids log(0)</span>
-
-<span class="c"># Or Box-Cox (auto-finds best power)</span>
-<span class="k">from</span> scipy.stats <span class="k">import</span> boxcox
-df[<span class="s">'Price_BC'</span>], _ = <span class="f">boxcox</span>(df[<span class="s">'Price'</span>])
-
-<span class="c"># Yeo-Johnson (works with negatives too)</span>
-<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> PowerTransformer
-pt = <span class="f">PowerTransformer</span>(method=<span class="s">'yeo-johnson'</span>)
-df[<span class="s">'Price_PT'</span>] = pt.<span class="f">fit_transform</span>(df[[<span class="s">'Price'</span>]])
-      </div>
-    </div>
-
-    <div class="enc-card acc-p" style="margin-top:20px;">
-      <div class="card-label" style="color:var(--accent3)">③ Binning / Discretization — Turn Continuous into Categorical</div>
-      <p class="desc">Group continuous values into bins. Useful when the relationship isn't linear (e.g., "new" vs "old" houses matters more than exact year). Can also help with outliers.</p>
-
-      <div class="table-wrap" style="margin-top:0;">
-        <table class="data-table">
-          <thead><tr><th>#</th><th>Year Built</th><th>House Age</th><th class="hl-p">Age Bin</th><th class="hl-p">Age Label</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>2010</td><td>16</td><td class="hl-p">1</td><td class="hl-p">Recent</td></tr>
-            <tr><td>2</td><td>2015</td><td>11</td><td class="hl-p">1</td><td class="hl-p">Recent</td></tr>
-            <tr><td>3</td><td>2005</td><td>21</td><td class="hl-p">2</td><td class="hl-p">Middle-Aged</td></tr>
-            <tr><td>4</td><td>2000</td><td>26</td><td class="hl-p">2</td><td class="hl-p">Middle-Aged</td></tr>
-            <tr><td>5</td><td>2018</td><td>8</td><td class="hl-p">0</td><td class="hl-p">New</td></tr>
-            <tr><td>6</td><td>2020</td><td>6</td><td class="hl-p">0</td><td class="hl-p">New</td></tr>
-            <tr><td>7</td><td>2012</td><td>14</td><td class="hl-p">1</td><td class="hl-p">Recent</td></tr>
-            <tr><td>8</td><td>1998</td><td>28</td><td class="hl-p">3</td><td class="hl-p">Old</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="code-block">
-<span class="c"># Equal-width bins</span>
-df[<span class="s">'Age_Bin'</span>] = pd.<span class="f">cut</span>(df[<span class="s">'House_Age'</span>], bins=[<span class="n">0</span>,<span class="n">10</span>,<span class="n">20</span>,<span class="n">30</span>,<span class="n">100</span>],
-                      labels=[<span class="s">'New'</span>,<span class="s">'Recent'</span>,<span class="s">'Middle-Aged'</span>,<span class="s">'Old'</span>])
-
-<span class="c"># Equal-frequency bins (quantile-based)</span>
-df[<span class="s">'Age_Qbin'</span>] = pd.<span class="f">qcut</span>(df[<span class="s">'House_Age'</span>], q=<span class="n">4</span>, labels=[<span class="s">'Q1'</span>,<span class="s">'Q2'</span>,<span class="s">'Q3'</span>,<span class="s">'Q4'</span>])
-      </div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ════════════════════════ FEATURE CREATION ════════════════════════ -->
-  <div class="section" id="creation">
-    <div class="section-header">
-      <span class="section-num">09</span>
-      <div>
-        <div class="section-title">Feature Creation</div>
-        <div class="section-sub">Engineer entirely new features from existing ones</div>
-      </div>
-    </div>
-
-    <p style="color:var(--t2); margin-bottom:28px; font-size:14px;">Often the best features aren't in your raw data — you have to <em>build</em> them. This is where domain knowledge meets data science.</p>
-
-    <div class="enc-card acc-g">
-      <div class="card-label" style="color:var(--accent4)">Math Combinations — Multiply, Divide, Subtract</div>
-      <p class="desc">Create new numeric features by combining existing ones in meaningful ways.</p>
-
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>#</th><th>Area</th><th>Bedrooms</th><th>Year Built</th><th class="hl-g">Area/Bedroom</th><th class="hl-g">House Age</th><th class="hl-g">Price/sqft (target)</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>1800</td><td>3</td><td>2010</td><td class="hl-g">600</td><td class="hl-g">16</td><td class="hl-g">45.6</td></tr>
-            <tr><td>2</td><td>950</td><td>2</td><td>2015</td><td class="hl-g">475</td><td class="hl-g">11</td><td class="hl-g">47.4</td></tr>
-            <tr><td>3</td><td>2500</td><td>4</td><td>2005</td><td class="hl-g">625</td><td class="hl-g">21</td><td class="hl-g">44.0</td></tr>
-            <tr><td>4</td><td>700</td><td>1</td><td>2000</td><td class="hl-g">700</td><td class="hl-g">26</td><td class="hl-g">40.0</td></tr>
-            <tr><td>5</td><td>1600</td><td>3</td><td>2018</td><td class="hl-g">533</td><td class="hl-g">8</td><td class="hl-g">41.9</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="code-block">
-df[<span class="s">'Area_Per_Bedroom'</span>] = df[<span class="s">'Area'</span>] / df[<span class="s">'Bedrooms'</span>]
-df[<span class="s">'House_Age'</span>]       = <span class="n">2026</span> - df[<span class="s">'Year_Built'</span>]
-df[<span class="s">'Age_x_Quality'</span>]   = df[<span class="s">'House_Age'</span>] * df[<span class="s">'Quality_Encoded'</span>]
-df[<span class="s">'Log_Area'</span>]        = np.<span class="f">log1p</span>(df[<span class="s">'Area'</span>])
-df[<span class="s">'Area_Squared'</span>]    = df[<span class="s">'Area'</span>] ** <span class="n">2</span>  <span class="c"># polynomial feature</span>
-      </div>
-    </div>
-
-    <div class="enc-card acc-y" style="margin-top:20px;">
-      <div class="card-label" style="color:var(--accent1)">Interaction Features — Combine Two Columns</div>
-      <p class="desc">The combined effect of two features can be stronger than either alone. A "Good neighborhood with large area" might deserve its own feature.</p>
-
-      <div class="table-wrap" style="margin-top:0;">
-        <table class="data-table">
-          <thead>
-            <tr><th>#</th><th>Neighborhood Quality</th><th>Area</th><th class="hl-y">Luxury Score = Quality × Area</th><th class="hl-y">Is Luxury?</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>Excellent (3)</td><td>1800</td><td class="hl-y">5,400</td><td class="hl-y">1</td></tr>
-            <tr><td>2</td><td>Good (2)</td><td>950</td><td class="hl-y">1,900</td><td class="hl-y">0</td></tr>
-            <tr><td>3</td><td>Average (1)</td><td>2500</td><td class="hl-y">2,500</td><td class="hl-y">0</td></tr>
-            <tr><td>4</td><td>Poor (0)</td><td>700</td><td class="hl-y">0</td><td class="hl-y">0</td></tr>
-            <tr><td>6</td><td>Excellent (3)</td><td>3000</td><td class="hl-y">9,000</td><td class="hl-y">1</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="code-block">
-df[<span class="s">'Luxury_Score'</span>] = df[<span class="s">'Quality_Encoded'</span>] * df[<span class="s">'Area'</span>]
-df[<span class="s">'Is_Luxury'</span>] = ((df[<span class="s">'Quality_Encoded'</span>] >= <span class="n">2</span>) & (df[<span class="s">'Area'</span>] > <span class="n">1500</span>)).<span class="f">astype</span>(int)
-df[<span class="s">'New_And_Spacious'</span>] = ((df[<span class="s">'House_Age'</span>] < <span class="n">10</span>) & (df[<span class="s">'Area'</span>] > <span class="n">1500</span>)).<span class="f">astype</span>(int)
-
-<span class="c"># Automated polynomial features</span>
-<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> PolynomialFeatures
-poly = <span class="f">PolynomialFeatures</span>(degree=<span class="n">2</span>, include_bias=<span class="k">False</span>)
-X_poly = poly.<span class="f">fit_transform</span>(df[[<span class="s">'Area'</span>, <span class="s">'House_Age'</span>]])
-      </div>
-    </div>
-
-    <div class="enc-card acc-b" style="margin-top:20px;">
-      <div class="card-label" style="color:var(--accent2)">Aggregation Features — Group Statistics</div>
-      <p class="desc">Compute statistics (mean, max, count, std) per group. "What's the average house size in this city?" can be a powerful feature.</p>
-
-      <div class="code-block">
-<span class="c"># Group-level statistics as new features</span>
-city_stats = df.<span class="f">groupby</span>(<span class="s">'City'</span>)[<span class="s">'Area'</span>].<span class="f">agg</span>([<span class="s">'mean'</span>, <span class="s">'max'</span>, <span class="s">'std'</span>])
-city_stats.columns = [<span class="s">'City_AvgArea'</span>, <span class="s">'City_MaxArea'</span>, <span class="s">'City_StdArea'</span>]
-
-df = df.<span class="f">merge</span>(city_stats, on=<span class="s">'City'</span>, how=<span class="s">'left'</span>)
-
-<span class="c"># Deviation from group mean (is this house larger than typical in its city?)</span>
-df[<span class="s">'Area_vs_City_Avg'</span>] = df[<span class="s">'Area'</span>] - df[<span class="s">'City_AvgArea'</span>]
-      </div>
-    </div>
-
-    <div class="enc-card acc-r" style="margin-top:20px;">
-      <div class="card-label" style="color:var(--accent5)">Date/Time Features — Extract Hidden Signals</div>
-      <p class="desc">If you have timestamps, decompose them into rich features that models can use.</p>
-
-      <div class="code-block">
-df[<span class="s">'Year_Built'</span>] = pd.<span class="f">to_datetime</span>(df[<span class="s">'Year_Built'</span>], format=<span class="s">'%Y'</span>)
-
-df[<span class="s">'Decade_Built'</span>]     = (df[<span class="s">'Year_Built'</span>].dt.year // <span class="n">10</span>) * <span class="n">10</span>
-df[<span class="s">'Is_Post_2010'</span>]    = (df[<span class="s">'Year_Built'</span>].dt.year >= <span class="n">2010</span>).<span class="f">astype</span>(int)
-df[<span class="s">'Age_at_Purchase'</span>]  = <span class="n">2026</span> - df[<span class="s">'Year_Built'</span>].dt.year
-      </div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ════════════════════════ SUMMARY CHEAT SHEET ════════════════════════ -->
-  <div class="section" id="summary">
-    <div class="section-header">
-      <span class="section-num">10</span>
-      <div>
-        <div class="section-title">When to Use What</div>
-        <div class="section-sub">Quick reference cheat sheet</div>
-      </div>
-    </div>
-
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr><th>Technique</th><th>Data Type</th><th>When to Use</th><th>Watch Out For</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="hl-y"><strong>Label Encoding</strong></td>
-            <td>Ordinal categorical</td>
-            <td>Order matters (Poor &lt; Good &lt; Excellent)</td>
-            <td>Never on nominal data — implies false order</td>
-          </tr>
-          <tr>
-            <td class="hl-b"><strong>One-Hot Encoding</strong></td>
-            <td>Nominal categorical</td>
-            <td>Low cardinality (&lt;20 unique values), tree or linear models</td>
-            <td>Dummy variable trap; explodes with high cardinality</td>
-          </tr>
-          <tr>
-            <td class="hl-p"><strong>Binary Encoding</strong></td>
-            <td>Nominal categorical</td>
-            <td>High cardinality (50–500+ unique values)</td>
-            <td>Bit patterns may not have intuitive meaning</td>
-          </tr>
-          <tr>
-            <td class="hl-g"><strong>Target Encoding</strong></td>
-            <td>Nominal, high cardinality</td>
-            <td>Strong cat–target relationship, regression tasks</td>
-            <td>Target leakage! Use cross-fold + smoothing</td>
-          </tr>
-          <tr>
-            <td class="hl-r"><strong>Frequency Encoding</strong></td>
-            <td>Nominal categorical</td>
-            <td>Frequency carries signal; unsupervised preprocessing</td>
-            <td>Multiple categories with same freq → same encoded value</td>
-          </tr>
-          <tr>
-            <td class="hl-y"><strong>Feature Selection</strong></td>
-            <td>Any</td>
-            <td>Too many features, overfitting, slow training</td>
-            <td>Don't select on full dataset; use CV to avoid bias</td>
-          </tr>
-          <tr>
-            <td class="hl-b"><strong>Scaling</strong></td>
-            <td>Numeric</td>
-            <td>Distance-based models (KNN, SVM), Neural networks, PCA</td>
-            <td>Not needed for tree-based models (RF, XGBoost)</td>
-          </tr>
-          <tr>
-            <td class="hl-p"><strong>Log Transform</strong></td>
-            <td>Numeric, right-skewed</td>
-            <td>Income, prices, counts — power-law distributed data</td>
-            <td>Can't take log of 0 or negatives → use log1p or Yeo-Johnson</td>
-          </tr>
-          <tr>
-            <td class="hl-g"><strong>Binning</strong></td>
-            <td>Continuous numeric</td>
-            <td>Non-linear relationships, outlier-robust models</td>
-            <td>Loses information; choose bin boundaries wisely</td>
-          </tr>
-          <tr>
-            <td class="hl-r"><strong>Feature Creation</strong></td>
-            <td>Any</td>
-            <td>Domain expertise suggests interaction effects</td>
-            <td>Too many engineered features → overfitting again</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="insight insight-green" style="margin-top:24px;">
-      <span class="insight-icon">🏆</span>
-      <span class="insight-text"><strong>The Golden Rule of Feature Engineering:</strong> Always apply transformations AFTER splitting into train/test sets. Fit scalers, encoders, and imputers on TRAINING data only, then transform both train and test. Fitting on the full dataset causes data leakage — your test set secretly influences your preprocessing.</span>
-    </div>
-  </div>
-
-</main>
-
-</div><!-- /#main -->
-
-<footer style="text-align:center;padding:36px 28px;border-top:1px solid var(--border);color:var(--t3);font-size:11px;font-family:'Source Code Pro',monospace;margin-left:240px;">
-  <div style="margin-bottom:10px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:800;color:var(--t2);letter-spacing:0.5px;">
-    🎓 Thanks for Visiting! Hope this is a great learning journey for you. 🚀
-  </div>
-  <div style="margin-bottom:4px;font-size:10px;color:var(--accent);font-family:'Source Code Pro',monospace;font-weight:600;letter-spacing:1.5px;">
-    Dev by &nbsp;<span style="background:var(--accent-light);border:1px solid var(--accent-border);padding:1px 8px;border-radius:10px;font-size:9.5px;">vishva_vichu_</span>
-  </div>
+<footer class="footer">
+  MLKit &mdash; Machine Learning Study Guides
 </footer>
 
 <script>
-// Theme
 function toggleTheme() {
   const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.getElementById('theme-label').textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
-  localStorage.setItem('ml-theme', isDark ? 'light' : 'dark');
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? 'Light Mode' : 'Dark Mode';
+  localStorage.setItem('theme', next);
 }
-const saved = localStorage.getItem('ml-theme');
-if (saved) {
-  document.documentElement.setAttribute('data-theme', saved);
-  document.getElementById('theme-label').textContent = saved === 'light' ? '☀️ Light Mode' : '🌙 Dark Mode';
-}
-
-function toggleSB() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('show');
-}
-
-// Fast scroll strip
-const fsStrip = document.getElementById('fast-scroll');
-const fsThumb = document.getElementById('fs-thumb');
-function updateFsThumb() {
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? scrollTop / docHeight : 0;
-  const trackH = fsStrip.clientHeight;
-  const thumbH = Math.max(30, trackH * (window.innerHeight / document.documentElement.scrollHeight));
-  fsThumb.style.height = thumbH + 'px';
-  fsThumb.style.top = pct * (trackH - thumbH) + 'px';
-}
-fsStrip.addEventListener('click', e => {
-  const pct = e.clientY / fsStrip.clientHeight;
-  window.scrollTo({ top: pct * (document.documentElement.scrollHeight - window.innerHeight), behavior:'smooth' });
-});
-let fsDragging = false;
-fsThumb.addEventListener('mousedown', e => { fsDragging = true; e.preventDefault(); });
-document.addEventListener('mousemove', e => {
-  if (!fsDragging) return;
-  const pct = e.clientY / fsStrip.clientHeight;
-  window.scrollTo({ top: pct * (document.documentElement.scrollHeight - window.innerHeight) });
-});
-document.addEventListener('mouseup', () => { fsDragging = false; });
-window.addEventListener('scroll', updateFsThumb, { passive:true });
-updateFsThumb();
-
-// Progress bar + back to top + sidebar active
-window.addEventListener('scroll', () => {
-  const h = document.documentElement;
-  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-  document.getElementById('prog').style.width = pct + '%';
-
-  const btn = document.getElementById('back-top');
-  btn.classList.toggle('show', window.scrollY > 400);
-}, { passive: true });
-
-// Active sidebar highlight using IntersectionObserver
-const sections = document.querySelectorAll('.section');
-const navItems = document.querySelectorAll('a.sb-item[href^="#"]');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navItems.forEach(n => n.classList.remove('active'));
-      const active = document.querySelector(`a.sb-item[href="#${e.target.id}"]`);
-      if (active) active.classList.add('active');
-    }
-  });
-}, { threshold: 0.3 });
-sections.forEach(s => observer.observe(s));
-
-// Smooth scroll for anchor links
-navItems.forEach(item => {
-  item.addEventListener('click', (e) => {
-    const href = item.getAttribute('href');
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-      if (window.innerWidth <= 768) toggleSB();
-    }
-  });
-});
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('theme-icon').textContent = saved === 'dark' ? 'Light Mode' : 'Dark Mode';
+    });
+  }
+})();
 </script>
+
 </body>
 </html>
