@@ -93,8 +93,11 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 #sidebar {
   position:fixed; top:0; left:0; width:260px; height:100vh;
   background:var(--sidebar-bg); border-right:1px solid var(--border);
-  overflow-y:auto; z-index:200; padding-bottom:40px;
-  scrollbar-width:thin; transition:transform 0.3s, background 0.3s;
+  z-index:200; display:flex; flex-direction:column;
+  transition:transform 0.3s, background 0.3s;
+}
+#sidebar-scroll {
+  overflow-y:auto; flex:1; padding-bottom:40px; scrollbar-width:thin;
 }
 .sb-header { padding:16px 16px 14px; border-bottom:1px solid var(--border); background:var(--sidebar-bg); position:sticky; top:0; z-index:10; }
 .sb-brand { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
@@ -315,7 +318,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   width:100%; padding:6px 10px; border-radius:6px;
   border:1px solid var(--border); background:var(--surface2);
   color:var(--t1); font-size:12px; font-family:'Outfit',sans-serif;
-  outline:none; margin-bottom:6px; transition:border-color 0.2s;
+  outline:none; transition:border-color 0.2s;
 }
 #sb-search:focus { border-color:var(--accent); }
 #sb-search::placeholder { color:var(--t3); }
@@ -379,9 +382,10 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       <div class="toggle-track"><div class="toggle-thumb"></div></div>
     </div>
   </div>
-  <div style="padding:0 10px 4px;">
+  <div style="padding:8px 10px 6px;background:var(--sidebar-bg);">
     <input id="sb-search" type="text" placeholder="🔍  Search topics..." oninput="searchSidebar(this.value)"/>
   </div>
+  <div id="sidebar-scroll">
 
   <div class="sb-section">Overview</div>
   <button class="sb-item" onclick="goTo('s-lifecycle')"><span class="ic">🔄</span>ML Lifecycle</button>
@@ -422,6 +426,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 
   <div class="sb-section">Best Practices</div>
   <button class="sb-item" onclick="goTo('s-bestpractices')"><span class="ic">🏆</span>Best Practices</button>
+  </div>
 </nav>
 
 <div id="main"><div class="page">
