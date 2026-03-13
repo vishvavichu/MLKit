@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLKit — Machine Learning Study Guide</title>
+<meta name="description" content="MLKit is a complete Machine Learning study guide covering EDA, feature engineering, model types, evaluation metrics, overfitting, regularization, and best practices — with code examples.">
+<meta name="keywords" content="machine learning, ML study guide, EDA, feature engineering, XGBoost, random forest, overfitting, regularization, evaluation metrics, data science">
+<meta name="author" content="vishva_vichu_">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yourdomain.com/ML_Study_guide.html">
+
+<!-- Open Graph (for social sharing previews) -->
+<meta property="og:title" content="MLKit — Machine Learning Study Guide">
+<meta property="og:description" content="A complete ML reference covering EDA, feature engineering, model types, evaluation metrics, and best practices with code examples.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yourdomain.com/ML_Study_guide.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&family=Nunito:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"] {
+  --bg: #0f1117;
+  --bg2: #161b22;
+  --surface: #1c2128;
+  --surface2: #21262d;
+  --surface3: #30363d;
+  --border: #30363d;
+  --border2: #484f58;
+  --t1: #e6edf3;
+  --t2: #8b949e;
+  --t3: #484f58;
+  --accent: #2ea043;
+  --accent-light: rgba(46,160,67,0.15);
+  --accent-border: rgba(46,160,67,0.4);
+  --blue: #388bfd;
+  --blue-light: rgba(56,139,253,0.15);
+  --orange: #f0883e;
+  --orange-light: rgba(240,136,62,0.15);
+  --red: #f85149;
+  --red-light: rgba(248,81,73,0.15);
+  --violet: #a371f7;
+  --violet-light: rgba(163,113,247,0.15);
+  --yellow: #e3b341;
+  --yellow-light: rgba(227,179,65,0.15);
+  --teal: #39d353;
+  --pink: #f778ba;
+  --code-bg: #161b22;
+  --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --sidebar-bg: #161b22;
+  --hero-gradient: radial-gradient(ellipse at 50% 0%, rgba(46,160,67,0.08) 0%, transparent 65%);
+}
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --bg2: #ffffff;
+  --surface: #ffffff;
+  --surface2: #f6f8fa;
+  --surface3: #eaeef2;
+  --border: #d0d7de;
+  --border2: #b1bac4;
+  --t1: #1f2328;
+  --t2: #57606a;
+  --t3: #818b98;
+  --accent: #1a7f37;
+  --accent-light: rgba(26,127,55,0.1);
+  --accent-border: rgba(26,127,55,0.3);
+  --blue: #0969da;
+  --blue-light: rgba(9,105,218,0.1);
+  --orange: #bc4c00;
+  --orange-light: rgba(188,76,0,0.1);
+  --red: #cf222e;
+  --red-light: rgba(207,34,46,0.1);
+  --violet: #8250df;
+  --violet-light: rgba(130,80,223,0.1);
+  --yellow: #9a6700;
+  --yellow-light: rgba(154,103,0,0.1);
+  --teal: #1a7f37;
+  --pink: #bf3989;
+  --code-bg: #f6f8fa;
+  --shadow: 0 1px 3px rgba(31,35,40,0.12);
+  --shadow-lg: 0 8px 24px rgba(31,35,40,0.12);
+  --sidebar-bg: #f6f8fa;
+  --hero-gradient: radial-gradient(ellipse at 50% 0%, rgba(26,127,55,0.06) 0%, transparent 65%);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; font-size:16px; line-height:1.7; overflow-x:hidden; transition:background 0.3s, color 0.3s; }
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
+
+/* ===== SIDEBAR ===== */
+#sidebar {
+  position:fixed; top:0; left:0; width:260px; height:100vh;
+  background:var(--sidebar-bg); border-right:1px solid var(--border);
+  overflow-y:auto; z-index:200; padding-bottom:40px;
+  scrollbar-width:thin; transition:transform 0.3s, background 0.3s;
+}
+.sb-header { padding:16px 16px 14px; border-bottom:1px solid var(--border); background:var(--sidebar-bg); position:sticky; top:0; z-index:10; }
+.sb-brand { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.sb-brand-icon { width:32px; height:32px; background:var(--accent); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.sb-brand-text { font-family:'Nunito',sans-serif; font-size:15px; font-weight:800; color:var(--t1); }
+.sb-brand-sub { font-size:10px; color:var(--t3); font-family:'Source Code Pro',monospace; margin-top:1px; }
+.theme-toggle { display:flex; align-items:center; justify-content:space-between; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:6px 10px; cursor:pointer; font-size:12px; color:var(--t2); font-weight:600; transition:all 0.2s; }
+.theme-toggle:hover { border-color:var(--accent); color:var(--accent); }
+.toggle-track { width:34px; height:18px; background:var(--surface3); border-radius:9px; position:relative; transition:background 0.3s; }
+[data-theme="light"] .toggle-track { background:var(--accent); }
+.toggle-thumb { width:12px; height:12px; background:white; border-radius:50%; position:absolute; top:3px; left:3px; transition:transform 0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.3); }
+[data-theme="light"] .toggle-thumb { transform:translateX(16px); }
+.sb-section { padding:12px 12px 2px; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--t3); font-family:'Source Code Pro',monospace; font-weight:600; }
+.sb-item { display:flex; align-items:center; gap:8px; width:calc(100% - 16px); margin:1px 8px; padding:7px 10px; border-radius:6px; border:none; background:none; color:var(--t2); font-size:13px; font-family:'Outfit',sans-serif; cursor:pointer; text-align:left; transition:all 0.15s; }
+.sb-item:hover { background:var(--surface2); color:var(--t1); }
+.sb-item.active { background:var(--accent-light); color:var(--accent); font-weight:600; }
+.sb-item .ic { font-size:13px; flex-shrink:0; opacity:0.8; }
+#menu-btn { display:none; position:fixed; top:12px; left:12px; z-index:300; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 11px; cursor:pointer; color:var(--t1); font-size:16px; line-height:1; box-shadow:var(--shadow); }
+#overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:150; }
+#overlay.show { display:block; }
+
+/* ===== MAIN ===== */
+#main { margin-left:260px; }
+.page { max-width:1320px; margin:0 auto; padding:48px 24px 80px; }
+
+/* ===== HERO ===== */
+.hero { text-align:center; padding:60px 0 44px; background:var(--hero-gradient); border-bottom:1px solid var(--border); margin-bottom:0; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; background:var(--accent-light); border:1px solid var(--accent-border); color:var(--accent); padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:18px; font-family:'Source Code Pro',monospace; }
+.hero h1 { font-family:'Nunito',sans-serif; font-weight:800; font-size:clamp(28px,4vw,44px); line-height:1.1; margin-bottom:10px; color:var(--t1); }
+.hero-sub { color:var(--t2); font-size:14px; max-width:420px; margin:0 auto 20px; }
+.hero-stats { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+.hero-stat { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 16px; text-align:center; }
+.hero-stat-n { font-size:18px; font-weight:800; color:var(--accent); font-family:'Nunito',sans-serif; }
+.hero-stat-l { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; }
+
+/* ===== BACK TO TOP ===== */
+#back-top { position:fixed; bottom:24px; right:24px; z-index:100; background:var(--accent); color:white; border:none; border-radius:50%; width:44px; height:44px; cursor:pointer; font-size:18px; display:none; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(46,160,67,0.4); transition:all 0.2s; }
+#back-top.show { display:flex; }
+#back-top:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(46,160,67,0.5); }
+
+/* ===== SECTIONS ===== */
+.section { margin-bottom:56px; scroll-margin-top:20px; }
+.sec-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--border); }
+.sec-num { font-family:'Source Code Pro',monospace; font-size:10px; font-weight:600; color:var(--accent); background:var(--accent-light); border:1px solid var(--accent-border); padding:3px 8px; border-radius:4px; }
+.sec-title { font-family:'Nunito',sans-serif; font-size:22px; font-weight:800; color:var(--t1); }
+.sec-icon { font-size:20px; }
+
+/* WHAT & WHY */
+.what-why { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.ww-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:14px 16px; }
+.ww-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; font-family:'Source Code Pro',monospace; }
+.ww-label.what { color:var(--blue); }
+.ww-label.why { color:var(--orange); }
+.ww-box p { font-size:14.5px; color:var(--t2); margin:0; }
+
+/* ===== CARDS ===== */
+.card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:18px; margin-bottom:12px; transition:border-color 0.2s, box-shadow 0.2s; }
+.card:hover { border-color:var(--border2); box-shadow:var(--shadow); }
+.card-title { font-family:'Nunito',sans-serif; font-size:15.5px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.g4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; }
+@media(max-width:900px) { .g3,.g4 { grid-template-columns:1fr 1fr; } }
+@media(max-width:640px) { .g2,.g3,.g4 { grid-template-columns:1fr; } }
+
+/* ===== CODE ===== */
+.code { background:var(--code-bg); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:0 6px 6px 0; padding:12px 16px; font-family:'Source Code Pro',monospace; font-size:12.5px; color:var(--t1); margin:8px 0; overflow-x:auto; line-height:1.6; white-space:pre; }
+.kw { color:var(--red); } .str { color:var(--blue); }
+.num { color:var(--orange); } .cm { color:var(--t3); font-style:italic; }
+.fn { color:var(--blue); } .ok { color:var(--accent); }
+
+/* ===== FORMULA ===== */
+.formula { background:var(--surface2); border:1px solid var(--border); border-top:3px solid var(--accent); border-radius:0 0 6px 6px; padding:10px 16px; font-family:'Source Code Pro',monospace; font-size:13.5px; color:var(--t1); text-align:center; margin:8px 0; }
+
+/* ===== NOTES ===== */
+.note { padding:10px 14px; border-radius:0 6px 6px 0; margin:8px 0; font-size:13.5px; border-left:4px solid; }
+.note.green  { border-color:var(--accent);  background:var(--accent-light);  color:var(--t1); }
+.note.blue   { border-color:var(--blue);    background:var(--blue-light);    color:var(--t1); }
+.note.orange { border-color:var(--orange);  background:var(--orange-light);  color:var(--t1); }
+.note.red    { border-color:var(--red);     background:var(--red-light);     color:var(--t1); }
+.note.violet { border-color:var(--violet);  background:var(--violet-light);  color:var(--t1); }
+.note.yellow { border-color:var(--yellow);  background:var(--yellow-light);  color:var(--t1); }
+
+/* ===== TABLE ===== */
+.tbl { width:100%; border-collapse:collapse; margin:8px 0; font-size:13.5px; }
+.tbl th { background:var(--surface2); color:var(--accent); padding:8px 12px; text-align:left; font-family:'Source Code Pro',monospace; font-size:10.5px; letter-spacing:0.5px; border-bottom:2px solid var(--accent); font-weight:600; }
+.tbl td { padding:7px 12px; border-bottom:1px solid var(--border); color:var(--t2); }
+.tbl tr:hover td { background:var(--surface2); }
+
+/* ===== TAGS ===== */
+.tag { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-family:'Source Code Pro',monospace; font-weight:600; margin:2px; border:1px solid; }
+.tg { background:var(--accent-light); color:var(--accent); border-color:var(--accent-border); }
+.tb { background:var(--blue-light); color:var(--blue); border-color:rgba(56,139,253,0.3); }
+.tr { background:var(--red-light); color:var(--red); border-color:rgba(248,81,73,0.3); }
+.to { background:var(--orange-light); color:var(--orange); border-color:rgba(240,136,62,0.3); }
+.tv { background:var(--violet-light); color:var(--violet); border-color:rgba(163,113,247,0.3); }
+.ty { background:var(--yellow-light); color:var(--yellow); border-color:rgba(227,179,65,0.3); }
+.tc { background:rgba(57,211,83,0.1); color:var(--teal); border-color:rgba(57,211,83,0.3); }
+
+/* ===== STEPS ===== */
+.steps { counter-reset:step; }
+.step { counter-increment:step; display:flex; gap:10px; align-items:center; margin-bottom:8px; }
+.step::before { content:counter(step); min-width:19.5px; height:19.5px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; font-family:'Source Code Pro',monospace; flex-shrink:0; }
+.step-body { font-size:13.5px; color:var(--t2); }
+
+/* ===== RANGE BARS ===== */
+.rbar { margin:6px 0; display:flex; align-items:center; gap:10px; }
+.rl { width:80px; font-size:11px; color:var(--t2); font-family:'Source Code Pro',monospace; }
+.rt { flex:1; height:7px; background:var(--surface3); border-radius:4px; overflow:hidden; }
+.rf { height:100%; border-radius:4px; }
+.rp { width:42px; font-size:11px; text-align:right; font-family:'Source Code Pro',monospace; }
+
+/* ===== FLOW ===== */
+.flow { display:flex; flex-direction:column; align-items:center; gap:0; margin:12px 0; }
+.fbox { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:8px 16px; font-size:12.5px; text-align:center; min-width:160px; color:var(--t2); }
+.farr { color:var(--accent); font-size:16px; line-height:1; padding:2px 0; }
+.frow { display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap; justify-content:center; }
+.fcol { display:flex; flex-direction:column; align-items:center; gap:0; }
+
+/* ===== HEATMAP ===== */
+.hm-legend { display:flex; align-items:center; gap:8px; padding:8px 12px; border-top:1px solid var(--border); font-size:11px; color:var(--t3); }
+.hm-legend-bar { height:10px; flex:1; border-radius:3px; background:linear-gradient(to right, #0a3d91, #1a5cb5, #3b7dd8, #7ba8e8, #c8d9f0, #f5ddc8, #e8a070, #d86030, #b83015, #8b1010); }
+
+/* ===== DIVIDER ===== */
+.divider { border:none; border-top:1px solid var(--border); margin:32px 0; }
+
+/* ===== BUTTONS ===== */
+.btn-primary { background:var(--accent); border:none; color:white; padding:10px 22px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Outfit',sans-serif; transition:all 0.2s; white-space:nowrap; }
+.btn-primary:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+/* ===== METRIC CARD ===== */
+.metric-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:10px; }
+.metric-header { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px; }
+.metric-name { font-family:'Nunito',sans-serif; font-size:15px; font-weight:700; color:var(--t1); }
+.metric-formula { font-family:'Source Code Pro',monospace; font-size:12px; color:var(--accent); background:var(--accent-light); border:1px solid var(--accent-border); padding:2px 8px; border-radius:4px; }
+.metric-body { font-size:13.5px; color:var(--t2); }
+
+/* ===== SPLIT VIZ ===== */
+.split-viz { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:16px; margin:12px 0; }
+.split-bar { display:flex; height:36px; border-radius:6px; overflow:hidden; margin:8px 0; gap:2px; }
+.split-seg { display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; font-family:'Source Code Pro',monospace; transition:all 0.2s; }
+
+/* ===== CORR SCALE ===== */
+.corr-w { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:12px; margin:8px 0; }
+.corr-bar { height:20px; border-radius:4px; margin:6px 0; }
+[data-theme="dark"] .corr-bar { background:linear-gradient(to right,#f85149,#f0883e,#e3b341,#30363d,#e3b341,#f0883e,#f85149); }
+[data-theme="light"] .corr-bar { background:linear-gradient(to right,#cf222e,#d85929,#e3b341,#f6f8fa,#e3b341,#d85929,#cf222e); }
+.corr-lb { display:flex; justify-content:space-between; font-size:9.5px; font-family:'Source Code Pro',monospace; color:var(--t3); }
+
+p { color:var(--t2); margin-bottom:8px; font-size:14.5px; }
+ul,ol { color:var(--t2); padding-left:18px; font-size:14.5px; margin-bottom:8px; }
+li { margin-bottom:3px; }
+h4 { color:var(--t1); margin:12px 0 6px; font-size:14.5px; font-weight:700; }
+h5 { color:var(--accent); margin:10px 0 4px; font-size:11.5px; font-family:'Source Code Pro',monospace; letter-spacing:1px; text-transform:uppercase; font-weight:600; }
+strong { color:var(--t1); }
+.mt { margin-top:12px; }
+.mb { margin-bottom:12px; }
+.hl  { color:var(--accent); font-weight:600; }
+.hl2 { color:var(--violet); font-weight:600; }
+.hl3 { color:var(--pink); font-weight:600; }
+.hl4 { color:var(--orange); font-weight:600; }
+.hl5 { color:var(--blue); font-weight:600; }
+
+footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border); color:var(--t3); font-size:11px; font-family:'Source Code Pro',monospace; }
+
+/* ===== ML BANNER THEME ===== */
+[data-theme="light"] .ml-banner .banner-glow { opacity: 0.3; }
+[data-theme="dark"]  .ml-banner .banner-glow { opacity: 1; }
+[data-theme="dark"]  .ml-banner .banner-title { fill: rgba(255,255,255,0.10); }
+[data-theme="light"] .ml-banner .banner-title { fill: rgba(0,0,0,0.09); }
+
+@media(max-width:768px) {
+  #sidebar { transform:translateX(-100%); }
+  #sidebar.open { transform:translateX(0); }
+  #menu-btn { display:block; }
+  #main { margin-left:0; }
+  .page { padding:56px 16px 60px; }
+  .what-why { grid-template-columns:1fr; }
+}
+
+/* ===== FAST SCROLL STRIP ===== */
+#fast-scroll {
+  position:fixed; right:0; top:0;
+  width:6px; height:100vh;
+  background:var(--surface2);
+  z-index:190; cursor:pointer;
+}
+#fs-thumb {
+  width:100%; background:var(--accent);
+  border-radius:3px; position:absolute;
+  left:0; top:0; min-height:30px;
+  opacity:0.7; transition:opacity 0.2s;
+}
+#fast-scroll:hover #fs-thumb { opacity:1; }
+@media(max-width:768px) { #fast-scroll { display:none; } }
+
+/* ===== READING PROGRESS BAR ===== */
+#progress-bar {
+  position:fixed; top:0; left:0; height:3px; width:0%;
+  background:linear-gradient(90deg, var(--accent), #34d399, var(--blue));
+  z-index:9999; transition:width 0.1s linear;
+  box-shadow:0 0 8px rgba(46,160,67,0.6);
+}
+
+/* ===== SECTION FADE-IN ON SCROLL ===== */
+.section {
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.5s ease, transform 0.5s ease;
+}
+.section.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== SIDEBAR SEARCH ===== */
+#sb-search {
+  width:100%; padding:6px 10px; border-radius:6px;
+  border:1px solid var(--border); background:var(--surface2);
+  color:var(--t1); font-size:12px; font-family:'Outfit',sans-serif;
+  outline:none; margin-bottom:6px; transition:border-color 0.2s;
+}
+#sb-search:focus { border-color:var(--accent); }
+#sb-search::placeholder { color:var(--t3); }
+
+/* ===== SEARCH HIGHLIGHT ===== */
+.search-highlight {
+  background:rgba(46,160,67,0.25);
+  border-radius:2px;
+  color:var(--accent);
+}
+
+/* ===== CARD HOVER LIFT ===== */
+.card {
+  transition:border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* ===== STAT COUNT-UP ===== */
+.hero-stat-n {
+  transition:color 0.3s;
+}
+
+/* ===== COPY CODE BUTTON ===== */
+.code-wrap { position:relative; }
+.copy-btn {
+  position:absolute; top:6px; right:6px;
+  background:var(--surface3); border:1px solid var(--border);
+  border-radius:4px; padding:2px 8px; font-size:10px;
+  color:var(--t3); cursor:pointer; font-family:'Source Code Pro',monospace;
+  opacity:0; transition:opacity 0.2s, background 0.2s, color 0.2s;
+}
+.code-wrap:hover .copy-btn { opacity:1; }
+.copy-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
+.copy-btn.copied { background:var(--accent); color:white; border-color:var(--accent); opacity:1; }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<!-- FAST SCROLL STRIP -->
+<div id="fast-scroll"><div id="fs-thumb"></div></div>
+
+<button id="menu-btn" onclick="toggleSB()">☰</button>
+<div id="overlay" onclick="toggleSB()"></div>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sb-header">
+    <div class="sb-brand">
+      <div class="sb-brand-icon">📘</div>
+      <div>
+        <div class="sb-brand-text">MLKit</div>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-label">🌙 Dark Mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </div>
+  <div style="padding:0 10px 4px;">
+    <input id="sb-search" type="text" placeholder="🔍  Search topics..." oninput="searchSidebar(this.value)"/>
+  </div>
+
+  <div class="sb-section">Overview</div>
+  <button class="sb-item" onclick="goTo('s-lifecycle')"><span class="ic">🔄</span>ML Lifecycle</button>
+
+  <div class="sb-section">Foundations</div>
+  <button class="sb-item" onclick="goTo('s-ai')"><span class="ic">🤖</span>AI / ML / DL</button>
+  <button class="sb-item" onclick="goTo('s-types')"><span class="ic">🎓</span>Types of ML</button>
+  <button class="sb-item" onclick="goTo('s-data')"><span class="ic">📋</span>Data Types</button>
+  <button class="sb-item" onclick="goTo('s-pandas')"><span class="ic">🐼</span>Pandas</button>
+
+  <div class="sb-section">Data Preprocessing</div>
+  <button class="sb-item" onclick="goTo('s-nulldup')"><span class="ic">🧹</span>Null &amp; Duplicate Treatment</button>
+  <button class="sb-item" onclick="goTo('s-smote')"><span class="ic">⚖️</span>SMOTE</button>
+
+  <div class="sb-section">EDA</div>
+  <button class="sb-item" onclick="goTo('s-eda')"><span class="ic">🔬</span>What is EDA?</button>
+  <button class="sb-item" onclick="goTo('s-univariate')"><span class="ic">📊</span>Univariate Analysis</button>
+  <button class="sb-item" onclick="goTo('s-bivariate')"><span class="ic">🔗</span>Bivariate Analysis</button>
+  <button class="sb-item" onclick="goTo('s-multi')"><span class="ic">🌐</span>Multivariate Analysis</button>
+
+  <div class="sb-section">Statistics</div>
+  <button class="sb-item" onclick="goTo('s-stats')"><span class="ic">📐</span>IQR &amp; Variance</button>
+  <button class="sb-item" onclick="goTo('s-outlier')"><span class="ic">⚠️</span>Outlier Detection</button>
+  <button class="sb-item" onclick="goTo('s-bivariate')"><span class="ic">🔢</span>Num to Num</button>
+  <button class="sb-item" onclick="goTo('s-catnum')"><span class="ic">📊</span>Cat vs Numerical</button>
+  <button class="sb-item" onclick="goTo('s-catcat')"><span class="ic">χ²</span>Cat vs Cat</button>
+
+  <div class="sb-section">Feature Engineering</div>
+  <a class="sb-item" href="feature_engineering_guide.html"><span class="ic">📐</span> Full FE Guide ↗</a>
+  <button class="sb-item" onclick="goTo('s-transform')"><span class="ic">📈</span>Log / Box-Cox</button>
+  <button class="sb-item" onclick="goTo('s-pca')"><span class="ic">🔻</span>PCA</button>
+  <button class="sb-item" onclick="goTo('s-smote')"><span class="ic">⚖️</span>SMOTE</button>
+
+  <div class="sb-section">Modeling</div>
+  <button class="sb-item" onclick="goTo('s-models')"><span class="ic">🧮</span>Model Types</button>
+  <button class="sb-item" onclick="goTo('s-split')"><span class="ic">✂️</span>Train / Test Split</button>
+  <button class="sb-item" onclick="goTo('s-reg')"><span class="ic">📉</span>Overfitting &amp; Regularization</button>
+  <button class="sb-item" onclick="goTo('s-eval')"><span class="ic">📏</span>Evaluation Metrics</button>
+
+  <div class="sb-section">Best Practices</div>
+  <button class="sb-item" onclick="goTo('s-bestpractices')"><span class="ic">🏆</span>Best Practices</button>
+</nav>
+
+<div id="main"><div class="page">
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <h1>Machine Learning</h1>
+  <p class="hero-sub">From data fundamentals to model evaluation</p>
+
+  <!-- ML ILLUSTRATION BANNER -->
+  <div class="ml-banner" style="margin:22px auto 20px;max-width:780px;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.35);background:linear-gradient(135deg,#0d1117 0%,#0f1e2e 40%,#0a1628 70%,#0d1117 100%);">
+    <svg viewBox="0 0 780 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:transparent;">
+      <defs>
+        <radialGradient id="glow1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2ea043" stop-opacity="0.35"/><stop offset="100%" stop-color="#2ea043" stop-opacity="0"/></radialGradient>
+        <radialGradient id="glow2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#388bfd" stop-opacity="0.3"/><stop offset="100%" stop-color="#388bfd" stop-opacity="0"/></radialGradient>
+        <radialGradient id="glow3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#a371f7" stop-opacity="0.3"/><stop offset="100%" stop-color="#a371f7" stop-opacity="0"/></radialGradient>
+        <filter id="blur1"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="blur2"><feGaussianBlur stdDeviation="3"/></filter>
+      </defs>
+
+      <!-- Background transparent — color comes from parent div -->
+      <rect width="780" height="220" fill="transparent"/>
+
+      <!-- Background glow blobs — lighter in light mode -->
+      <ellipse cx="160" cy="110" rx="120" ry="80" fill="url(#glow2)" filter="url(#blur1)" class="banner-glow"/>
+      <ellipse cx="390" cy="110" rx="140" ry="90" fill="url(#glow1)" filter="url(#blur1)" class="banner-glow"/>
+      <ellipse cx="620" cy="110" rx="120" ry="80" fill="url(#glow3)" filter="url(#blur1)" class="banner-glow"/>
+
+      <!-- Grid dots background -->
+      <g class="banner-grid">
+        <pattern id="grid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+          <circle cx="15" cy="15" r="1" fill="#8b949e"/>
+        </pattern>
+        <rect width="780" height="220" fill="url(#grid)" opacity="0.08"/>
+      </g>
+
+      <!-- ====== LEFT BLOCK: DATA INPUT ====== -->
+      <!-- Data table icon -->
+      <rect x="30" y="60" width="100" height="100" rx="12" fill="rgba(56,139,253,0.08)" stroke="rgba(56,139,253,0.3)" stroke-width="1"/>
+      <text x="80" y="88" fill="#388bfd" font-size="11" font-weight="700" text-anchor="middle" font-family="Outfit,sans-serif" opacity="0.9">DATA</text>
+      <line x1="42" y1="98" x2="118" y2="98" stroke="rgba(56,139,253,0.25)" stroke-width="1"/>
+      <!-- mini rows -->
+      <rect x="44" y="104" width="30" height="6" rx="2" fill="rgba(56,139,253,0.3)"/>
+      <rect x="80" y="104" width="34" height="6" rx="2" fill="rgba(56,139,253,0.2)"/>
+      <rect x="44" y="115" width="40" height="6" rx="2" fill="rgba(56,139,253,0.2)"/>
+      <rect x="90" y="115" width="24" height="6" rx="2" fill="rgba(56,139,253,0.3)"/>
+      <rect x="44" y="126" width="24" height="6" rx="2" fill="rgba(56,139,253,0.15)"/>
+      <rect x="74" y="126" width="44" height="6" rx="2" fill="rgba(56,139,253,0.25)"/>
+      <rect x="44" y="137" width="36" height="6" rx="2" fill="rgba(56,139,253,0.2)"/>
+      <rect x="86" y="137" width="28" height="6" rx="2" fill="rgba(56,139,253,0.15)"/>
+      <text x="80" y="157" fill="rgba(56,139,253,0.6)" font-size="9" text-anchor="middle" font-family="Source Code Pro,monospace">df.shape(5000,12)</text>
+
+      <!-- Arrow DATA -> EDA -->
+      <line x1="136" y1="110" x2="175" y2="110" stroke="rgba(56,139,253,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="175,106 182,110 175,114" fill="rgba(56,139,253,0.6)"/>
+
+      <!-- ====== EDA BOX ====== -->
+      <rect x="184" y="72" width="86" height="76" rx="10" fill="rgba(46,160,67,0.08)" stroke="rgba(46,160,67,0.35)" stroke-width="1"/>
+      <text x="227" y="96" fill="#2ea043" font-size="10" font-weight="700" text-anchor="middle" font-family="Outfit,sans-serif">EDA</text>
+      <!-- mini chart bars -->
+      <rect x="196" y="128" width="8" height="14" rx="2" fill="rgba(46,160,67,0.5)"/>
+      <rect x="208" y="122" width="8" height="20" rx="2" fill="rgba(46,160,67,0.7)"/>
+      <rect x="220" y="116" width="8" height="26" rx="2" fill="rgba(46,160,67,0.9)"/>
+      <rect x="232" y="120" width="8" height="22" rx="2" fill="rgba(46,160,67,0.7)"/>
+      <rect x="244" y="125" width="8" height="17" rx="2" fill="rgba(46,160,67,0.5)"/>
+      <line x1="193" y1="143" x2="255" y2="143" stroke="rgba(46,160,67,0.2)" stroke-width="1"/>
+      <text x="227" y="154" fill="rgba(46,160,67,0.55)" font-size="8" text-anchor="middle" font-family="Source Code Pro,monospace">Explore</text>
+
+      <!-- Arrow EDA -> NEURAL NET -->
+      <line x1="272" y1="110" x2="308" y2="110" stroke="rgba(46,160,67,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="308,106 315,110 308,114" fill="rgba(46,160,67,0.6)"/>
+
+      <!-- ====== CENTER: NEURAL NETWORK ====== -->
+      <!-- Input layer -->
+      <circle cx="328" cy="70"  r="9" fill="rgba(46,160,67,0.15)" stroke="#2ea043" stroke-width="1.5"/>
+      <circle cx="328" cy="95"  r="9" fill="rgba(46,160,67,0.15)" stroke="#2ea043" stroke-width="1.5"/>
+      <circle cx="328" cy="120" r="9" fill="rgba(46,160,67,0.15)" stroke="#2ea043" stroke-width="1.5"/>
+      <circle cx="328" cy="145" r="9" fill="rgba(46,160,67,0.15)" stroke="#2ea043" stroke-width="1.5"/>
+      <!-- Hidden layer 1 -->
+      <circle cx="375" cy="62"  r="9" fill="rgba(56,139,253,0.15)" stroke="#388bfd" stroke-width="1.5"/>
+      <circle cx="375" cy="87"  r="9" fill="rgba(56,139,253,0.15)" stroke="#388bfd" stroke-width="1.5"/>
+      <circle cx="375" cy="112" r="9" fill="rgba(56,139,253,0.15)" stroke="#388bfd" stroke-width="1.5"/>
+      <circle cx="375" cy="137" r="9" fill="rgba(56,139,253,0.15)" stroke="#388bfd" stroke-width="1.5"/>
+      <circle cx="375" cy="157" r="9" fill="rgba(56,139,253,0.15)" stroke="#388bfd" stroke-width="1.5"/>
+      <!-- Hidden layer 2 -->
+      <circle cx="422" cy="72"  r="9" fill="rgba(163,113,247,0.15)" stroke="#a371f7" stroke-width="1.5"/>
+      <circle cx="422" cy="97"  r="9" fill="rgba(163,113,247,0.15)" stroke="#a371f7" stroke-width="1.5"/>
+      <circle cx="422" cy="122" r="9" fill="rgba(163,113,247,0.15)" stroke="#a371f7" stroke-width="1.5"/>
+      <circle cx="422" cy="147" r="9" fill="rgba(163,113,247,0.15)" stroke="#a371f7" stroke-width="1.5"/>
+      <!-- Output layer -->
+      <circle cx="466" cy="87"  r="9" fill="rgba(240,136,62,0.15)" stroke="#f0883e" stroke-width="1.5"/>
+      <circle cx="466" cy="110" r="9" fill="rgba(240,136,62,0.15)" stroke="#f0883e" stroke-width="1.5"/>
+      <circle cx="466" cy="133" r="9" fill="rgba(240,136,62,0.15)" stroke="#f0883e" stroke-width="1.5"/>
+
+      <!-- Connections input->h1 -->
+      <g stroke="rgba(46,160,67,0.12)" stroke-width="0.8">
+        <line x1="337" y1="70" x2="366" y2="62"/><line x1="337" y1="70" x2="366" y2="87"/><line x1="337" y1="70" x2="366" y2="112"/>
+        <line x1="337" y1="95" x2="366" y2="62"/><line x1="337" y1="95" x2="366" y2="87"/><line x1="337" y1="95" x2="366" y2="112"/><line x1="337" y1="95" x2="366" y2="137"/>
+        <line x1="337" y1="120" x2="366" y2="87"/><line x1="337" y1="120" x2="366" y2="112"/><line x1="337" y1="120" x2="366" y2="137"/><line x1="337" y1="120" x2="366" y2="157"/>
+        <line x1="337" y1="145" x2="366" y2="112"/><line x1="337" y1="145" x2="366" y2="137"/><line x1="337" y1="145" x2="366" y2="157"/>
+      </g>
+      <!-- Connections h1->h2 -->
+      <g stroke="rgba(56,139,253,0.12)" stroke-width="0.8">
+        <line x1="384" y1="62" x2="413" y2="72"/><line x1="384" y1="62" x2="413" y2="97"/><line x1="384" y1="62" x2="413" y2="122"/>
+        <line x1="384" y1="87" x2="413" y2="72"/><line x1="384" y1="87" x2="413" y2="97"/><line x1="384" y1="87" x2="413" y2="122"/><line x1="384" y1="87" x2="413" y2="147"/>
+        <line x1="384" y1="112" x2="413" y2="72"/><line x1="384" y1="112" x2="413" y2="97"/><line x1="384" y1="112" x2="413" y2="122"/><line x1="384" y1="112" x2="413" y2="147"/>
+        <line x1="384" y1="137" x2="413" y2="97"/><line x1="384" y1="137" x2="413" y2="122"/><line x1="384" y1="137" x2="413" y2="147"/>
+        <line x1="384" y1="157" x2="413" y2="122"/><line x1="384" y1="157" x2="413" y2="147"/>
+      </g>
+      <!-- Connections h2->output -->
+      <g stroke="rgba(163,113,247,0.15)" stroke-width="0.8">
+        <line x1="431" y1="72" x2="457" y2="87"/><line x1="431" y1="72" x2="457" y2="110"/>
+        <line x1="431" y1="97" x2="457" y2="87"/><line x1="431" y1="97" x2="457" y2="110"/><line x1="431" y1="97" x2="457" y2="133"/>
+        <line x1="431" y1="122" x2="457" y2="87"/><line x1="431" y1="122" x2="457" y2="110"/><line x1="431" y1="122" x2="457" y2="133"/>
+        <line x1="431" y1="147" x2="457" y2="110"/><line x1="431" y1="147" x2="457" y2="133"/>
+      </g>
+      <!-- Glowing active path -->
+      <g stroke-width="1.5" opacity="0.7" filter="url(#blur2)">
+        <line x1="337" y1="95" x2="366" y2="87" stroke="#2ea043"/>
+        <line x1="384" y1="87" x2="413" y2="97" stroke="#388bfd"/>
+        <line x1="431" y1="97" x2="457" y2="110" stroke="#a371f7"/>
+      </g>
+      <!-- Layer labels -->
+      <text x="328" y="170" fill="rgba(46,160,67,0.6)" font-size="8" text-anchor="middle" font-family="Source Code Pro,monospace">Input</text>
+      <text x="375" y="174" fill="rgba(56,139,253,0.6)" font-size="8" text-anchor="middle" font-family="Source Code Pro,monospace">Hidden</text>
+      <text x="422" y="165" fill="rgba(163,113,247,0.6)" font-size="8" text-anchor="middle" font-family="Source Code Pro,monospace">Hidden</text>
+      <text x="466" y="150" fill="rgba(240,136,62,0.6)" font-size="8" text-anchor="middle" font-family="Source Code Pro,monospace">Output</text>
+
+      <!-- Arrow NN -> Metrics -->
+      <line x1="480" y1="110" x2="510" y2="110" stroke="rgba(240,136,62,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="510,106 517,110 510,114" fill="rgba(240,136,62,0.6)"/>
+
+      <!-- ====== METRICS BOX ====== -->
+      <rect x="518" y="72" width="90" height="76" rx="10" fill="rgba(240,136,62,0.07)" stroke="rgba(240,136,62,0.3)" stroke-width="1"/>
+      <text x="563" y="91" fill="#f0883e" font-size="10" font-weight="700" text-anchor="middle" font-family="Outfit,sans-serif">METRICS</text>
+      <line x1="526" y1="97" x2="600" y2="97" stroke="rgba(240,136,62,0.2)" stroke-width="1"/>
+      <!-- metric rows -->
+      <text x="530" y="110" fill="rgba(46,160,67,0.8)" font-size="8.5" font-family="Source Code Pro,monospace">Accuracy</text>
+      <rect x="585" y="104" width="22" height="8" rx="2" fill="rgba(46,160,67,0.3)"/>
+      <text x="596" y="111" fill="#2ea043" font-size="7.5" text-anchor="middle" font-family="Source Code Pro,monospace">97%</text>
+      <text x="530" y="123" fill="rgba(56,139,253,0.8)" font-size="8.5" font-family="Source Code Pro,monospace">F1 Score</text>
+      <rect x="585" y="117" width="22" height="8" rx="2" fill="rgba(56,139,253,0.3)"/>
+      <text x="596" y="124" fill="#388bfd" font-size="7.5" text-anchor="middle" font-family="Source Code Pro,monospace">0.95</text>
+      <text x="530" y="136" fill="rgba(163,113,247,0.8)" font-size="8.5" font-family="Source Code Pro,monospace">AUC-ROC</text>
+      <rect x="585" y="130" width="22" height="8" rx="2" fill="rgba(163,113,247,0.3)"/>
+      <text x="596" y="137" fill="#a371f7" font-size="7.5" text-anchor="middle" font-family="Source Code Pro,monospace">0.98</text>
+      <text x="530" y="143" fill="rgba(240,136,62,0.8)" font-size="8.5" font-family="Source Code Pro,monospace">RMSE</text>
+      <rect x="585" y="138" width="22" height="8" rx="2" fill="rgba(240,136,62,0.3)"/>
+      <text x="596" y="145" fill="#f0883e" font-size="7.5" text-anchor="middle" font-family="Source Code Pro,monospace">0.03</text>
+
+      <!-- Arrow Metrics -> Deploy -->
+      <line x1="612" y1="110" x2="643" y2="110" stroke="rgba(163,113,247,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="643,106 650,110 643,114" fill="rgba(163,113,247,0.6)"/>
+
+      <!-- ====== DEPLOY BOX ====== -->
+      <rect x="652" y="78" width="96" height="64" rx="10" fill="rgba(163,113,247,0.08)" stroke="rgba(163,113,247,0.3)" stroke-width="1"/>
+      <text x="700" y="100" fill="#a371f7" font-size="10" font-weight="700" text-anchor="middle" font-family="Outfit,sans-serif">MODEL</text>
+      <!-- cloud shape -->
+      <ellipse cx="695" cy="126" rx="14" ry="9" fill="rgba(163,113,247,0.2)" stroke="rgba(163,113,247,0.4)" stroke-width="1"/>
+      <ellipse cx="686" cy="128" rx="9" ry="7" fill="rgba(163,113,247,0.2)" stroke="rgba(163,113,247,0.4)" stroke-width="1"/>
+      <ellipse cx="704" cy="128" rx="9" ry="7" fill="rgba(163,113,247,0.2)" stroke="rgba(163,113,247,0.4)" stroke-width="1"/>
+      <rect x="690" y="128" width="20" height="8" fill="rgba(163,113,247,0.12)"/>
+      <!-- down arrow from cloud -->
+      <line x1="700" y1="136" x2="700" y2="141" stroke="rgba(163,113,247,0.5)" stroke-width="1.5"/>
+      <polygon points="696,141 700,145 704,141" fill="rgba(163,113,247,0.5)"/>
+      <text x="700" y="154" fill="rgba(163,113,247,0.55)" font-size="8" text-anchor="middle" font-family="Source Code Pro,monospace">Deploy</text>
+
+      <!-- ====== BOTTOM LABELS ====== -->
+      <text x="80"  y="185" fill="rgba(56,139,253,0.6)"  font-size="9" text-anchor="middle" font-family="Outfit,sans-serif" class="banner-label">Raw Data</text>
+      <text x="227" y="185" fill="rgba(46,160,67,0.6)"   font-size="9" text-anchor="middle" font-family="Outfit,sans-serif" class="banner-label">Explore</text>
+      <text x="397" y="185" fill="rgba(100,100,120,0.5)"  font-size="9" text-anchor="middle" font-family="Outfit,sans-serif" class="banner-label">Train Neural Network</text>
+      <text x="563" y="185" fill="rgba(240,136,62,0.6)"  font-size="9" text-anchor="middle" font-family="Outfit,sans-serif" class="banner-label">Evaluate</text>
+      <text x="700" y="185" fill="rgba(163,113,247,0.6)" font-size="9" text-anchor="middle" font-family="Outfit,sans-serif" class="banner-label">Predict</text>
+
+      <!-- TOP TITLE -->
+      <text x="390" y="28" font-size="13" font-weight="700" text-anchor="middle" font-family="Outfit,sans-serif" letter-spacing="4" class="banner-title">MACHINE LEARNING PIPELINE</text>
+      <!-- Animated pulse dots on active nodes -->
+      <circle cx="375" cy="87" r="12" fill="none" stroke="rgba(56,139,253,0.2)" stroke-width="1">
+        <animate attributeName="r" values="9;14;9" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="422" cy="97" r="12" fill="none" stroke="rgba(163,113,247,0.2)" stroke-width="1">
+        <animate attributeName="r" values="9;14;9" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-n">22+</div><div class="hero-stat-l">Topics</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">70+</div><div class="hero-stat-l">Concepts</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">25+</div><div class="hero-stat-l">Code Blocks</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">∞</div><div class="hero-stat-l">Reference</div></div>
+  </div>
+</div>
+
+<!-- ML LIFECYCLE CIRCULAR -->
+<div id="s-lifecycle" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px 24px;margin:28px 0;text-align:center;">
+  <div style="font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--t1);margin-bottom:4px;">🔄 ML Lifecycle</div>
+  <div style="font-size:12px;color:var(--t3);margin-bottom:20px;">The end-to-end cycle every ML project follows</div>
+  <div style="position:relative;width:320px;height:320px;margin:0 auto;">
+    <svg viewBox="0 0 320 320" style="position:absolute;inset:0;width:100%;height:100%;">
+      <circle cx="160" cy="160" r="108" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
+      <defs>
+        <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
+      </defs>
+      <!-- arc arrows between steps (7 arcs, one per gap) -->
+      <!-- gap 1: after step1 (top) going clockwise -->
+      <path d="M 214 74 A 108 108 0 0 1 268 160" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 268 160 A 108 108 0 0 1 214 246" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 214 246 A 108 108 0 0 1 160 268" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 160 268 A 108 108 0 0 1 106 246" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 106 246 A 108 108 0 0 1 52 160" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 52 160 A 108 108 0 0 1 106 74" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 106 74 A 108 108 0 0 1 160 52" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+    </svg>
+    <!-- Step nodes positioned on circle (r=108, center=160,160) -->
+    <!-- angles: 270°(top), 321°, 12°, 63°, 141°, 192°, 231° — evenly 360/7≈51.4° apart starting top -->
+    <!-- 1: 270° → (160, 52) -->
+    <div style="position:absolute;left:50%;top:0;transform:translate(-50%,-0%);width:72px;">
+      <div style="background:var(--accent-light);border:2px solid var(--accent);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🎯</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--accent);font-family:'Nunito',sans-serif;line-height:1.2;">Problem<br>Definition</div>
+    </div>
+    <!-- 2: 321.4° → (160+108·cos321°, 160+108·sin321°) = (160+83.9, 160-68.0) = (244, 92) -->
+    <div style="position:absolute;left:244px;top:70px;transform:translate(-50%,-50%);width:72px;">
+      <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📦</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Collection</div>
+    </div>
+    <!-- 3: 12.9° → (160+108·cos13°, 160+108·sin13°) = (265, 184) -->
+    <div style="position:absolute;left:268px;top:184px;transform:translate(-50%,-50%);width:72px;">
+      <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧹</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--orange);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Preparation</div>
+    </div>
+    <!-- 4: 64.3° → (160+108·cos64°, 160+108·sin64°) = (207, 257) -->
+    <div style="position:absolute;left:210px;top:258px;transform:translate(-50%,-50%);width:72px;">
+      <div style="background:rgba(46,160,67,0.12);border:2px solid var(--teal);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🔬</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.2;">EDA &amp;<br>Analysis</div>
+    </div>
+    <!-- 5: 115.7° → (160+108·cos116°, 160+108·sin116°) = (113, 257) -->
+    <div style="position:absolute;left:110px;top:258px;transform:translate(-50%,-50%);width:72px;">
+      <div style="background:var(--violet-light);border:2px solid var(--violet);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧮</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--violet);font-family:'Nunito',sans-serif;line-height:1.2;">Model<br>Building</div>
+    </div>
+    <!-- 6: 167.1° → (160+108·cos167°, 160+108·sin167°) = (55, 184) -->
+    <div style="position:absolute;left:52px;top:184px;transform:translate(-50%,-50%);width:72px;">
+      <div style="background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📏</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--yellow);font-family:'Nunito',sans-serif;line-height:1.2;">Evaluation<br>&amp; Tuning</div>
+    </div>
+    <!-- 7: 218.6° → (160+108·cos219°, 160+108·sin219°) = (76, 92) -->
+    <div style="position:absolute;left:76px;top:70px;transform:translate(-50%,-50%);width:72px;">
+      <div style="background:var(--red-light);border:2px solid var(--red);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🚀</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--red);font-family:'Nunito',sans-serif;line-height:1.2;">Deploy &amp;<br>Monitor</div>
+    </div>
+    <!-- center label -->
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;">
+      <div style="font-size:22px;">♾️</div>
+      <div style="font-size:9px;font-family:'Source Code Pro',monospace;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Iterative</div>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;margin:28px 0;" id="s-roadmap">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:8px;">
+    <div>
+      <div style="font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--t1);">📌 ML Learning Roadmap</div>
+      <div style="font-size:12px;color:var(--t3);">Click any node to jump to that topic</div>
+    </div>
+  </div>
+  <div style="overflow-x:auto;">
+<svg viewBox="0 0 820 980" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto">
+<defs>
+  <marker id="ar" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#2ea043"/></marker>
+  <marker id="ar2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#484f58"/></marker>
+</defs>
+<g onclick="goTo('s-ai')" style="cursor:pointer"><rect x="285" y="14" width="250" height="46" rx="8" fill="rgba(56,139,253,0.1)" stroke="#388bfd" stroke-width="1.5"/><text x="410" y="37" fill="#388bfd" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🤖 AI / ML / Deep Learning</text></g>
+<line x1="410" y1="60" x2="410" y2="82" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-types')" style="cursor:pointer"><rect x="285" y="86" width="250" height="46" rx="8" fill="rgba(163,113,247,0.1)" stroke="#a371f7" stroke-width="1.5"/><text x="410" y="109" fill="#a371f7" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🎓 Types of ML</text></g>
+<line x1="410" y1="132" x2="410" y2="154" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-data')" style="cursor:pointer"><rect x="285" y="158" width="250" height="46" rx="8" fill="rgba(227,179,65,0.1)" stroke="#e3b341" stroke-width="1.5"/><text x="410" y="181" fill="#e3b341" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📋 Data Types</text></g>
+<line x1="410" y1="204" x2="410" y2="226" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-pandas')" style="cursor:pointer"><rect x="285" y="230" width="250" height="46" rx="8" fill="rgba(57,211,83,0.1)" stroke="#39d353" stroke-width="1.5"/><text x="410" y="253" fill="#39d353" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🐼 Pandas</text></g>
+<line x1="410" y1="276" x2="410" y2="298" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-nulldup')" style="cursor:pointer"><rect x="255" y="302" width="310" height="48" rx="8" fill="rgba(248,81,73,0.1)" stroke="#f85149" stroke-width="2"/><text x="410" y="326" fill="#f85149" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🧹 Null &amp; Duplicate Treatment</text></g>
+<line x1="410" y1="350" x2="410" y2="372" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-eda')" style="cursor:pointer"><rect x="255" y="376" width="310" height="48" rx="8" fill="rgba(46,160,67,0.1)" stroke="#2ea043" stroke-width="2"/><text x="410" y="400" fill="#2ea043" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🔬 EDA — Exploratory Data Analysis</text></g>
+<line x1="330" y1="424" x2="180" y2="450" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
+<line x1="410" y1="424" x2="410" y2="450" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
+<line x1="490" y1="424" x2="638" y2="450" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
+<g onclick="goTo('s-univariate')" style="cursor:pointer"><rect x="58" y="454" width="244" height="40" rx="7" fill="rgba(56,139,253,0.08)" stroke="#388bfd" stroke-width="1.2"/><text x="180" y="474" fill="#388bfd" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📊 Univariate Analysis</text></g>
+<g onclick="goTo('s-bivariate')" style="cursor:pointer"><rect x="316" y="454" width="188" height="40" rx="7" fill="rgba(163,113,247,0.08)" stroke="#a371f7" stroke-width="1.2"/><text x="410" y="474" fill="#a371f7" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🔗 Bivariate</text></g>
+<g onclick="goTo('s-multi')" style="cursor:pointer"><rect x="518" y="454" width="244" height="40" rx="7" fill="rgba(247,120,186,0.08)" stroke="#f778ba" stroke-width="1.2"/><text x="640" y="474" fill="#f778ba" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🌐 Multivariate Analysis</text></g>
+<line x1="180" y1="494" x2="360" y2="530" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
+<line x1="410" y1="494" x2="410" y2="530" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
+<line x1="640" y1="494" x2="460" y2="530" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
+<g onclick="window.location.href='feature_engineering_guide.html'" style="cursor:pointer"><rect x="255" y="534" width="310" height="52" rx="8" fill="rgba(240,136,62,0.1)" stroke="#f0883e" stroke-width="2"/><text x="410" y="555" fill="#f0883e" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">⚙️ Feature Engineering</text><text x="410" y="574" fill="rgba(240,136,62,0.55)" font-size="10" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">click to open full guide ↗</text></g>
+<!-- FE sub-nodes: 3 boxes centred around x=410 with equal spacing -->
+<!-- Box widths: 200 each, gap 16 → total = 3×200 + 2×16 = 632 → start x = 410 - 316 = 94 -->
+<!-- cx1=194, cx2=410, cx3=626 -->
+<line x1="364" y1="586" x2="194" y2="616" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
+<line x1="410" y1="586" x2="410" y2="616" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
+<line x1="456" y1="586" x2="626" y2="616" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
+<g onclick="goTo('s-transform')" style="cursor:pointer"><rect x="94" y="620" width="200" height="38" rx="7" fill="rgba(46,160,67,0.07)" stroke="#2ea043" stroke-width="1.1"/><text x="194" y="639" fill="#2ea043" font-size="11.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📈 Log / Box-Cox</text></g>
+<g onclick="goTo('s-smote')" style="cursor:pointer"><rect x="310" y="620" width="200" height="38" rx="7" fill="rgba(248,81,73,0.07)" stroke="#f85149" stroke-width="1.1"/><text x="410" y="639" fill="#f85149" font-size="11.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">⚖️ SMOTE</text></g>
+<g onclick="goTo('s-pca')" style="cursor:pointer"><rect x="526" y="620" width="200" height="38" rx="7" fill="rgba(163,113,247,0.07)" stroke="#a371f7" stroke-width="1.1"/><text x="626" y="639" fill="#a371f7" font-size="11.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🔻 PCA</text></g>
+<line x1="194" y1="658" x2="370" y2="692" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
+<line x1="410" y1="658" x2="410" y2="692" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
+<line x1="626" y1="658" x2="450" y2="692" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
+<g onclick="goTo('s-models')" style="cursor:pointer"><rect x="255" y="696" width="310" height="48" rx="8" fill="rgba(163,113,247,0.1)" stroke="#a371f7" stroke-width="2"/><text x="410" y="720" fill="#a371f7" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🧮 ML Model Types</text></g>
+<line x1="410" y1="744" x2="410" y2="766" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-split')" style="cursor:pointer"><rect x="255" y="770" width="310" height="48" rx="8" fill="rgba(57,211,83,0.1)" stroke="#39d353" stroke-width="2"/><text x="410" y="794" fill="#39d353" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">✂️ Train / Test / Validation</text></g>
+<line x1="410" y1="818" x2="410" y2="840" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-reg')" style="cursor:pointer"><rect x="255" y="844" width="310" height="48" rx="8" fill="rgba(240,136,62,0.1)" stroke="#f0883e" stroke-width="2"/><text x="410" y="868" fill="#f0883e" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📉 Overfitting / L1 / L2</text></g>
+<line x1="410" y1="892" x2="410" y2="914" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-eval')" style="cursor:pointer"><rect x="255" y="918" width="310" height="48" rx="8" fill="rgba(56,139,253,0.1)" stroke="#388bfd" stroke-width="2"/><text x="410" y="942" fill="#388bfd" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📏 Evaluation Metrics</text></g>
+</svg>
+  </div>
+</div>
+
+<!-- S1: AI/ML/DL -->
+<section class="section" id="s-ai">
+  <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">🤖</span><span class="sec-title">AI, ML &amp; Deep Learning</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>AI is the broad field of making machines simulate human intelligence. ML is a subset where machines learn from data. DL uses deep neural networks for complex patterns.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Understanding the hierarchy helps you choose the right approach — rule-based AI, statistical ML, or deep neural nets — based on your data size, interpretability needs, and compute budget.</p></div>
+  </div>
+  <div class="g3">
+    <div class="card"><div class="card-title" style="color:var(--blue)">🤖 Artificial Intelligence</div><p>Broad field of making machines simulate human intelligence — reasoning, problem-solving, language.</p><div class="note green">AI is the <strong>Field of Study</strong>. Everything lives inside it.</div></div>
+    <div class="card"><div class="card-title" style="color:var(--violet)">📊 Machine Learning</div><p>Subset of AI where machines <strong>learn patterns from data</strong> without explicit programming rules.</p><div class="note blue">Learns from <strong>examples</strong> instead of hard-coded rules.</div></div>
+    <div class="card"><div class="card-title" style="color:var(--pink)">🧠 Deep Learning</div><p>Subset of ML using <strong>multi-layered neural networks</strong> for images, audio, text.</p><div class="note violet">DL = ML with <strong>many layers</strong> of feature extraction.</div></div>
+  </div>
+  <div class="card mt"><div class="card-title">When to Use What?</div>
+    <table class="tbl">
+      <tr><th>Scenario</th><th>Use</th><th>Why</th></tr>
+      <tr><td>Rule-based chatbot, fixed logic</td><td><span class="tag tb">AI</span></td><td>No learning needed</td></tr>
+      <tr><td>Predict prices, detect fraud</td><td><span class="tag tv">ML</span></td><td>Structured data, interpretable</td></tr>
+      <tr><td>Image/speech recognition</td><td><span class="tag tr">DL</span></td><td>Complex unstructured patterns</td></tr>
+      <tr><td>Small dataset (&lt;1000 rows)</td><td><span class="tag tv">ML</span></td><td>DL needs large data</td></tr>
+      <tr><td>Need explainability (medical)</td><td><span class="tag tv">ML</span></td><td>DL is a black box</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- S2: TYPES OF ML -->
+<section class="section" id="s-types">
+  <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🎓</span><span class="sec-title">Types of Machine Learning</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>ML is categorized by the type of feedback a model receives during learning — labeled data (supervised), no labels (unsupervised), or rewards from actions (reinforcement).</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Choosing the wrong type means your model can't learn at all. A supervised model needs labels — if you don't have them, you need a different approach entirely.</p></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="card-title" style="color:var(--accent)">🎓 Supervised Learning</div><p>Model learns from <strong>labeled data</strong> — input + correct output pairs.</p>
+      <div class="g2">
+        <div><h5>Classification</h5><p style="font-size:12px">Output = <strong>category</strong></p><ul style="font-size:12px"><li>Logistic Regression</li><li>Decision Tree</li><li>Random Forest</li><li>SVM, KNN</li><li>XGBoost</li></ul><div class="tag tg">Spam Detection</div></div>
+        <div><h5>Regression</h5><p style="font-size:12px">Output = <strong>number</strong></p><ul style="font-size:12px"><li>Linear Regression</li><li>Ridge (L2)</li><li>Lasso (L1)</li><li>ElasticNet</li><li>XGBoost</li></ul><div class="tag tb">House Price</div></div>
+      </div>
+    </div>
+    <div class="card"><div class="card-title" style="color:var(--orange)">🔍 Unsupervised Learning</div><p>Finds <strong>hidden patterns</strong> with no labels.</p>
+      <h5>Clustering</h5><ul style="font-size:12px"><li>K-Means</li><li>DBSCAN</li><li>Hierarchical</li></ul><div class="tag to">Customer Segmentation</div>
+      <h5 class="mt">Dimensionality Reduction</h5><ul style="font-size:12px"><li>PCA, t-SNE, UMAP</li></ul>
+      <h5 class="mt">Association</h5><ul style="font-size:12px"><li>Apriori, FP-Growth</li></ul><div class="tag tc">Market Basket</div>
+    </div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--pink)">🎮 Reinforcement Learning</div><p>Agent learns by <strong>interacting with environment</strong>, receiving rewards or penalties.</p><div class="code">Agent → Action → Environment → Reward/Penalty → Agent learns</div></div>
+</section>
+
+<!-- S3: DATA TYPES -->
+<section class="section" id="s-data">
+  <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">📋</span><span class="sec-title">Types of Data</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Data can be categorical (labels/groups) or numerical (measured quantities). Each subtype — nominal, ordinal, discrete, continuous — determines how you can process and model it.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Data type determines which encoding to apply, which algorithms work, and which statistical tests are valid. Treating ordinal as nominal (or vice versa) leads to wrong models.</p></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="card-title" style="color:var(--orange)">📋 Categorical Data</div>
+      <h5>Nominal (No Order)</h5><div class="code">Colors:  Red, Blue, Green
+Gender: Male, Female, Other</div>
+      <div class="note orange">Red is NOT greater than Blue — no order exists.</div>
+      <h5>Ordinal (Has Order)</h5><div class="code">Education: School &lt; UG &lt; PG &lt; PhD
+Rating:    1★ &lt; 2★ &lt; 3★ &lt; 4★ &lt; 5★</div>
+    </div>
+    <div class="card"><div class="card-title" style="color:var(--blue)">🔢 Numerical Data</div>
+      <h5>Discrete (Countable)</h5><div class="code">Children: 0, 1, 2, 3...
+Cars sold: 0, 1, 2...</div>
+      <div class="note orange">You can't have 2.5 children!</div>
+      <h5>Continuous (Measurable)</h5><div class="code">Height: 172.5 cm, 168.2 cm
+Salary: ₹45,230.50</div>
+    </div>
+  </div>
+</section>
+
+<!-- S4: PANDAS -->
+<section class="section" id="s-pandas">
+  <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">🐼</span><span class="sec-title">Pandas — Data Manipulation</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Pandas is Python's most powerful data manipulation library. It provides DataFrame and Series structures for loading, cleaning, transforming, and exploring tabular data.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>80% of ML work is data preparation. Pandas is how you inspect nulls, filter rows, encode features, merge datasets, and create new columns — all before training begins.</p></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="card-title" style="color:var(--blue)">Series — 1D labeled array</div><div class="code"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+s = pd.Series([<span class="num">85</span>,<span class="num">92</span>,<span class="num">78</span>],
+  index=[<span class="str">'Alice'</span>,<span class="str">'Bob'</span>,<span class="str">'Carol'</span>])</div></div>
+    <div class="card"><div class="card-title" style="color:var(--violet)">DataFrame — 2D table</div><div class="code">df = pd.DataFrame({
+  <span class="str">'Name'</span>:  [<span class="str">'Alice'</span>,<span class="str">'Bob'</span>],
+  <span class="str">'Age'</span>:   [<span class="num">25</span>, <span class="num">30</span>],
+  <span class="str">'Score'</span>: [<span class="num">85</span>, <span class="num">92</span>]
+})</div></div>
+  </div>
+  <div class="card mt"><div class="card-title">Essential Pandas Operations</div>
+    <div class="code">df.head()           <span class="cm"># First 5 rows</span>
+df.info()           <span class="cm"># Types, null counts</span>
+df.describe()       <span class="cm"># Statistical summary</span>
+df.isnull().sum()   <span class="cm"># Missing values per column</span>
+df.dropna()         <span class="cm"># Remove rows with nulls</span>
+df[df[<span class="str">'Age'</span>] &gt; <span class="num">25</span>]  <span class="cm"># Filter rows</span>
+df[[<span class="str">'Name'</span>,<span class="str">'Score'</span>]] <span class="cm"># Select columns</span></div>
+  </div>
+</section>
+
+<!-- ============================
+     DATA PREPROCESSING — NEW
+============================= -->
+<section class="section" id="s-nulldup">
+  <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon">🧹</span><span class="sec-title">Null &amp; Duplicate Value Treatment</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Data preprocessing step where missing values (nulls/NaN) and duplicate rows are detected and handled before any analysis or modeling. Dirty data = wrong models. Clean data = reliable results.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Most ML algorithms cannot handle NaN values — they either crash or produce silently wrong results. Duplicate rows bias your model by over-representing certain patterns and inflating evaluation metrics.</p></div>
+  </div>
+
+  <!-- NULL VALUES -->
+  <div class="card"><div class="card-title" style="color:var(--red)">🕳️ Null / Missing Values — Detection</div>
+    <p>Missing values appear as <code style="background:var(--code-bg);padding:1px 5px;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:12px;">NaN</code>, <code style="background:var(--code-bg);padding:1px 5px;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:12px;">None</code>, <code style="background:var(--code-bg);padding:1px 5px;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:12px;">NULL</code>, empty strings, or placeholder values like <strong>-999, "unknown", "N/A"</strong>. First step is always detection.</p>
+    <div class="g2 mt">
+      <div>
+        <h5>Detection Code</h5>
+        <div class="code"><span class="cm"># Check nulls per column</span>
+df.isnull().sum()
+
+<span class="cm"># Percentage of nulls</span>
+df.isnull().mean() * <span class="num">100</span>
+
+<span class="cm"># Heatmap of nulls</span>
+<span class="kw">import</span> missingno <span class="kw">as</span> msno
+msno.<span class="fn">matrix</span>(df)
+
+<span class="cm"># Which rows have nulls</span>
+df[df.isnull().<span class="fn">any</span>(axis=<span class="num">1</span>)]</div>
+      </div>
+      <div>
+        <h5>Types of Missingness</h5>
+        <table class="tbl">
+          <tr><th>Type</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td><span class="tag tb">MCAR</span></td><td>Missing Completely At Random — no pattern</td><td>Random data entry errors</td></tr>
+          <tr><td><span class="tag to">MAR</span></td><td>Missing At Random — depends on other columns</td><td>Income missing more for younger people</td></tr>
+          <tr><td><span class="tag tr">MNAR</span></td><td>Missing Not At Random — depends on the missing value itself</td><td>High earners skip salary questions</td></tr>
+        </table>
+        <div class="note orange mt">MNAR is the hardest to handle — the missingness itself carries information.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NULL TREATMENT STRATEGIES -->
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">🔧 Null Treatment Strategies — How to Handle</div>
+    <div class="g2">
+      <div>
+        <h5>Strategy 1: Drop Rows/Columns</h5>
+        <div class="code"><span class="cm"># Drop rows with any null</span>
+df.dropna(inplace=<span class="kw">True</span>)
+
+<span class="cm"># Drop columns with &gt;50% null</span>
+thresh = <span class="fn">len</span>(df) * <span class="num">0.5</span>
+df.dropna(axis=<span class="num">1</span>, thresh=thresh)</div>
+        <div class="note red">⚠️ Only drop rows if &lt;5% are missing. Never drop a column without analysis — it may contain information.</div>
+
+        <h5 class="mt">Strategy 2: Fill with Statistics</h5>
+        <div class="code"><span class="cm"># Numerical: fill with mean or median</span>
+df[<span class="str">'Age'</span>].fillna(df[<span class="str">'Age'</span>].mean())
+df[<span class="str">'Salary'</span>].fillna(df[<span class="str">'Salary'</span>].median())
+
+<span class="cm"># Categorical: fill with mode</span>
+df[<span class="str">'City'</span>].fillna(df[<span class="str">'City'</span>].mode()[<span class="num">0</span>])</div>
+      </div>
+      <div>
+        <h5>Strategy 3: Forward/Backward Fill (Time Series)</h5>
+        <div class="code"><span class="cm"># Use previous value (time series)</span>
+df.fillna(method=<span class="str">'ffill'</span>)
+
+<span class="cm"># Use next value</span>
+df.fillna(method=<span class="str">'bfill'</span>)</div>
+
+        <h5 class="mt">Strategy 4: Advanced Imputation</h5>
+        <div class="code"><span class="kw">from</span> sklearn.impute <span class="kw">import</span> KNNImputer, SimpleImputer
+
+<span class="cm"># KNN Imputation (uses similar rows)</span>
+imputer = KNNImputer(n_neighbors=<span class="num">5</span>)
+df_imputed = imputer.fit_transform(df)
+
+<span class="cm"># Iterative Imputer (model-based)</span>
+<span class="kw">from</span> sklearn.experimental <span class="kw">import</span> enable_iterative_imputer
+<span class="kw">from</span> sklearn.impute <span class="kw">import</span> IterativeImputer</div>
+      </div>
+    </div>
+
+    <!-- Decision Table -->
+    <div class="mt">
+      <h5>Which Strategy to Use?</h5>
+      <table class="tbl">
+        <tr><th>Situation</th><th>Recommended Strategy</th><th>Why</th></tr>
+        <tr><td>Numerical, few nulls (&lt;5%), symmetric distribution</td><td><span class="tag tb">Fill with Mean</span></td><td>Mean preserves overall average</td></tr>
+        <tr><td>Numerical, skewed distribution or outliers</td><td><span class="tag tg">Fill with Median</span></td><td>Median is robust to outliers</td></tr>
+        <tr><td>Categorical column</td><td><span class="tag to">Fill with Mode</span></td><td>Most frequent value is safest assumption</td></tr>
+        <tr><td>Time series data</td><td><span class="tag tv">Forward/Backward Fill</span></td><td>Preserves temporal continuity</td></tr>
+        <tr><td>Many nulls, complex relationships</td><td><span class="tag tc">KNN or Iterative Imputer</span></td><td>Uses relationships between columns</td></tr>
+        <tr><td>Column has &gt;70% nulls</td><td><span class="tag tr">Drop the Column</span></td><td>Too little data to be reliable</td></tr>
+        <tr><td>MNAR — missingness has meaning</td><td><span class="tag ty">Create "was_null" flag column</span></td><td>Preserves information in the missingness</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- DUPLICATE VALUES -->
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">👥 Duplicate Values — Detection &amp; Treatment</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What are duplicates?</div><p>Rows that have identical values across all (or selected) columns. They arise from data merges, scraping, re-submissions, or system errors.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why remove them?</div><p>Duplicates inflate dataset size, bias model training (the model sees certain patterns more often than they actually occur), and artificially inflate evaluation metrics.</p></div>
+    </div>
+    <div class="g2 mt">
+      <div>
+        <h5>Detection</h5>
+        <div class="code"><span class="cm"># Count total duplicates</span>
+df.duplicated().sum()
+
+<span class="cm"># View duplicate rows</span>
+df[df.duplicated(keep=<span class="kw">False</span>)]
+
+<span class="cm"># Duplicates on specific columns</span>
+df.duplicated(subset=[<span class="str">'Name'</span>,<span class="str">'Email'</span>]).sum()</div>
+      </div>
+      <div>
+        <h5>Treatment</h5>
+        <div class="code"><span class="cm"># Remove all duplicates (keep first)</span>
+df.drop_duplicates(inplace=<span class="kw">True</span>)
+
+<span class="cm"># Keep last occurrence</span>
+df.drop_duplicates(keep=<span class="str">'last'</span>)
+
+<span class="cm"># Based on key columns only</span>
+df.drop_duplicates(
+  subset=[<span class="str">'CustomerID'</span>, <span class="str">'OrderDate'</span>],
+  keep=<span class="str">'first'</span>
+)</div>
+      </div>
+    </div>
+    <div class="note violet mt">🔑 <strong>keep='first'</strong> keeps the earliest entry (usually more reliable). <strong>keep='last'</strong> keeps the most recent (useful if latest data is more accurate). <strong>keep=False</strong> marks ALL duplicates — useful for investigation.</div>
+  </div>
+
+  <!-- FULL PIPELINE -->
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">🔄 Complete Data Cleaning Pipeline</div>
+    <div class="code"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># 1. Load data</span>
+df = pd.<span class="fn">read_csv</span>(<span class="str">'data.csv'</span>)
+<span class="fn">print</span>(<span class="str">f"Shape: {df.shape}"</span>)
+
+<span class="cm"># 2. Check nulls</span>
+null_pct = df.isnull().mean() * <span class="num">100</span>
+<span class="fn">print</span>(null_pct[null_pct &gt; <span class="num">0</span>])
+
+<span class="cm"># 3. Drop high-null columns (&gt;70%)</span>
+df.drop(columns=null_pct[null_pct &gt; <span class="num">70</span>].index, inplace=<span class="kw">True</span>)
+
+<span class="cm"># 4. Fill numerical with median</span>
+num_cols = df.select_dtypes(include=<span class="str">'number'</span>).columns
+df[num_cols] = df[num_cols].fillna(df[num_cols].median())
+
+<span class="cm"># 5. Fill categorical with mode</span>
+cat_cols = df.select_dtypes(include=<span class="str">'object'</span>).columns
+<span class="kw">for</span> col <span class="kw">in</span> cat_cols:
+    df[col].fillna(df[col].mode()[<span class="num">0</span>], inplace=<span class="kw">True</span>)
+
+<span class="cm"># 6. Remove duplicates</span>
+df.drop_duplicates(inplace=<span class="kw">True</span>)
+
+<span class="fn">print</span>(<span class="str">f"Clean Shape: {df.shape}"</span>)
+df.isnull().sum()  <span class="cm"># Should be all zeros</span></div>
+    <div class="note green mt">✅ Always run this pipeline BEFORE EDA. You want to analyze clean data, not discover during modeling that you have 15% nulls.</div>
+  </div>
+</section>
+
+<!-- S5: WHAT IS EDA -->
+<section class="section" id="s-eda">
+  <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon">🔬</span><span class="sec-title">EDA — Exploratory Data Analysis</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is EDA?</div><p>EDA is the process of <strong>systematically investigating your dataset</strong> before building any model. You examine shape, distributions, relationships, missing values, and anomalies using statistics and visualizations.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need EDA?</div><p>Without EDA, you're modeling blindly. EDA prevents you from feeding garbage to your model — you catch outliers, skewed distributions, data leakage, encoding issues, and multicollinearity early.</p></div>
+  </div>
+  <div class="card"><div class="card-title">EDA Process Overview</div>
+    <div class="flow mt">
+      <div class="fbox" style="border-color:var(--blue);color:var(--blue);font-weight:600">📥 Raw Dataset (after null/duplicate cleaning)</div>
+      <div class="farr">↓</div>
+      <div class="frow">
+        <div class="fcol"><div class="fbox" style="border-color:var(--accent);font-size:12px;min-width:150px">📊 Univariate<br><span style="font-size:10px;color:var(--t3)">1 variable at a time</span></div></div>
+        <div class="fcol"><div class="fbox" style="border-color:var(--violet);font-size:12px;min-width:150px">🔗 Bivariate<br><span style="font-size:10px;color:var(--t3)">2 variables together</span></div></div>
+        <div class="fcol"><div class="fbox" style="border-color:var(--pink);font-size:12px;min-width:150px">🌐 Multivariate<br><span style="font-size:10px;color:var(--t3)">3+ variables</span></div></div>
+      </div>
+      <div class="farr">↓</div>
+      <div class="fbox" style="border-color:var(--orange)">🧹 Handle Outliers, Skew, Imbalance</div>
+      <div class="farr">↓</div>
+      <div class="fbox" style="border-color:var(--accent);color:var(--accent);font-weight:600">✅ Data Ready for Feature Engineering &amp; Modeling</div>
+    </div>
+  </div>
+  <div class="note blue mt">EDA does <strong>not change</strong> your data — it only helps you <strong>understand it</strong>. Transformations come later in Feature Engineering.</div>
+</section>
+
+<!-- S6: UNIVARIATE -->
+<section class="section" id="s-univariate">
+  <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon">📊</span><span class="sec-title">Univariate Analysis</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Analyzing <strong>one variable at a time</strong>. You look at how values of a single column are distributed — their shape, center, spread, and extreme values.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Before comparing features, you need to understand each individually. A bimodal distribution, heavy skew, or extreme outlier in a single column can break models if not addressed.</p></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="card-title" style="color:var(--orange)">Categorical Variable</div>
+      <ul><li>Count each category → <strong>frequency table</strong></li><li>Find the most common value → <strong>Mode</strong></li><li>Check if any category dominates (&gt;90%)</li></ul>
+      <h5>Visualizations</h5><div class="note green">Bar Chart, Pie Chart, Count Plot</div>
+    </div>
+    <div class="card"><div class="card-title" style="color:var(--blue)">Numerical Variable</div>
+      <ul><li><strong>Mean</strong> — average (affected by outliers)</li><li><strong>Median</strong> — middle value (robust)</li><li><strong>Mode</strong> — most frequent value</li><li><strong>Variance &amp; SD</strong> — spread</li><li><strong>IQR</strong> — middle 50% range</li><li><strong>Skewness</strong> — distribution symmetry</li></ul>
+      <h5>Visualizations</h5><div class="note green">Histogram, Box Plot, KDE Plot</div>
+    </div>
+  </div>
+</section>
+
+<!-- IQR & STATS -->
+<section class="section" id="s-stats">
+  <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon">📐</span><span class="sec-title">IQR, Variance &amp; Standard Deviation</span></div>
+  <div class="card"><div class="card-title" style="color:var(--orange)">📦 IQR — Interquartile Range</div>
+    <p>Measures the <strong>spread of the middle 50%</strong> of data. Robust to extreme outliers.</p>
+    <div class="formula">IQR = Q3 − Q1 &nbsp;|&nbsp; Lower = Q1 − 1.5×IQR &nbsp;|&nbsp; Upper = Q3 + 1.5×IQR</div>
+    <div class="code">Dataset: [4, 7, 10, 13, 16, 20, 25]
+Q1=7  Median=13  Q3=20  IQR=13
+Lower = 7 − 19.5 = −12.5  |  Upper = 20 + 19.5 = 39.5
+→ No outliers ✅</div>
+    <svg viewBox="0 0 560 100" style="width:100%;max-width:560px;display:block;margin:10px auto">
+      <rect width="560" height="100" fill="var(--surface2)" rx="8"/>
+      <line x1="75" y1="50" x2="155" y2="50" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="75" y1="40" x2="75" y2="60" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="375" y1="50" x2="455" y2="50" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="455" y1="40" x2="455" y2="60" stroke="var(--blue)" stroke-width="2"/>
+      <rect x="155" y="30" width="220" height="40" rx="4" fill="rgba(56,139,253,0.1)" stroke="var(--blue)" stroke-width="1.5"/>
+      <line x1="265" y1="30" x2="265" y2="70" stroke="var(--pink)" stroke-width="2.5"/>
+      <text x="75" y="86" fill="var(--t3)" font-size="10" text-anchor="middle" font-family="Source Code Pro">Min</text>
+      <text x="155" y="86" fill="var(--t2)" font-size="10" text-anchor="middle" font-family="Source Code Pro">Q1</text>
+      <text x="265" y="86" fill="var(--pink)" font-size="10" text-anchor="middle" font-family="Source Code Pro">Median</text>
+      <text x="375" y="86" fill="var(--t2)" font-size="10" text-anchor="middle" font-family="Source Code Pro">Q3</text>
+      <text x="455" y="86" fill="var(--t3)" font-size="10" text-anchor="middle" font-family="Source Code Pro">Max</text>
+      <text x="265" y="18" fill="var(--blue)" font-size="10" text-anchor="middle" font-family="Source Code Pro">◄─── IQR = Q3−Q1 ───►</text>
+      <circle cx="510" cy="50" r="5" fill="var(--red)"/>
+      <text x="510" y="86" fill="var(--red)" font-size="9" text-anchor="middle" font-family="Source Code Pro">Outlier</text>
+      <circle cx="22" cy="50" r="5" fill="var(--red)"/>
+      <text x="22" y="86" fill="var(--red)" font-size="9" text-anchor="middle" font-family="Source Code Pro">Outlier</text>
+    </svg>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--blue)">📐 Variance &amp; Standard Deviation</div>
+    <div class="what-why" style="margin-bottom:14px;">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Variance measures <strong>how far each value is spread from the mean</strong>. Standard Deviation (SD) is simply the square root of variance — bringing it back to the original unit so it's easier to interpret. A high SD means values are widely scattered; a low SD means they're tightly clustered around the mean.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Mean alone doesn't tell the full story. Two datasets can have the same mean but completely different spreads. SD tells you <strong>how reliable and consistent</strong> the data is — essential for detecting outliers, comparing features, and understanding model uncertainty.</p></div>
+    </div>
+    <div class="formula">σ² = Σ(xᵢ−μ)²/N &nbsp;|&nbsp; s = √(σ²)</div>
+    <div class="steps">
+      <div class="step"><div class="step-body">Calculate <strong>Mean</strong> (x̄)</div></div>
+      <div class="step"><div class="step-body">Subtract: <strong>(xᵢ − x̄)</strong></div></div>
+      <div class="step"><div class="step-body">Square: <strong>(xᵢ − x̄)²</strong></div></div>
+      <div class="step"><div class="step-body">Sum and divide by n−1: <strong>s²</strong></div></div>
+      <div class="step"><div class="step-body">√s² = <strong>Standard Deviation</strong></div></div>
+    </div>
+    <div class="note orange">Divide by <strong>n−1</strong> for sample (Bessel's correction) — avoids underestimating variance.</div>
+  </div>
+</section>
+
+<!-- S8: OUTLIER DETECTION -->
+<section class="section" id="s-outlier">
+  <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon">⚠️</span><span class="sec-title">Outlier Detection</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Identifying data points that deviate significantly from the rest. Methods include IQR fences (box plot whiskers) and Z-score thresholds based on standard deviations from the mean.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Outliers distort model coefficients, inflate RMSE, and skew correlations. A single extreme value can move a regression line significantly. Must detect and decide: fix or remove.</p></div>
+  </div>
+  <div class="card"><div class="card-title">Skewness &amp; What It Means</div>
+    <div class="g2">
+      <div><h5>Right Skew (Positive)</h5><div class="note orange"><strong>Mean &gt; Median</strong> — outliers pulling mean up (tail RIGHT)</div><p style="font-size:12px">Examples: Income data, house prices</p></div>
+      <div><h5>Left Skew (Negative)</h5><div class="note blue"><strong>Mean &lt; Median</strong> — outliers pulling mean down (tail LEFT)</div><p style="font-size:12px">Examples: Test scores (few very low)</p></div>
+    </div>
+    <div class="note green mt"><strong>Symmetric:</strong> Mean ≈ Median ≈ Mode</div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">Z-Score Method</div>
+    <div class="what-why" style="margin-bottom:14px;">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>A Z-Score tells you <strong>how many standard deviations a value is away from the mean</strong>. A Z of 0 means the value is exactly at the mean. A Z of +2 means it's 2 standard deviations above. It standardizes any numerical column to a common scale so values from different features can be compared fairly.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Raw values alone don't tell you if something is unusual. A salary of ₹5,00,000 could be normal or extreme depending on the dataset. Z-Score gives context — <strong>|Z| &gt; 3 flags a value as a statistical outlier</strong>, sitting beyond 99.7% of the distribution. It's also the foundation of standardization (StandardScaler) used before many ML models.</p></div>
+    </div>
+    <div class="formula">Z = (X − μ) / σ &nbsp;&nbsp; → &nbsp;&nbsp; |Z| &gt; 3 = Outlier</div>
+    <h5>Empirical Rule (68-95-99.7)</h5>
+    <div class="rbar"><div class="rl">±1σ</div><div class="rt"><div class="rf" style="width:68%;background:linear-gradient(90deg,var(--accent),#34d399)"></div></div><div class="rp" style="color:var(--accent)">68%</div></div>
+    <div class="rbar"><div class="rl">±2σ</div><div class="rt"><div class="rf" style="width:95%;background:linear-gradient(90deg,var(--orange),#fbbf24)"></div></div><div class="rp" style="color:var(--orange)">95%</div></div>
+    <div class="rbar"><div class="rl">±3σ</div><div class="rt"><div class="rf" style="width:99.7%;background:linear-gradient(90deg,var(--red),#fca5a5)"></div></div><div class="rp" style="color:var(--red)">99.7%</div></div>
+    <div class="note red mt"><strong>|Z| &gt; 3 = Outlier</strong> — beyond 99.7% of the normal distribution.</div>
+  </div>
+</section>
+
+<!-- S9: BIVARIATE -->
+<section class="section" id="s-bivariate">
+  <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon">🔗</span><span class="sec-title">Bivariate Analysis</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Analyzing the <strong>relationship between two variables</strong> simultaneously — how they move together (numerical vs numerical), differ across groups (categorical vs numerical), or associate (categorical vs categorical).</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Feature selection, correlation detection, and hypothesis testing all start here. You find which features actually relate to the target — and which are noise.</p></div>
+  </div>
+  <div class="card"><div class="card-title" style="color:var(--blue)">🔢 Num vs Num — Step 1: Covariance (Direction)</div>
+    <p>Covariance measures <strong>whether two variables move in the same direction or opposite directions</strong>. It shows the <em>direction</em> of the relationship, but NOT how strong it is because it depends on the units of measurement.</p>
+    <div class="formula">Cov(X,Y) = Σ (xᵢ − x̄)(yᵢ − ȳ) / (n−1)</div>
+    <div class="g2 mt">
+      <div class="card" style="border-color:rgba(46,160,67,0.3)">
+        <div class="card-title" style="color:var(--accent);font-size:14px;">✅ Positive Covariance</div>
+        <p style="font-size:12.5px">When X increases, Y also increases. They deviate from their means in the <strong>same direction</strong>.</p>
+        <div class="note green">📌 Height &amp; Weight — taller people tend to weigh more → Cov &gt; 0</div>
+      </div>
+      <div class="card" style="border-color:rgba(248,81,73,0.3)">
+        <div class="card-title" style="color:var(--red);font-size:14px;">🔻 Negative Covariance</div>
+        <p style="font-size:12.5px">When X increases, Y decreases. They deviate in <strong>opposite directions</strong>.</p>
+        <div class="note red">📌 Study hours &amp; Exam errors — more study, fewer mistakes → Cov &lt; 0</div>
+      </div>
+    </div>
+    <div class="note orange mt">⚠️ <strong>Problem:</strong> Covariance has no fixed scale. That's why we normalize it → Correlation.</div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">📏 Num vs Num — Step 2: Pearson Correlation (Strength + Direction)</div>
+    <div class="formula">r = Cov(X,Y) / (σₓ × σᵧ) &nbsp;&nbsp;&nbsp; Range: −1 to +1</div>
+    <div class="g2 mt">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <table class="tbl">
+          <tr><th>Property</th><th style="color:var(--yellow)">Covariance</th><th style="color:var(--accent)">Correlation</th></tr>
+          <tr><td>What it tells</td><td>Direction only</td><td><strong>Direction + Strength</strong></td></tr>
+          <tr><td>Range</td><td>−∞ to +∞</td><td><strong>−1 to +1</strong></td></tr>
+          <tr><td>Unit dependent?</td><td>Yes</td><td><strong>No (unitless)</strong></td></tr>
+        </table>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <table class="tbl">
+          <tr><th>r Value</th><th>Meaning</th></tr>
+          <tr><td><span class="tag tr">+0.8 to +1.0</span></td><td>Strong positive</td></tr>
+          <tr><td><span class="tag to">+0.4 to +0.7</span></td><td>Moderate positive</td></tr>
+          <tr><td><span class="tag tg">≈ 0</span></td><td>No relationship</td></tr>
+          <tr><td><span class="tag to">−0.7 to −0.4</span></td><td>Moderate negative</td></tr>
+          <tr><td><span class="tag tr">−1.0 to −0.8</span></td><td>Strong negative</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="corr-w mt">
+      <div class="corr-lb"><span>−1.0</span><span>−0.7</span><span>−0.5</span><span>−0.3</span><span>0</span><span>+0.3</span><span>+0.5</span><span>+0.7</span><span>+1.0</span></div>
+      <div class="corr-bar"></div>
+      <div class="corr-lb"><span style="color:var(--red)">Perfect−</span><span style="color:var(--orange)">Strong−</span><span style="color:var(--yellow)">Mod−</span><span style="color:var(--t3)">Weak</span><span style="color:var(--accent)">None</span><span style="color:var(--t3)">Weak</span><span style="color:var(--yellow)">Mod+</span><span style="color:var(--orange)">Strong+</span><span style="color:var(--red)">Perfect+</span></div>
+    </div>
+    <div class="note blue mt">🔑 If two features have r &gt; 0.8 → multicollinearity! One can be dropped safely.</div>
+    <p style="margin-top:10px">Visualizations: <span class="tag tg">Scatter Plot</span> <span class="tag tb">Heatmap</span> <span class="tag tv">Pair Plot</span></p>
+  </div>
+</section>
+
+<!-- S10: CAT VS NUM -->
+<section class="section" id="s-catnum">
+  <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon">📊</span><span class="sec-title">Categorical vs Numerical</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Testing whether a numerical variable (e.g. salary, score) significantly differs across categories (e.g. department, gender). We set up a null hypothesis H₀ and use a test statistic to decide whether to reject it.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Tells you whether a categorical feature has real predictive power for a numerical target. If salary doesn't differ by department, that feature is noise.</p></div>
+  </div>
+  <div class="card"><div class="card-title" style="color:var(--orange)">🧪 How Hypothesis Testing Works</div>
+    <div class="g2">
+      <div>
+        <table class="tbl">
+          <tr><th>Hypothesis</th><th>Meaning</th></tr>
+          <tr><td><span class="tag tg">H₀ (Null)</span></td><td>No difference exists — any observed gap is just random chance</td></tr>
+          <tr><td><span class="tag tr">H₁ (Alternative)</span></td><td>A real difference exists — it's not just random noise</td></tr>
+        </table>
+        <div class="note green mt">Example: H₀ = "Male and female scores are the same"</div>
+      </div>
+      <div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;">
+          <p style="font-size:12.5px;color:var(--t2);">The test statistic (t or F) is placed on its probability distribution. The <strong>P-value = area in the tail</strong> beyond that value — the probability of seeing this extreme a result <em>by pure chance alone</em>, assuming H₀ is true.</p>
+          <div class="note orange" style="margin-top:8px;">Small P-value → result is very unlikely by chance → reject H₀ → <strong>real difference exists</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="g2 mt">
+    <div class="card"><div class="card-title" style="color:var(--blue)">T-Test — Comparing 2 Groups</div>
+      <p style="font-size:12.5px;">Use when categorical variable has <strong>exactly 2 groups</strong>.</p>
+      <div class="formula">t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div>
+      <table class="tbl" style="margin-top:10px;">
+        <tr><th>Result</th><th>What it means</th><th>Action</th></tr>
+        <tr><td><span class="tag tg">p ≤ 0.05</span></td><td>Groups are significantly different</td><td>Keep feature</td></tr>
+        <tr><td><span class="tag tr">p &gt; 0.05</span></td><td>No significant difference</td><td>Feature may be useless</td></tr>
+      </table>
+    </div>
+    <div class="card"><div class="card-title" style="color:var(--violet)">ANOVA — Comparing 3+ Groups</div>
+      <p style="font-size:12.5px;">Use when categorical variable has <strong>3 or more groups</strong>.</p>
+      <div class="formula">F = Between-Group Variance / Within-Group Variance</div>
+      <table class="tbl" style="margin-top:10px;">
+        <tr><th>Result</th><th>What it means</th><th>Next Step</th></tr>
+        <tr><td><span class="tag tg">p ≤ 0.05</span></td><td>At least one group differs significantly</td><td>Run Post-Hoc (Tukey)</td></tr>
+        <tr><td><span class="tag tr">p &gt; 0.05</span></td><td>No significant difference</td><td>Feature may not add value</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- S11: CAT VS CAT -->
+<section class="section" id="s-catcat">
+  <div class="sec-header"><span class="sec-num">12</span><span class="sec-icon">χ²</span><span class="sec-title">Categorical vs Categorical</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Testing whether two categorical variables are <strong>associated or independent</strong>. We compare observed data to what we would <em>expect</em> if the variables had absolutely no relationship.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Tells you if a categorical feature is related to a categorical target. If Gender and Movie Preference are independent, Gender won't help predict preferences.</p></div>
+  </div>
+  <div class="card"><div class="card-title" style="color:var(--yellow)">χ² Chi-Square Test</div>
+    <div class="what-why" style="margin-bottom:14px;">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>The Chi-Square test measures <strong>how much the observed counts in a cross-table differ from what we'd expect if the two variables had absolutely no relationship</strong>. The larger the χ² value, the bigger the gap between observed and expected — meaning a stronger association exists between the two categories.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>When both your feature and target are categorical, you can't use correlation or t-tests. Chi-Square is the go-to test to decide <strong>whether a categorical feature is worth keeping</strong> — if Gender and Loan Default are independent, Gender adds zero predictive value to your model.</p></div>
+    </div>
+    <div class="formula">χ² = Σ [(Observed − Expected)² / Expected]</div>
+    <div class="g2 mt">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;">
+        <div class="code" style="font-size:11px;">Cross-tab: Gender × Movie Genre
+              Action  Romance  Comedy  Total
+Male:           60      20      20    100
+Female:         15      55      30    100
+Total:          75      75      50    200
+
+Expected(Male, Action) = (100 × 75) / 200 = 37.5
+χ² contribution = (60−37.5)² / 37.5 = 13.5
+→ p &lt; 0.001 → Reject H₀ ✅</div>
+      </div>
+      <div>
+        <table class="tbl">
+          <tr><th>P-value</th><th>Decision</th><th>Feature usefulness</th></tr>
+          <tr><td><span class="tag tg">p ≤ 0.05</span></td><td>Reject H₀ ✅</td><td>Variables associated — keep feature</td></tr>
+          <tr><td><span class="tag tr">p &gt; 0.05</span></td><td>Fail to reject H₀ ❌</td><td>Variables independent — may be useless</td></tr>
+        </table>
+        <div class="note orange mt">⚠️ Chi-square only tells you <em>whether</em> an association exists. Use Cramér's V for strength.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">📐 Cramér's V — Association Strength</div>
+    <div class="what-why" style="margin-bottom:14px;">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Cramér's V is a <strong>normalized version of the Chi-Square statistic</strong> that measures the <em>strength</em> of association between two categorical variables. It always ranges from 0 to 1 — where 0 means no association at all and 1 means a perfect relationship — regardless of table size or sample size.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Chi-Square only tells you <em>whether</em> an association exists, not <em>how strong</em> it is. A huge dataset can produce a significant χ² even for a trivially weak relationship. Cramér's V fixes this — it gives you a <strong>comparable, scaled strength score</strong> so you can rank which categorical features are most useful for your model.</p></div>
+    </div>
+    <div class="formula">V = √( χ² / (n × min(r−1, c−1)) )&nbsp;&nbsp; Range: 0 to 1</div>
+    <table class="tbl mt">
+      <tr><th>Cramér's V</th><th>Strength</th><th>What it means</th></tr>
+      <tr><td><span class="tag tg">0.00–0.10</span></td><td>Negligible</td><td>Barely any association — ignore</td></tr>
+      <tr><td><span class="tag tb">0.10–0.30</span></td><td>Weak–Moderate</td><td>Some association — use with caution</td></tr>
+      <tr><td><span class="tag to">0.30–0.60</span></td><td>Moderate–Strong</td><td>Meaningful association — likely useful</td></tr>
+      <tr><td><span class="tag tr">0.60–1.00</span></td><td>Very Strong</td><td>Strong relationship — important feature</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- S12: MULTIVARIATE -->
+<section class="section" id="s-multi">
+  <div class="sec-header"><span class="sec-num">13</span><span class="sec-icon">🌐</span><span class="sec-title">Multivariate Analysis</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Examining <strong>3 or more variables simultaneously</strong>. The key tool is the <strong>correlation heatmap</strong> — a matrix where each cell shows Pearson's r between two features, color-coded by strength and direction.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Reveals <strong>multicollinearity</strong> (features too similar to each other), which bloats variance and hurts models. Also shows which features correlate with the target.</p></div>
+  </div>
+  <div class="card"><div class="card-title" style="color:var(--pink)">🌡️ Correlation Heatmap</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:12px 0;">
+      <div style="padding:10px 12px;font-size:11px;font-family:'Source Code Pro',monospace;color:var(--t3);border-bottom:1px solid var(--border);">Correlation Matrix — Example Dataset</div>
+      <div style="overflow-x:auto;padding:8px;">
+        <table style="width:100%;border-collapse:collapse;font-family:'Source Code Pro',monospace;font-size:11px;min-width:420px;">
+          <tr>
+            <td style="padding:6px 8px;color:var(--t3);"></td>
+            <td style="padding:6px 8px;text-align:center;color:var(--t2);font-weight:700;">Age</td>
+            <td style="padding:6px 8px;text-align:center;color:var(--t2);font-weight:700;">Income</td>
+            <td style="padding:6px 8px;text-align:center;color:var(--t2);font-weight:700;">Score</td>
+            <td style="padding:6px 8px;text-align:center;color:var(--t2);font-weight:700;">Exp</td>
+            <td style="padding:6px 8px;text-align:center;color:var(--t2);font-weight:700;">Target</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 8px;color:var(--t2);font-weight:700;">Age</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.85);color:white;border-radius:3px;font-weight:700;">1.00</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.55);color:white;border-radius:3px;font-weight:700;">0.72</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(56,139,253,0.35);color:white;border-radius:3px;">−0.41</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.65);color:white;border-radius:3px;font-weight:700;">0.81</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.4);color:white;border-radius:3px;">0.53</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 8px;color:var(--t2);font-weight:700;">Income</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.55);color:white;border-radius:3px;font-weight:700;">0.72</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.85);color:white;border-radius:3px;font-weight:700;">1.00</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(240,136,62,0.35);color:white;border-radius:3px;">0.28</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.45);color:white;border-radius:3px;">0.61</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.6);color:white;border-radius:3px;font-weight:700;">0.78</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 8px;color:var(--t2);font-weight:700;">Score</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(56,139,253,0.35);color:white;border-radius:3px;">−0.41</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(240,136,62,0.35);color:white;border-radius:3px;">0.28</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.85);color:white;border-radius:3px;font-weight:700;">1.00</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(56,139,253,0.2);color:white;border-radius:3px;">−0.15</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(240,136,62,0.25);color:var(--t2);border-radius:3px;">0.19</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 8px;color:var(--t2);font-weight:700;">Exp</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.65);color:white;border-radius:3px;font-weight:700;">0.81</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.45);color:white;border-radius:3px;">0.61</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(56,139,253,0.2);color:white;border-radius:3px;">−0.15</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.85);color:white;border-radius:3px;font-weight:700;">1.00</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.5);color:white;border-radius:3px;">0.67</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 8px;color:var(--t2);font-weight:700;">Target</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.4);color:white;border-radius:3px;">0.53</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.6);color:white;border-radius:3px;font-weight:700;">0.78</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(240,136,62,0.25);color:var(--t2);border-radius:3px;">0.19</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.5);color:white;border-radius:3px;">0.67</td>
+            <td style="padding:6px 8px;text-align:center;background:rgba(248,81,73,0.85);color:white;border-radius:3px;font-weight:700;">1.00</td>
+          </tr>
+        </table>
+      </div>
+      <div class="hm-legend">
+        <span>−1.0</span><div class="hm-legend-bar"></div><span>+1.0</span>
+        <span style="margin-left:8px;">Dark Red = High Positive Correlation</span>
+      </div>
+    </div>
+    <div class="note orange mt"><strong>Reading the heatmap:</strong> Age–Exp = 0.81 (multicollinearity ⚠️). Score–Target = 0.19 (weak predictor). Income–Target = 0.78 (strong predictor ✅).</div>
+    <div class="code mt"><span class="kw">import</span> seaborn <span class="kw">as</span> sns
+corr = df.corr()
+sns.<span class="fn">heatmap</span>(corr, annot=<span class="kw">True</span>, fmt=<span class="str">".2f"</span>, cmap=<span class="str">"RdBu_r"</span>, center=<span class="num">0</span>)</div>
+  </div>
+
+  <!-- VIF — FULL EXPLANATION -->
+  <div class="card mt"><div class="card-title" style="color:var(--red)">🔍 VIF — Variance Inflation Factor (Full Explanation)</div>
+    <div class="what-why" style="margin-bottom:14px;">
+      <div class="ww-box"><div class="ww-label what">What is VIF?</div><p>VIF (Variance Inflation Factor) is a measure that quantifies <strong>how much the variance of a regression coefficient is inflated due to multicollinearity</strong> — that is, how much one feature can be linearly predicted from the other features.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>When features are highly correlated with each other, the model gets confused about which feature deserves credit. Coefficients become <strong>unstable, unreliable, and have exploding standard errors</strong>, making the model meaningless.</p></div>
+    </div>
+
+    <h5>How VIF is Calculated — Step by Step</h5>
+    <p>For each feature X in your dataset, VIF asks: <em>"How well can I predict X using all the OTHER features?"</em></p>
+    <div class="steps">
+      <div class="step"><div class="step-body">Pick one feature — say <strong>Age</strong> — and set it as the target variable</div></div>
+      <div class="step"><div class="step-body">Regress Age on ALL other features (Income, Score, Exp, etc.) using linear regression</div></div>
+      <div class="step"><div class="step-body">Record the <strong>R²</strong> of this regression — how well the other features explain Age</div></div>
+      <div class="step"><div class="step-body">Calculate <strong>VIF = 1 / (1 − R²)</strong>. If R² = 0.9 → VIF = 1/(1−0.9) = 10 → severe!</div></div>
+      <div class="step"><div class="step-body">Repeat for every feature in your dataset</div></div>
+    </div>
+    <div class="formula">VIF_x = 1 / (1 − R²_x) &nbsp;&nbsp; where R²_x = R² from regressing X on all other features</div>
+
+    <div class="g2 mt">
+      <div>
+        <h5>Interpreting VIF Values</h5>
+        <table class="tbl">
+          <tr><th>VIF Value</th><th>Meaning</th><th>Action</th></tr>
+          <tr><td><span class="tag tg">VIF = 1</span></td><td>No multicollinearity at all — feature is completely independent</td><td>Keep ✅</td></tr>
+          <tr><td><span class="tag tb">1 &lt; VIF ≤ 5</span></td><td>Low to moderate — some correlation but acceptable</td><td>Keep ✅</td></tr>
+          <tr><td><span class="tag to">5 &lt; VIF ≤ 10</span></td><td>Moderate to high — investigate carefully</td><td>Consider dropping</td></tr>
+          <tr><td><span class="tag tr">VIF &gt; 10</span></td><td>Severe multicollinearity — this feature is nearly redundant</td><td>Drop or combine ❌</td></tr>
+        </table>
+      </div>
+      <div>
+        <h5>Intuitive Example</h5>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;">
+          <p style="font-size:12.5px;color:var(--t2);margin-bottom:8px;">Suppose your dataset has both <strong>Height_cm</strong> and <strong>Height_inches</strong>:</p>
+          <div class="code" style="font-size:11px;">Height_cm = 2.54 × Height_inches
+R² ≈ 1.0 (perfect prediction)
+VIF = 1/(1−1.0) = ∞ → Perfect multicollinearity!
+
+Model cannot decide:
+  "Is the price high because Height_cm is 180,
+   or because Height_inches is 70.9?"
+→ Coefficients explode, model is unstable</div>
+          <div class="note red" style="margin-top:8px;">When VIF is very high, regression coefficients have <strong>huge standard errors</strong> — small changes in data cause massive swings in coefficients.</div>
+        </div>
+      </div>
+    </div>
+
+    <h5 class="mt">VIF vs Correlation Matrix — Key Difference</h5>
+    <table class="tbl">
+      <tr><th>Property</th><th>Correlation Matrix</th><th>VIF</th></tr>
+      <tr><td>What it checks</td><td>Pairwise (X₁ vs X₂) relationship only</td><td>X vs ALL other features combined</td></tr>
+      <tr><td>Detects 3-way collinearity?</td><td>❌ No — misses it</td><td>✅ Yes — catches it</td></tr>
+      <tr><td>Output</td><td>−1 to +1 per pair</td><td>1 to ∞ per feature</td></tr>
+      <tr><td>Example blind spot</td><td>X₃ = X₁ + X₂ might show low pairwise r</td><td>VIF for X₃ will be very high</td></tr>
+    </table>
+    <div class="note red mt">🔑 <strong>Always use VIF alongside the correlation heatmap.</strong> Correlation shows pairwise problems. VIF catches complex multi-way collinearity that correlation matrices miss.</div>
+
+    <h5 class="mt">How to Fix High VIF</h5>
+    <div class="g3">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;">Option 1: Drop a Feature</div>
+        <p style="font-size:12px;color:var(--t2);">If two features are highly correlated, drop the one with less predictive value for the target.</p>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--violet);margin-bottom:6px;">Option 2: Combine Features</div>
+        <p style="font-size:12px;color:var(--t2);">Create a single feature from the correlated ones (e.g. ratio, sum, average).</p>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px;">Option 3: Use PCA</div>
+        <p style="font-size:12px;color:var(--t2);">Transform correlated features into uncorrelated principal components — VIF = 1 for all components.</p>
+      </div>
+    </div>
+
+    <h5 class="mt">VIF Calculation Code</h5>
+    <div class="code"><span class="kw">from</span> statsmodels.stats.outliers_influence <span class="kw">import</span> variance_inflation_factor
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+<span class="cm"># X should be your feature matrix (no target column)</span>
+vif_data = pd.DataFrame()
+vif_data[<span class="str">"Feature"</span>] = X.columns
+vif_data[<span class="str">"VIF"</span>] = [
+    variance_inflation_factor(X.values, i)
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(X.columns))
+]
+
+<span class="fn">print</span>(vif_data.sort_values(<span class="str">"VIF"</span>, ascending=<span class="kw">False</span>))
+<span class="cm"># Drop features with VIF > 10</span>
+high_vif = vif_data[vif_data[<span class="str">"VIF"</span>] &gt; <span class="num">10</span>][<span class="str">"Feature"</span>].tolist()
+X_clean = X.drop(columns=high_vif)</div>
+  </div>
+</section>
+
+<hr class="divider">
+<div style="margin:24px 0 32px;background:var(--surface);border:2px solid var(--accent);border-radius:8px;overflow:hidden;">
+  <div style="background:var(--accent-light);border-bottom:1px solid var(--accent-border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:22px;">⚙️</span>
+      <div>
+        <div style="font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--t1);">Feature Engineering</div>
+        <div style="font-size:11px;color:var(--t3);font-family:'Source Code Pro',monospace;margin-top:1px;">Data Prep → Transformation → Ready to Model</div>
+      </div>
+    </div>
+    <a href="feature_engineering_guide.html" style="background:var(--accent);color:white;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter=''">
+      📐 Open Full FE Guide →
+    </a>
+  </div>
+  <div style="padding:16px 24px;">
+    <div style="font-size:11px;color:var(--t3);font-family:'Source Code Pro',monospace;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Quick Access — Topics on this page</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="goTo('s-transform')" style="font-size:12px;padding:7px 14px;">📈 Log / Box-Cox</button>
+      <button class="btn-primary" onclick="goTo('s-pca')" style="background:var(--violet);font-size:12px;padding:7px 14px;">🔻 PCA</button>
+      <button class="btn-primary" onclick="goTo('s-smote')" style="background:var(--red);font-size:12px;padding:7px 14px;">⚖️ SMOTE</button>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:var(--surface2);border-radius:6px;font-size:12.5px;color:var(--t2);border-left:3px solid var(--accent);">
+      📐 The <strong style="color:var(--t1)">Full Feature Engineering Guide</strong> covers: Label Encoding, One-Hot Encoding, Binary Encoding, Target Encoding, Frequency Encoding + Feature Selection, Transformation &amp; Creation.
+    </div>
+  </div>
+</div>
+
+<!-- S13: LOG / BOX-COX -->
+<section class="section" id="s-transform">
+  <div class="sec-header"><span class="sec-num">14</span><span class="sec-icon">📈</span><span class="sec-title">Outlier Treatment — Log &amp; Box-Cox</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Mathematical transformations applied to a column's values to reduce skewness. They compress large values, making the distribution closer to normal so models work better.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Many ML algorithms assume normally distributed features. Highly skewed data gives disproportionate weight to extreme values. Log and Box-Cox transformations fix this without removing any rows.</p></div>
+  </div>
+  <div class="card"><div class="card-title" style="color:var(--accent)">📈 Log Transformation</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Log transformation applies the logarithm function to every value in a column — compressing large values and spreading small ones. It turns a right-skewed distribution into something closer to a normal bell curve.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Many ML models assume features are roughly normally distributed. Income, house prices, and population counts are heavily right-skewed — a few huge values dominate. Log squashes those extremes so the model treats all values fairly.</p></div>
+    </div>
+    <div class="formula">y' = log(x) &nbsp;— x must be &gt; 0. Use log(x+1) if zeros present.</div>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Use?</th></tr>
+      <tr><td>Right-skewed (skewness &gt; +1)</td><td><span class="tag tg">✅ Yes</span></td></tr>
+      <tr><td>Data has zeros</td><td><span class="tag to">⚠️ log(x+1)</span></td></tr>
+      <tr><td>Negative values</td><td><span class="tag tr">❌ No</span></td></tr>
+    </table>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">🔧 Box-Cox Transformation</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Box-Cox is a family of power transformations that automatically finds the best exponent λ (lambda) to make your data as normal as possible. Instead of you guessing whether to use log, square root, or reciprocal — Box-Cox tests them all and picks the optimal one.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Log only fixes right skew. Box-Cox handles both left and right skew by tuning λ. When skewness is above +2 or the distribution is complex, Box-Cox finds a better transformation than log alone — but requires all values to be strictly positive.</p></div>
+    </div>
+    <p>Automatically finds the best <strong>λ (lambda)</strong> to normalize data.</p>
+    <div class="formula">y'(λ) = (yᵛ−1)/λ if λ≠0 &nbsp;|&nbsp; y'=ln(y) if λ=0</div>
+    <table class="tbl">
+      <tr><th>λ</th><th>Effect</th><th>Skew Type</th></tr>
+      <tr><td>2</td><td>y² (Square)</td><td>Left-skewed</td></tr>
+      <tr><td>0.5</td><td>√y</td><td>Moderate right</td></tr>
+      <tr><td>0</td><td>ln(y)</td><td>Strong right</td></tr>
+      <tr><td>-1</td><td>1/y</td><td>Severe right</td></tr>
+    </table>
+    <table class="tbl mt">
+      <tr><th>Skewness</th><th>Action</th></tr>
+      <tr><td>−0.5 to +0.5</td><td><span class="tag tg">No transform needed</span></td></tr>
+      <tr><td>+0.5 to +1.0</td><td><span class="tag to">Consider Log or √</span></td></tr>
+      <tr><td>&gt; +1.0</td><td><span class="tag tr">Apply Log</span></td></tr>
+      <tr><td>&gt; +2.0</td><td><span class="tag tr">Apply Box-Cox</span></td></tr>
+    </table>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--red)">⚠️ When Data Has Negative Values — Use These Instead</div>
+    <div class="note red"><strong>Log and Box-Cox both require x &gt; 0.</strong> If your column has negative values (e.g. temperature, profit/loss, z-scores), use the methods below instead.</div>
+    <div class="g2 mt">
+      <div class="card" style="border-color:rgba(163,113,247,0.4)">
+        <div class="card-title" style="color:var(--violet)">🔄 Yeo-Johnson Transformation</div>
+        <p style="font-size:13px;">The go-to replacement for Box-Cox when negatives are present. Works on <strong>any value — positive, zero, or negative</strong>. Automatically finds the best λ just like Box-Cox.</p>
+        <div class="formula">λ≠0,x≥0: ((x+1)^λ−1)/λ &nbsp;|&nbsp; λ=0,x≥0: ln(x+1)<br>λ≠2,x&lt;0: −((−x+1)^(2−λ)−1)/(2−λ) &nbsp;|&nbsp; λ=2,x&lt;0: −ln(−x+1)</div>
+        <table class="tbl mt">
+          <tr><th>Property</th><th>Detail</th></tr>
+          <tr><td>Handles negatives?</td><td><span class="tag tg">✅ Yes</span></td></tr>
+          <tr><td>Handles zeros?</td><td><span class="tag tg">✅ Yes</span></td></tr>
+          <tr><td>Auto-finds λ?</td><td><span class="tag tg">✅ Yes</span></td></tr>
+          <tr><td>Best for</td><td>Any skewed data, mixed signs</td></tr>
+        </table>
+        <div class="code"><span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> PowerTransformer
+
+pt = PowerTransformer(method=<span class="str">'yeo-johnson'</span>)
+df[<span class="str">'col_transformed'</span>] = pt.fit_transform(df[[<span class="str">'col'</span>]])
+<span class="cm"># Works with negatives, zeros, positives ✅</span></div>
+      </div>
+      <div class="card" style="border-color:rgba(56,139,253,0.4)">
+        <div class="card-title" style="color:var(--blue)">∛ Cube Root Transformation</div>
+        <p style="font-size:13px;">Simple manual method. The cube root of a negative number is still negative — so it naturally handles all signs. Good for <strong>moderate skew with negatives</strong>.</p>
+        <div class="formula">y' = x^(1/3) &nbsp;— works for all x including negatives</div>
+        <table class="tbl mt">
+          <tr><th>Property</th><th>Detail</th></tr>
+          <tr><td>Handles negatives?</td><td><span class="tag tg">✅ Yes</span></td></tr>
+          <tr><td>Handles zeros?</td><td><span class="tag tg">✅ Yes</span></td></tr>
+          <tr><td>Auto-finds λ?</td><td><span class="tag tr">❌ Fixed power (1/3)</span></td></tr>
+          <tr><td>Best for</td><td>Moderate skew, simple fix</td></tr>
+        </table>
+        <div class="code"><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># np.cbrt handles negatives correctly</span>
+df[<span class="str">'col_cbrt'</span>] = np.cbrt(df[<span class="str">'col'</span>])
+
+<span class="cm"># e.g. cbrt(-27) = -3 ✅  cbrt(0) = 0 ✅</span></div>
+      </div>
+    </div>
+    <table class="tbl mt">
+      <tr><th>Your Data</th><th>Recommended Transform</th><th>Why</th></tr>
+      <tr><td>All positive, right-skewed</td><td><span class="tag tg">Log / Box-Cox</span></td><td>Classic choice, well-understood</td></tr>
+      <tr><td>Has zeros, right-skewed</td><td><span class="tag to">log(x+1) / Yeo-Johnson</span></td><td>Avoids log(0) error</td></tr>
+      <tr><td>Has negatives, any skew</td><td><span class="tag tv">Yeo-Johnson</span></td><td>Works on all signs, auto-finds λ</td></tr>
+      <tr><td>Has negatives, moderate skew</td><td><span class="tag tb">Cube Root</span></td><td>Simple, no fitting needed</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- S14: PCA -->
+<section class="section" id="s-pca">
+  <div class="sec-header"><span class="sec-num">15</span><span class="sec-icon">🔻</span><span class="sec-title">PCA — Dimensionality Reduction</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Principal Component Analysis transforms many correlated features into fewer uncorrelated "principal components" that capture the maximum variance in the data.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Too many correlated features (multicollinearity) cause unstable model weights and slow training. PCA compresses information into independent components — directly eliminating multicollinearity.</p></div>
+  </div>
+  <div class="card"><div class="card-title">PCA Steps</div>
+    <div class="steps">
+      <div class="step"><div class="step-body"><strong>Standardize</strong> all features (mean=0, SD=1)</div></div>
+      <div class="step"><div class="step-body">Compute <strong>Covariance Matrix</strong></div></div>
+      <div class="step"><div class="step-body">Calculate <strong>Eigenvalues &amp; Eigenvectors</strong></div></div>
+      <div class="step"><div class="step-body">Sort by eigenvalue — higher = more variance explained</div></div>
+      <div class="step"><div class="step-body">Select top K using <strong>Kaiser's Rule (eigenvalue ≥ 1)</strong> or scree plot</div></div>
+      <div class="step"><div class="step-body">Project data onto K components → new feature matrix</div></div>
+    </div>
+    <div class="code"><span class="kw">from</span> sklearn.decomposition <span class="kw">import</span> PCA
+pca = PCA(n_components=<span class="num">0.95</span>)  <span class="cm"># keep 95% variance</span>
+X_pca = pca.fit_transform(X_scaled)</div>
+  </div>
+  <div class="card mt"><div class="card-title">Variance Retained Guide</div>
+    <table class="tbl">
+      <tr><th>Variance Retained</th><th>Quality</th></tr>
+      <tr><td>&lt;60%</td><td><span class="tag tr">Too low ❌</span></td></tr>
+      <tr><td>75–90%</td><td><span class="tag tg">Good ✅</span></td></tr>
+      <tr><td>90–95%</td><td><span class="tag tb">Excellent ✅</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- S15: SMOTE -->
+<section class="section" id="s-smote">
+  <div class="sec-header"><span class="sec-num">16</span><span class="sec-icon">⚖️</span><span class="sec-title">SMOTE — Class Imbalance</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Synthetic Minority Over-sampling Technique creates new <strong>artificial minority samples</strong> by interpolating between existing real minority samples — making class sizes more equal.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>When 99% of samples are class 0 and 1% are class 1, a model can achieve 99% accuracy by just predicting 0 always — useless! SMOTE forces the model to actually learn the minority class.</p></div>
+  </div>
+  <div class="card"><div class="card-title">How SMOTE Works</div>
+    <div class="formula">x_new = x_original + λ × (x_neighbor − x_original) &nbsp;&nbsp; λ ∈ [0,1]</div>
+    <div class="steps">
+      <div class="step"><div class="step-body">Find all <strong>minority class samples</strong></div></div>
+      <div class="step"><div class="step-body">For each: find <strong>K nearest minority neighbors</strong> (default K=5)</div></div>
+      <div class="step"><div class="step-body">Randomly pick one neighbor, generate random λ ∈ [0,1]</div></div>
+      <div class="step"><div class="step-body">Create synthetic point: <strong>x_new = original + λ × (neighbor − original)</strong></div></div>
+      <div class="step"><div class="step-body">Repeat until desired balance is achieved</div></div>
+    </div>
+    <div class="note red mt"><strong>Critical:</strong> Apply SMOTE ONLY on training data — never on test/validation data.</div>
+  </div>
+  <div class="card mt"><div class="card-title">Variants</div>
+    <table class="tbl">
+      <tr><th>Variant</th><th>When to Use</th></tr>
+      <tr><td>SMOTE (default)</td><td>Standard imbalance, continuous features</td></tr>
+      <tr><td>Borderline-SMOTE</td><td>Focus on hard boundary cases</td></tr>
+      <tr><td>ADASYN</td><td>Adaptive — more samples where density is low</td></tr>
+      <tr><td>SMOTE-Tomek</td><td>SMOTE + clean overlapping points</td></tr>
+      <tr><td>SMOTENC</td><td>Mixed data (numerical + categorical)</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- S16: MODEL TYPES -->
+<section class="section" id="s-models">
+  <div class="sec-header"><span class="sec-num">17</span><span class="sec-icon">🧮</span><span class="sec-title">ML Model Types — When to Use What</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>A structured overview of the major ML model families — what problem each solves, what data it expects, and which real-world use cases it's best suited for.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Choosing the wrong model type is the single most common ML mistake. The model is a tool — match the tool to the job.</p></div>
+  </div>
+
+  <div class="card"><div class="card-title" style="color:var(--blue)">📐 Linear Models</div>
+    <table class="tbl">
+      <tr><th>Model</th><th>Output</th><th>Best Use Case</th><th>Notes</th></tr>
+      <tr><td><span class="tag tb">Linear Regression</span></td><td>Continuous number</td><td>House price, salary prediction</td><td>Assumes linear relationship; sensitive to outliers</td></tr>
+      <tr><td><span class="tag tb">Ridge Regression</span></td><td>Continuous number</td><td>Same as linear but with correlated features</td><td>L2 regularization built-in</td></tr>
+      <tr><td><span class="tag tb">Lasso Regression</span></td><td>Continuous number</td><td>High-dimensional data, feature selection needed</td><td>L1 regularization — zeros out features</td></tr>
+      <tr><td><span class="tag tv">Logistic Regression</span></td><td>Probability (0–1)</td><td>Spam detection, default prediction, disease yes/no</td><td>Despite the name, it's a classifier</td></tr>
+    </table>
+    <div class="note blue" style="margin-top:8px;">✅ Start here first — linear models give you a strong baseline and are fully interpretable.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">🌲 Tree-Based &amp; Non-Linear Models</div>
+    <table class="tbl">
+      <tr><th>Model</th><th>Output</th><th>Best Use Case</th><th>Notes</th></tr>
+      <tr><td><span class="tag tg">Decision Tree</span></td><td>Class or number</td><td>Simple classification, interpretable rules</td><td>Easy to explain; prone to overfitting</td></tr>
+      <tr><td><span class="tag tg">Random Forest</span></td><td>Class or number</td><td>General-purpose: fraud, churn, credit scoring</td><td>Ensemble of trees; robust, handles missing values</td></tr>
+      <tr><td><span class="tag tg">XGBoost / LightGBM</span></td><td>Class or number</td><td>Tabular data competitions, ranking, clickthrough rate</td><td>Gradient boosting; state-of-the-art on structured data</td></tr>
+    </table>
+    <div class="note green" style="margin-top:8px;">✅ For most tabular/structured data problems, XGBoost or Random Forest is the go-to choice.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">🎯 Classification-Specific Models</div>
+    <table class="tbl">
+      <tr><th>Model</th><th>Output</th><th>Best Use Case</th><th>Notes</th></tr>
+      <tr><td><span class="tag tv">SVM</span></td><td>Class</td><td>Text classification, small datasets</td><td>Maximum-margin hyperplane; effective in high dimensions</td></tr>
+      <tr><td><span class="tag tv">K-Nearest Neighbors</span></td><td>Class or number</td><td>Recommendation systems, anomaly detection</td><td>No training phase; slow on large data</td></tr>
+      <tr><td><span class="tag tv">Naive Bayes</span></td><td>Class probability</td><td>Email spam, sentiment analysis</td><td>Fast, simple, works well with text/NLP</td></tr>
+    </table>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--pink)">🧠 Deep Learning Models</div>
+    <table class="tbl">
+      <tr><th>Model</th><th>Output</th><th>Best Use Case</th><th>Notes</th></tr>
+      <tr><td><span class="tag to">ANN (MLP)</span></td><td>Any</td><td>Complex tabular patterns</td><td>Fully connected layers; general purpose</td></tr>
+      <tr><td><span class="tag to">CNN</span></td><td>Class/label</td><td>Image classification, object detection</td><td>Convolutional layers capture spatial patterns</td></tr>
+      <tr><td><span class="tag to">RNN / LSTM</span></td><td>Sequence</td><td>Time series, language modeling</td><td>Remembers long-term dependencies</td></tr>
+      <tr><td><span class="tag to">Transformer</span></td><td>Any</td><td>NLP (ChatGPT, BERT), translation</td><td>Attention mechanism; state-of-the-art in NLP</td></tr>
+    </table>
+    <div class="note orange" style="margin-top:8px;">⚠️ Deep learning needs a lot of data (&gt;10k rows minimum). For small datasets, tree-based models almost always win.</div>
+  </div>
+
+  <!-- FORECASTING MOVED HERE -->
+  <div class="card mt"><div class="card-title" style="color:var(--yellow)">📈 Forecasting Models (Time Series)</div>
+    <p style="font-size:13px;">Use when your target variable has a <strong>time dimension</strong>: tomorrow's sales, next month's temperature, stock prices. Regular ML ignores temporal order — forecasting preserves it.</p>
+
+    <h5>Time Series Components</h5>
+    <table class="tbl">
+      <tr><th>Component</th><th>What It Is</th><th>Example</th></tr>
+      <tr><td><span class="hl">Trend</span></td><td>Long-term upward/downward direction</td><td>Rising sales year over year</td></tr>
+      <tr><td><span class="hl2">Seasonality</span></td><td>Repeating pattern at fixed intervals</td><td>High sales every December</td></tr>
+      <tr><td><span class="hl4">Cyclic</span></td><td>Longer irregular waves</td><td>Economic recession cycles</td></tr>
+      <tr><td><span class="hl3">Noise</span></td><td>Random unexplainable variation</td><td>One-off spike due to event</td></tr>
+    </table>
+
+    <h5 class="mt">Classical Forecasting Models</h5>
+    <table class="tbl">
+      <tr><th>Model</th><th>Formula / Key Idea</th><th>Best Use Case</th></tr>
+      <tr><td><span class="tag tb">Moving Average</span></td><td>avg of last N observations</td><td>Stable, no trend/seasonality — quick baseline</td></tr>
+      <tr><td><span class="tag tg">Exponential Smoothing (ETS)</span></td><td>F(t+1) = α·Y(t) + (1−α)·F(t)</td><td>Short-term forecast, sales, inventory</td></tr>
+      <tr><td><span class="tag tg">ARIMA(p,d,q)</span></td><td>AR + Differencing + MA</td><td>Stationary or easily differenced series</td></tr>
+      <tr><td><span class="tag tv">SARIMA</span></td><td>ARIMA + seasonal(P,D,Q,m)</td><td>Clear seasonality (retail, weather, energy)</td></tr>
+    </table>
+
+    <h5 class="mt">Modern / ML-Based Forecasting Models</h5>
+    <table class="tbl">
+      <tr><th>Model</th><th>Key Idea</th><th>Best Use Case</th></tr>
+      <tr><td><span class="tag tg">Prophet (Meta)</span></td><td>Trend + seasonality + holidays decomposition</td><td>Business forecasting, holiday effects</td></tr>
+      <tr><td><span class="tag to">XGBoost + Lag Features</span></td><td>ML with t-1, t-7, t-30 as input features</td><td>Complex relationships, external regressors</td></tr>
+      <tr><td><span class="tag tv">LSTM</span></td><td>Recurrent NN with long-term memory</td><td>Long sequences, complex temporal patterns</td></tr>
+      <tr><td><span class="tag ty">Temporal Fusion Transformer</span></td><td>Attention + multi-horizon forecasting</td><td>Large-scale production forecasting</td></tr>
+    </table>
+
+    <h5 class="mt">Which Forecasting Model?</h5>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Recommended Model</th></tr>
+      <tr><td>Quick baseline, stable series</td><td><span class="tag tb">Moving Average / ETS</span></td></tr>
+      <tr><td>No seasonality, stationary</td><td><span class="tag tg">ARIMA</span></td></tr>
+      <tr><td>Clear seasonality (monthly/weekly)</td><td><span class="tag tv">SARIMA / Holt-Winters</span></td></tr>
+      <tr><td>Business data with holidays</td><td><span class="tag tg">Prophet</span></td></tr>
+      <tr><td>Complex, many features</td><td><span class="tag to">XGBoost + lag features</span></td></tr>
+      <tr><td>Long sequence, big data</td><td><span class="tag tv">LSTM / Transformer</span></td></tr>
+    </table>
+    <div class="note orange mt"><strong>Key rule:</strong> Always split time series by time — train on past, test on future. Never shuffle! Shuffling creates data leakage in time series.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title">🗺️ Model Selection Guide</div>
+    <table class="tbl">
+      <tr><th>Your Problem</th><th>Recommended Model</th><th>Why</th></tr>
+      <tr><td>Predict a number (house price, salary)</td><td><span class="tag tb">Linear / Ridge Regression</span></td><td>Interpretable, fast, good baseline</td></tr>
+      <tr><td>Binary yes/no (spam, fraud, churn)</td><td><span class="tag tv">Logistic Regression / XGBoost</span></td><td>Logistic for interpretability, XGBoost for performance</td></tr>
+      <tr><td>Multi-class (A/B/C/D categories)</td><td><span class="tag tg">Random Forest / XGBoost</span></td><td>Handles multi-class natively; robust</td></tr>
+      <tr><td>Customer churn prediction</td><td><span class="tag tg">XGBoost + SMOTE</span></td><td>Handles imbalance; captures complex patterns</td></tr>
+      <tr><td>Text classification / sentiment</td><td><span class="tag tv">Naive Bayes / Transformer</span></td><td>Naive Bayes for speed; Transformer for accuracy</td></tr>
+      <tr><td>Image recognition</td><td><span class="tag to">CNN</span></td><td>Designed for spatial/visual patterns</td></tr>
+      <tr><td>Time series / forecasting</td><td><span class="tag tv">ARIMA / Prophet / LSTM</span></td><td>Depends on seasonality and data volume</td></tr>
+      <tr><td>Anomaly / fraud detection</td><td><span class="tag tg">Isolation Forest / XGBoost</span></td><td>Handles extreme class imbalance</td></tr>
+      <tr><td>Small dataset (&lt;1000 rows)</td><td><span class="tag tg">SVM / Logistic Regression</span></td><td>Work well in low-data regimes</td></tr>
+      <tr><td>Very large structured data</td><td><span class="tag tg">XGBoost / LightGBM</span></td><td>Scales well; battle-tested on tabular data</td></tr>
+    </table>
+    <div class="note green mt">🔑 <strong>General rule:</strong> Always start with Logistic/Linear Regression as your baseline. If performance is insufficient, move to Random Forest, then XGBoost. Only use Deep Learning if you have large data and unstructured inputs.</div>
+  </div>
+</section>
+
+<!-- S18: TRAIN TEST SPLIT -->
+<section class="section" id="s-split">
+  <div class="sec-header"><span class="sec-num">18</span><span class="sec-icon">✂️</span><span class="sec-title">Train / Test / Validation Split</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Dividing your dataset into separate subsets so the model is trained on one portion and evaluated on data it has <strong>never seen before</strong>. This simulates real-world performance.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>If you evaluate on training data, your model looks perfect — it just memorized the answers. A separate test set reveals if it <strong>actually learned</strong> the pattern or just memorized noise.</p></div>
+  </div>
+  <div class="card"><div class="card-title">Standard Split Ratios</div>
+    <div class="split-viz">
+      <div style="font-size:11px;color:var(--t3);margin-bottom:6px;font-family:'Source Code Pro',monospace;">70/30 Split (Simple)</div>
+      <div class="split-bar">
+        <div class="split-seg" style="flex:70;background:var(--accent);">Train (70%)</div>
+        <div class="split-seg" style="flex:30;background:var(--red);">Test (30%)</div>
+      </div>
+      <div style="font-size:11px;color:var(--t3);margin:10px 0 6px;font-family:'Source Code Pro',monospace;">80/10/10 Split (With Validation)</div>
+      <div class="split-bar">
+        <div class="split-seg" style="flex:80;background:var(--accent);">Train (80%)</div>
+        <div class="split-seg" style="flex:10;background:var(--orange);">Val (10%)</div>
+        <div class="split-seg" style="flex:10;background:var(--red);">Test (10%)</div>
+      </div>
+      <div style="font-size:11px;color:var(--t3);margin:10px 0 6px;font-family:'Source Code Pro',monospace;">60/20/20 Split (Common in DL)</div>
+      <div class="split-bar">
+        <div class="split-seg" style="flex:60;background:var(--accent);">Train (60%)</div>
+        <div class="split-seg" style="flex:20;background:var(--orange);">Val (20%)</div>
+        <div class="split-seg" style="flex:20;background:var(--red);">Test (20%)</div>
+      </div>
+    </div>
+  </div>
+  <div class="g3 mt">
+    <div class="card"><div class="card-title" style="color:var(--accent)">🟢 Train Set</div><p style="font-size:12.5px">The model <strong>learns</strong> from this — adjusts weights, fits patterns. Never used for final evaluation.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--orange)">🟠 Validation Set</div><p style="font-size:12.5px">Used to <strong>tune hyperparameters</strong> (learning rate, depth, regularization) during development.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--red)">🔴 Test Set</div><p style="font-size:12.5px">Final <strong>unseen evaluation</strong> — touched only ONCE at the very end. Reports real-world performance.</p></div>
+  </div>
+  <div class="card mt"><div class="card-title">Cross-Validation (K-Fold)</div>
+    <p>When data is limited, K-Fold CV rotates which portion is used as validation — every sample is tested exactly once.</p>
+    <div class="code"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> cross_val_score
+scores = cross_val_score(model, X, y, cv=<span class="num">5</span>, scoring=<span class="str">'r2'</span>)
+<span class="fn">print</span>(scores.mean(), scores.std())</div>
+  </div>
+</section>
+
+<!-- S19: OVERFITTING & UNDERFITTING — NOW AFTER TRAIN/TEST -->
+<section class="section" id="s-reg">
+  <div class="sec-header"><span class="sec-num">19</span><span class="sec-icon">📉</span><span class="sec-title">Overfitting, Underfitting &amp; Regularization</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>The two fundamental problems in model training. <strong>Underfitting</strong> = model is too simple to learn the pattern. <strong>Overfitting</strong> = model memorizes training noise instead of learning the real pattern. Regularization is the fix for overfitting.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>A model that performs perfectly on training data but fails on new data is useless. The goal is <strong>generalization</strong> — learning the real underlying pattern. This is the core challenge of ML.</p></div>
+  </div>
+  <div class="card"><div class="card-title">The Bias-Variance Tradeoff</div>
+    <div class="g3">
+      <div style="background:var(--surface2);border:2px solid var(--blue);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:6px;">📉</div>
+        <div style="font-weight:800;color:var(--blue);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:6px;">Underfitting</div>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:8px;">Model is too simple — misses the pattern in both train and test data.</div>
+        <table class="tbl" style="font-size:11.5px;">
+          <tr><th>Set</th><th>Score</th></tr>
+          <tr><td>Train</td><td style="color:var(--red)">Low ❌</td></tr>
+          <tr><td>Test</td><td style="color:var(--red)">Low ❌</td></tr>
+        </table>
+        <div class="note blue" style="margin-top:8px;font-size:11.5px;">Cause: Too few features, too shallow model</div>
+        <div class="note green" style="margin-top:6px;font-size:11.5px;">Fix: Add more features, use complex model</div>
+      </div>
+      <div style="background:var(--surface2);border:2px solid var(--accent);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:6px;">✅</div>
+        <div style="font-weight:800;color:var(--accent);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:6px;">Good Fit</div>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:8px;">Model generalizes well — learns the real pattern, not the noise.</div>
+        <table class="tbl" style="font-size:11.5px;">
+          <tr><th>Set</th><th>Score</th></tr>
+          <tr><td>Train</td><td style="color:var(--accent)">High ✅</td></tr>
+          <tr><td>Test</td><td style="color:var(--accent)">High ✅</td></tr>
+        </table>
+        <div class="note green" style="margin-top:8px;font-size:11.5px;">This is the goal — balanced complexity, good generalization</div>
+      </div>
+      <div style="background:var(--surface2);border:2px solid var(--red);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:6px;">📈</div>
+        <div style="font-weight:800;color:var(--red);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:6px;">Overfitting</div>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:8px;">Model memorizes training noise — great on train, fails on new data.</div>
+        <table class="tbl" style="font-size:11.5px;">
+          <tr><th>Set</th><th>Score</th></tr>
+          <tr><td>Train</td><td style="color:var(--accent)">Very High ✅</td></tr>
+          <tr><td>Test</td><td style="color:var(--red)">Low ❌</td></tr>
+        </table>
+        <div class="note red" style="margin-top:8px;font-size:11.5px;">Cause: Too complex model, too many features</div>
+        <div class="note orange" style="margin-top:6px;font-size:11.5px;">Fix: Regularization (L1/L2), more data, pruning</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">🔒 Regularization — The Fix for Overfitting</div>
+    <p style="font-size:13px;">Regularization adds a <strong>penalty term to the loss function</strong> that punishes large model weights. This forces the model to stay simple — it can't just assign huge weights to every feature to perfectly fit training noise.</p>
+    <div class="code">Without Reg:  Minimize only  Σ(y − ŷ)²
+L1 (Lasso):   Minimize  Σ(y − ŷ)² + λΣ|w|   ← penalizes |weight|
+L2 (Ridge):   Minimize  Σ(y − ŷ)² + λΣw²    ← penalizes weight²
+ElasticNet:   Combine both L1 + L2</div>
+    <p style="font-size:12.5px;margin-top:8px;">λ (lambda) is the regularization strength. Higher λ = more penalty = simpler model. Too high → underfitting. Tune with cross-validation.</p>
+  </div>
+
+  <div class="g2 mt">
+    <div class="card" style="border-color:var(--accent-border)">
+      <div class="card-title" style="color:var(--accent)">L1 — Lasso Regularization</div>
+      <p style="font-size:12.5px;">Penalizes the <strong>absolute value</strong> of weights. Pushes small/irrelevant feature weights all the way to <strong>exactly zero</strong> — automatically removing them.</p>
+      <table class="tbl" style="margin:10px 0;">
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td>Effect on weights</td><td>Shrinks weak ones to exactly 0</td></tr>
+        <tr><td>Feature selection</td><td><span class="tag tg">✅ Automatic</span></td></tr>
+        <tr><td>Correlated features</td><td>Randomly drops one of them</td></tr>
+        <tr><td>Best for</td><td>High-dim data, sparse features</td></tr>
+      </table>
+      <div class="note green" style="margin-top:8px;">Use L1 when you suspect many irrelevant features exist and want automatic feature selection.</div>
+    </div>
+    <div class="card" style="border-color:rgba(56,139,253,0.3)">
+      <div class="card-title" style="color:var(--blue)">L2 — Ridge Regularization</div>
+      <p style="font-size:12.5px;">Penalizes the <strong>squared value</strong> of weights. Shrinks all weights toward zero but <strong>never reaches exactly zero</strong> — keeps all features, just with smaller influence.</p>
+      <table class="tbl" style="margin:10px 0;">
+        <tr><th>Property</th><th>Detail</th></tr>
+        <tr><td>Effect on weights</td><td>Shrinks all, never to exactly 0</td></tr>
+        <tr><td>Feature selection</td><td><span class="tag tr">❌ Keeps all features</span></td></tr>
+        <tr><td>Correlated features</td><td>Distributes weight across them</td></tr>
+        <tr><td>Best for</td><td>Correlated features, regression</td></tr>
+      </table>
+      <div class="note blue" style="margin-top:8px;">Use L2 when all features might be relevant, especially with correlated inputs.</div>
+    </div>
+  </div>
+
+  <div class="card mt"><div class="card-title">L1 vs L2 vs ElasticNet</div>
+    <table class="tbl">
+      <tr><th>Method</th><th>Penalty</th><th>Zeros out features?</th><th>Best Use Case</th></tr>
+      <tr><td><span class="tag tg">L1 Lasso</span></td><td>λΣ|w|</td><td>✅ Yes</td><td>Feature selection, sparse data</td></tr>
+      <tr><td><span class="tag tb">L2 Ridge</span></td><td>λΣw²</td><td>❌ No</td><td>Correlated features, regression</td></tr>
+      <tr><td><span class="tag tv">ElasticNet</span></td><td>L1 + L2</td><td>✅ Sometimes</td><td>Both benefits, general purpose</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- S20: EVALUATION METRICS -->
+<section class="section" id="s-eval">
+  <div class="sec-header"><span class="sec-num">20</span><span class="sec-icon">📏</span><span class="sec-title">Evaluation Metrics</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Quantitative measures that tell you <strong>how well your model performs</strong>. Different metrics are appropriate for regression vs classification vs forecasting models.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Accuracy alone is misleading (class imbalance). RMSE penalizes large errors more than MAE. R² tells you proportion of variance explained. Choosing the right metric defines what "good" means for your problem.</p></div>
+  </div>
+
+  <div class="note blue">Quick Cheat Sheet: Regression → MAE/RMSE/R² &nbsp;|&nbsp; Classification → Accuracy/F1/AUC &nbsp;|&nbsp; Imbalanced → F1/Precision/Recall</div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--blue)">📉 Regression Metrics</div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">MAE — Mean Absolute Error</div><div class="metric-formula">MAE = Σ|yᵢ−ŷᵢ| / n</div></div>
+      <div class="metric-body">Average absolute difference. <strong>Easy to interpret</strong> — same units as target. Not sensitive to large outliers. <span class="tag tg">Best for: Robust eval when outliers exist</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">MSE — Mean Squared Error</div><div class="metric-formula">MSE = Σ(yᵢ−ŷᵢ)² / n</div></div>
+      <div class="metric-body">Squares errors — <strong>penalizes large errors heavily</strong>. Units are squared. Used as loss function during training. <span class="tag to">Best for: Penalizing big mistakes</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">RMSE — Root Mean Squared Error</div><div class="metric-formula">RMSE = √MSE</div></div>
+      <div class="metric-body">Square root of MSE — back to original units. Penalizes outliers more than MAE. Most commonly reported regression metric. <span class="tag tb">Best for: General-purpose regression evaluation</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">R² — Coefficient of Determination</div><div class="metric-formula">R² = 1 − (SS_res / SS_tot)</div></div>
+      <div class="metric-body">Proportion of variance in target <strong>explained by the model</strong>. R²=1 is perfect, R²=0 means model is no better than predicting the mean.
+      <table class="tbl" style="margin-top:8px;">
+        <tr><th>R² Value</th><th>Interpretation</th></tr>
+        <tr><td><span class="tag tg">0.90–1.00</span></td><td>Excellent</td></tr>
+        <tr><td><span class="tag tb">0.70–0.89</span></td><td>Good</td></tr>
+        <tr><td><span class="tag to">0.50–0.69</span></td><td>Moderate</td></tr>
+        <tr><td><span class="tag tr">&lt; 0.50</span></td><td>Weak</td></tr>
+      </table>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">MAPE — Mean Absolute Percentage Error</div><div class="metric-formula">MAPE = (1/n) Σ |yᵢ−ŷᵢ| / |yᵢ| × 100%</div></div>
+      <div class="metric-body">Error as a percentage of actual value. Scale-independent — compare across datasets. Problem: undefined when yᵢ=0. <span class="tag tv">Best for: Forecasting, business reporting</span></div>
+    </div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">✅ Classification Metrics</div>
+    <div class="card" style="margin-bottom:12px;border-color:var(--border2)"><div class="card-title">Confusion Matrix (Foundation)</div>
+      <div class="code">                 Predicted Positive  Predicted Negative
+Actual Positive:    TP (True Pos)       FN (False Neg) ← Type II
+Actual Negative:    FP (False Pos)      TN (True Neg)
+                    ↑ Type I Error
+
+TP = correctly predicted positive
+TN = correctly predicted negative
+FP = predicted positive but was negative (false alarm)
+FN = predicted negative but was positive (missed)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">Accuracy</div><div class="metric-formula">(TP + TN) / (TP+TN+FP+FN)</div></div>
+      <div class="metric-body">Overall correct predictions. <strong>Misleading with imbalanced classes.</strong> <span class="tag to">Use only when classes are balanced</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">Precision</div><div class="metric-formula">TP / (TP + FP)</div></div>
+      <div class="metric-body">Of all <em>predicted positives</em>, how many were actually positive? <span class="tag tb">Use when: False Positives are costly (spam filter, legal)</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">Recall (Sensitivity)</div><div class="metric-formula">TP / (TP + FN)</div></div>
+      <div class="metric-body">Of all <em>actual positives</em>, how many did we catch? <span class="tag tr">Use when: False Negatives are costly (cancer detection, fraud)</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">F1 Score</div><div class="metric-formula">2 × (Precision × Recall) / (Precision + Recall)</div></div>
+      <div class="metric-body">Harmonic mean of Precision and Recall — <strong>balanced single metric</strong>. Best for imbalanced datasets.
+      <table class="tbl" style="margin-top:8px;">
+        <tr><th>F1 Value</th><th>Quality</th></tr>
+        <tr><td><span class="tag tg">0.85+</span></td><td>Excellent</td></tr>
+        <tr><td><span class="tag tb">0.70–0.84</span></td><td>Good</td></tr>
+        <tr><td><span class="tag to">0.50–0.69</span></td><td>Fair</td></tr>
+        <tr><td><span class="tag tr">&lt;0.50</span></td><td>Poor</td></tr>
+      </table>
+      <span class="tag tg">Best for: Imbalanced classification (fraud, disease)</span>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header"><div class="metric-name">AUC-ROC</div><div class="metric-formula">Area Under the ROC Curve</div></div>
+      <div class="metric-body">ROC plots True Positive Rate vs False Positive Rate at every threshold. AUC=1 perfect, AUC=0.5 random. <strong>Threshold-independent.</strong>
+      <div class="rbar mt"><div class="rl">AUC 0.5</div><div class="rt"><div class="rf" style="width:50%;background:var(--red)"></div></div><div class="rp" style="color:var(--red)">Random</div></div>
+      <div class="rbar"><div class="rl">AUC 0.7</div><div class="rt"><div class="rf" style="width:70%;background:var(--orange)"></div></div><div class="rp" style="color:var(--orange)">Acceptable</div></div>
+      <div class="rbar"><div class="rl">AUC 0.9</div><div class="rt"><div class="rf" style="width:90%;background:var(--accent)"></div></div><div class="rp" style="color:var(--accent)">Excellent</div></div>
+      <span class="tag tg">Best for: Binary classification, comparing models</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt"><div class="card-title">Quick Reference — Which Metric?</div>
+    <table class="tbl">
+      <tr><th>Problem Type</th><th>Primary Metric</th><th>Secondary Metric</th></tr>
+      <tr><td>Regression (general)</td><td><span class="tag tb">RMSE</span></td><td><span class="tag tg">R²</span></td></tr>
+      <tr><td>Regression (outliers present)</td><td><span class="tag tg">MAE</span></td><td><span class="tag tb">RMSE</span></td></tr>
+      <tr><td>Regression (business %)</td><td><span class="tag tv">MAPE</span></td><td><span class="tag tg">MAE</span></td></tr>
+      <tr><td>Binary Classification (balanced)</td><td><span class="tag tb">Accuracy</span></td><td><span class="tag tg">AUC-ROC</span></td></tr>
+      <tr><td>Binary Classification (imbalanced)</td><td><span class="tag tg">F1 Score</span></td><td><span class="tag to">Precision/Recall</span></td></tr>
+      <tr><td>Fraud Detection (miss = bad)</td><td><span class="tag tr">Recall</span></td><td><span class="tag tg">F1</span></td></tr>
+      <tr><td>Spam Filter (FP = bad)</td><td><span class="tag tb">Precision</span></td><td><span class="tag tg">F1</span></td></tr>
+      <tr><td>Multi-class Classification</td><td><span class="tag tv">Macro F1</span></td><td><span class="tag tb">Accuracy</span></td></tr>
+      <tr><td>Forecasting (time series)</td><td><span class="tag tv">MAPE</span></td><td><span class="tag tg">MAE</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- S21: BEST PRACTICES -->
+<section class="section" id="s-bestpractices">
+  <div class="sec-header"><span class="sec-num">21</span><span class="sec-icon">🏆</span><span class="sec-title">Best Practices — Train a Better Model</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>A consolidated checklist of the most important habits, rules, and decisions that separate a model that actually works in production from one that only looks good on paper.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why does it matter?</div><p>Knowing individual techniques is not enough. How you combine them, in what order, and what mistakes to avoid determines whether your model generalizes or fails silently on real data.</p></div>
+  </div>
+
+  <div class="card"><div class="card-title" style="color:var(--blue)">🧹 1. Data Quality First</div>
+    <ul>
+      <li><strong>Always clean before you model</strong> — handle nulls, duplicates, and wrong data types before any EDA or training.</li>
+      <li><strong>Check for data leakage</strong> — never let future information or target-derived features sneak into your training set.</li>
+      <li><strong>Understand your data source</strong> — know how it was collected, what each column means, and what could go wrong.</li>
+      <li><strong>Validate data types</strong> — a column stored as string that should be numeric will silently break everything.</li>
+    </ul>
+    <div class="note blue mt">Garbage in = garbage out. No model can fix fundamentally bad data.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">✂️ 2. Always Split Before You Touch the Data</div>
+    <ul>
+      <li><strong>Split train/test first</strong> — before scaling, encoding, imputing, or any transformation.</li>
+      <li><strong>Fit transformers on train only</strong> — then apply (transform) to both train and test. Never fit on the full dataset.</li>
+      <li><strong>Never peek at the test set</strong> — it must stay completely unseen until final evaluation. Touching it earlier inflates your metrics.</li>
+      <li><strong>Use stratified split for classification</strong> — ensures class proportions are preserved in both sets.</li>
+    </ul>
+    <div class="note red mt">⚠️ Fitting a scaler or encoder on the full dataset before splitting is one of the most common and damaging mistakes in ML.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">📊 3. Always Start with a Baseline</div>
+    <ul>
+      <li><strong>Build the simplest model first</strong> — Logistic Regression for classification, Linear Regression for regression.</li>
+      <li><strong>A baseline tells you the minimum bar</strong> — if your complex model barely beats it, the complexity isn't worth it.</li>
+      <li><strong>Compare all models against the baseline</strong> — not against each other in isolation.</li>
+      <li><strong>A dummy classifier (always predict majority class) is your floor</strong> — your model must beat it or it's useless.</li>
+    </ul>
+    <div class="note green mt">✅ Baseline first → then iterate. Never jump straight to XGBoost or deep learning.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">🔧 4. Feature Engineering Over Model Complexity</div>
+    <ul>
+      <li><strong>Better features beat better models</strong> — a simple model with great features outperforms a complex model with raw features.</li>
+      <li><strong>Encode categoricals correctly</strong> — ordinal data needs label encoding, nominal needs one-hot or target encoding.</li>
+      <li><strong>Scale features for distance-based models</strong> — KNN, SVM, and neural networks are sensitive to feature scale. Tree models are not.</li>
+      <li><strong>Remove highly correlated features</strong> — check VIF and correlation heatmap before training linear models.</li>
+      <li><strong>Create domain-driven features</strong> — house age, price per sqft, interaction terms often matter more than raw columns.</li>
+    </ul>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--red)">🚫 5. Avoid These Common Mistakes</div>
+    <div class="g2">
+      <div>
+        <table class="tbl">
+          <tr><th>Mistake</th><th>Why It’s Dangerous</th></tr>
+          <tr><td>Fitting scaler on full data</td><td>Test data leaks into preprocessing — inflated metrics</td></tr>
+          <tr><td>Using accuracy on imbalanced data</td><td>99% accuracy by predicting majority class — useless model</td></tr>
+          <tr><td>Applying SMOTE before splitting</td><td>Synthetic samples in test set — fake performance</td></tr>
+          <tr><td>Dropping nulls without checking %</td><td>Losing 30% of data silently biases the model</td></tr>
+          <tr><td>Label encoding nominal features</td><td>Implies false order — model learns wrong relationships</td></tr>
+        </table>
+      </div>
+      <div>
+        <table class="tbl">
+          <tr><th>Mistake</th><th>Why It’s Dangerous</th></tr>
+          <tr><td>Shuffling time series data</td><td>Future data trains the model — data leakage</td></tr>
+          <tr><td>Tuning on test set</td><td>Test set becomes part of training — overly optimistic results</td></tr>
+          <tr><td>Ignoring class imbalance</td><td>Model never learns minority class — fails in production</td></tr>
+          <tr><td>Skipping EDA</td><td>Outliers, skew, and wrong types break models silently</td></tr>
+          <tr><td>Using R² alone for regression</td><td>High R² can still mean terrible predictions on new data</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--yellow)">🔁 6. Validate Properly</div>
+    <ul>
+      <li><strong>Use K-Fold cross-validation</strong> when data is limited — gives a more reliable estimate than a single train/test split.</li>
+      <li><strong>Use stratified K-Fold for classification</strong> — preserves class balance in every fold.</li>
+      <li><strong>Report mean ± std of CV scores</strong> — a model with high variance across folds is unstable.</li>
+      <li><strong>Pick the right metric for your problem</strong> — F1 for imbalanced, RMSE for regression, AUC for ranking.</li>
+      <li><strong>Never report only training accuracy</strong> — always report validation or test performance.</li>
+    </ul>
+    <div class="note yellow mt">A model with Train=98%, Test=62% is overfit. A model with Train=78%, Test=76% is production-ready.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--teal)">🚀 7. The Golden Checklist Before Training</div>
+    <div class="steps">
+      <div class="step"><div class="step-body"><strong>Clean data</strong> — nulls handled, duplicates removed, types correct</div></div>
+      <div class="step"><div class="step-body"><strong>Split train/test</strong> — before any transformation or encoding</div></div>
+      <div class="step"><div class="step-body"><strong>EDA done</strong> — distributions understood, outliers identified, correlations checked</div></div>
+      <div class="step"><div class="step-body"><strong>Features engineered</strong> — encoded, scaled, skew fixed, irrelevant features dropped</div></div>
+      <div class="step"><div class="step-body"><strong>Imbalance handled</strong> — SMOTE or class weights applied on training data only</div></div>
+      <div class="step"><div class="step-body"><strong>Baseline built</strong> — simple model trained and evaluated first</div></div>
+      <div class="step"><div class="step-body"><strong>Right metric chosen</strong> — matches the business problem, not just accuracy</div></div>
+      <div class="step"><div class="step-body"><strong>Cross-validation used</strong> — not just a single train/test split</div></div>
+      <div class="step"><div class="step-body"><strong>Test set touched only once</strong> — at the very end for final reporting</div></div>
+    </div>
+    <div class="note green mt">✅ Follow this order every time and you will avoid 90% of the mistakes that make models fail in production.</div>
+  </div>
+</section>
+
+<hr class="divider">
+</div></div>
+
+<footer>
+  <div style="margin-bottom:10px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:800;color:var(--t2);letter-spacing:0.5px;">
+    🎓 Thanks for Visiting! Hope this is a great learning journey for you. 🚀
+  </div>
+  <div style="margin-bottom:4px;font-size:10px;color:var(--accent);font-family:'Source Code Pro',monospace;font-weight:600;letter-spacing:1.5px;">
+    Dev by &nbsp;<span style="background:var(--accent-light);border:1px solid var(--accent-border);padding:1px 8px;border-radius:10px;font-size:9.5px;">vishva_vichu_</span>
+  </div>
+</footer>
+
+<script>
+const BANNER_DARK  = 'linear-gradient(135deg,#0d1117 0%,#0f1e2e 40%,#0a1628 70%,#0d1117 100%)';
+const BANNER_LIGHT = 'linear-gradient(135deg,#ffffff 0%,#f0f6ff 30%,#f4f0ff 65%,#f0fff4 100%)';
+
+function applyBannerTheme(theme) {
+  const banner = document.querySelector('.ml-banner');
+  if (!banner) return;
+  banner.style.background = theme === 'light' ? BANNER_LIGHT : BANNER_DARK;
+  banner.style.boxShadow  = theme === 'light'
+    ? '0 8px 32px rgba(0,0,0,0.08)'
+    : '0 8px 32px rgba(0,0,0,0.35)';
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('theme-label').textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  localStorage.setItem('ml-theme', next);
+  applyBannerTheme(next);
+}
+
+// Load saved theme and apply immediately
+const saved = localStorage.getItem('ml-theme');
+if (saved) {
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('theme-label').textContent = saved === 'light' ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+// Apply banner background right now (script is at bottom so banner exists)
+applyBannerTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+
+const labelMap = {
+  's-lifecycle':'ML Lifecycle',
+  's-ai':'AI / ML / DL','s-types':'Types of ML','s-data':'Data Types',
+  's-pandas':'Pandas','s-nulldup':'Null & Duplicate Treatment',
+  's-eda':'What is EDA?','s-univariate':'Univariate Analysis',
+  's-bivariate':'Bivariate Analysis','s-multi':'Multivariate Analysis',
+  's-stats':'IQR & Variance','s-outlier':'Outlier Detection',
+  's-catnum':'Cat vs Numerical','s-catcat':'Cat vs Cat',
+  's-transform':'Log / Box-Cox','s-pca':'PCA','s-smote':'SMOTE',
+  's-reg':'Overfitting & Regularization','s-models':'Model Types',
+  's-split':'Train / Test Split','s-eval':'Evaluation Metrics','s-bestpractices':'Best Practices'
+};
+const sbItems = document.querySelectorAll('.sb-item');
+
+function goTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  sbItems.forEach(b => {
+    b.classList.remove('active');
+    const onclick = b.getAttribute('onclick') || '';
+    const match = onclick.match(/goTo\('([^']+)'\)/);
+    if (match && match[1] === id) b.classList.add('active');
+  });
+  if (window.innerWidth <= 768) toggleSB();
+}
+
+function toggleSB() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+// ===== READING PROGRESS BAR =====
+const progressBar = document.getElementById('progress-bar');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = pct + '%';
+}
+
+// ===== SECTION FADE-IN ON SCROLL =====
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.07 });
+sections.forEach(s => observer.observe(s));
+
+// ===== SIDEBAR SEARCH =====
+function searchSidebar(val) {
+  const q = val.trim().toLowerCase();
+  document.querySelectorAll('.sb-item').forEach(btn => {
+    const txt = btn.textContent.toLowerCase();
+    btn.style.display = (!q || txt.includes(q)) ? '' : 'none';
+  });
+  document.querySelectorAll('.sb-section').forEach(sec => {
+    // hide section label if all its buttons are hidden
+    let next = sec.nextElementSibling;
+    let hasVisible = false;
+    while (next && !next.classList.contains('sb-section')) {
+      if (next.classList.contains('sb-item') && next.style.display !== 'none') hasVisible = true;
+      next = next.nextElementSibling;
+    }
+    sec.style.display = hasVisible ? '' : (q ? 'none' : '');
+  });
+}
+
+// ===== COPY CODE BUTTONS =====
+document.querySelectorAll('.code').forEach(block => {
+  const wrap = document.createElement('div');
+  wrap.className = 'code-wrap';
+  block.parentNode.insertBefore(wrap, block);
+  wrap.appendChild(block);
+  const btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'copy';
+  btn.onclick = () => {
+    navigator.clipboard.writeText(block.innerText).then(() => {
+      btn.textContent = '✓ copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1800);
+    });
+  };
+  wrap.appendChild(btn);
+});
+
+// ===== HERO STAT COUNT-UP =====
+function countUp(el, target, suffix, duration) {
+  let start = 0;
+  const isInfinity = target === null;
+  if (isInfinity) { el.textContent = '∞'; return; }
+  const step = Math.ceil(target / (duration / 30));
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { el.textContent = target + suffix; clearInterval(timer); }
+    else { el.textContent = start + suffix; }
+  }, 30);
+}
+const statEls = document.querySelectorAll('.hero-stat-n');
+const statTargets = [[22,'+'],[70,'+'],[25,'+'],null];
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => {
+    if (e.isIntersecting) {
+      const t = statTargets[i];
+      if (t === null) e.target.textContent = '∞';
+      else countUp(e.target, t[0], t[1], 800);
+      statObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+statEls.forEach((el,i) => { statTargets[i]; statObserver.observe(el); });
+
+// ===== FAST SCROLL STRIP =====
+const fsStrip = document.getElementById('fast-scroll');
+const fsThumb = document.getElementById('fs-thumb');
+function updateFsThumb() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? scrollTop / docHeight : 0;
+  const trackH = fsStrip.clientHeight;
+  const thumbH = Math.max(30, trackH * (window.innerHeight / document.documentElement.scrollHeight));
+  fsThumb.style.height = thumbH + 'px';
+  fsThumb.style.top = pct * (trackH - thumbH) + 'px';
+}
+fsStrip.addEventListener('click', e => {
+  const pct = e.clientY / fsStrip.clientHeight;
+  window.scrollTo({ top: pct * (document.documentElement.scrollHeight - window.innerHeight), behavior:'smooth' });
+});
+let fsDragging = false;
+fsThumb.addEventListener('mousedown', e => { fsDragging = true; e.preventDefault(); });
+document.addEventListener('mousemove', e => {
+  if (!fsDragging) return;
+  const pct = e.clientY / fsStrip.clientHeight;
+  window.scrollTo({ top: pct * (document.documentElement.scrollHeight - window.innerHeight) });
+});
+document.addEventListener('mouseup', () => { fsDragging = false; });
+window.addEventListener('scroll', updateFsThumb, { passive:true });
+updateFsThumb();
+
+// ===== HOOK SCROLL FOR PROGRESS + SIDEBAR =====
+window.addEventListener('scroll', () => {
+  updateProgress();
+  const btn = document.getElementById('back-top');
+  btn.classList.toggle('show', window.scrollY > 400);
+  let cur = '';
+  Object.keys(labelMap).forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 160) cur = id;
+  });
+  sbItems.forEach(b => {
+    b.classList.remove('active');
+    const onclick = b.getAttribute('onclick') || '';
+    const match = onclick.match(/goTo\('([^']+)'\)/);
+    if (match && match[1] === cur) b.classList.add('active');
+  });
+}, { passive:true });
+
+</script>
+</body>
+</html>
