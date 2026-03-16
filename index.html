@@ -274,51 +274,84 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   #sidebar.open { transform:translateX(0); }
   #menu-btn { display:block; }
   #main { margin-left:0; }
-  .page { padding:56px 16px 32px; }
+  .page { padding:56px 12px 32px; }
   .what-why { grid-template-columns:1fr; }
 
-  /* Fix code blocks overflowing their containers */
-  .code { overflow-x:auto; white-space:pre; max-width:100%; word-break:normal; }
-  .code-wrap { overflow:hidden; max-width:100%; }
-
-  /* Fix cards and grids */
-  .card { overflow:hidden; word-break:break-word; }
+  /* All grids collapse to single column */
   .g2,.g3,.g4 { grid-template-columns:1fr; }
 
-  /* Fix tables overflowing */
-  .tbl { display:block; overflow-x:auto; white-space:nowrap; }
+  /* Cards: prevent any child from breaking out */
+  .card { overflow:hidden; min-width:0; }
+  .card .card { overflow:hidden; min-width:0; }
 
-  /* Fix formula overflow */
-  .formula { overflow-x:auto; white-space:nowrap; font-size:12px; }
+  /* Code blocks: horizontal scroll, never wrap or overflow parent */
+  .code-wrap { overflow:hidden; max-width:100%; min-width:0; }
+  .code { display:block; overflow-x:auto; white-space:pre; max-width:100%; min-width:0; box-sizing:border-box; }
 
-  /* Fix metric cards */
-  .metric-header { flex-wrap:wrap; }
-  .metric-formula { font-size:10px; word-break:break-all; }
+  /* Tables: always scroll horizontally */
+  .tbl { display:block; overflow-x:auto; white-space:nowrap; max-width:100%; }
 
-  /* Fix split viz bars */
-  .split-seg { font-size:9px; }
+  /* Wrap any bare table that isn't .tbl (e.g. correlation heatmap table) */
+  table { max-width:100%; overflow-x:auto; display:block; }
 
-  /* Fix VIF intuitive example and nested cards */
-  .card .card { overflow:hidden; }
+  /* Formula: scroll if too wide */
+  .formula { overflow-x:auto; white-space:nowrap; font-size:11.5px; max-width:100%; }
 
-  /* Fix range bars */
-  .rbar { flex-wrap:nowrap; }
-  .rl { width:60px; font-size:10px; flex-shrink:0; }
-  .rp { width:60px; font-size:10px; }
+  /* Metric cards */
+  .metric-header { flex-wrap:wrap; gap:6px; }
+  .metric-formula { font-size:10px; word-break:break-all; white-space:normal; }
 
-  /* Fix flow boxes */
+  /* Split viz — make text visible on narrow bars */
+  .split-bar { height:auto; flex-wrap:nowrap; }
+  .split-seg { font-size:9px; padding:6px 2px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  /* Correlation / covariance box */
+  .corr-w { overflow-x:auto; max-width:100%; }
+  .corr-lb { font-size:8px; }
+
+  /* Range bars */
+  .rbar { flex-wrap:nowrap; min-width:0; }
+  .rl { width:52px; font-size:10px; flex-shrink:0; }
+  .rp { width:52px; font-size:10px; flex-shrink:0; text-align:right; }
+
+  /* Flow boxes */
   .frow { flex-direction:column; align-items:center; }
-  .fbox { min-width:unset; width:100%; max-width:260px; }
+  .fbox { min-width:unset; width:100%; max-width:100%; box-sizing:border-box; }
 
-  /* Fix hero stats */
+  /* Hero stats */
   .hero-stats { gap:8px; }
-  .hero-stat { padding:6px 12px; }
+  .hero-stat { padding:6px 10px; }
 
-  /* Fix section header */
+  /* Section header */
   .sec-title { font-size:18px; }
 
-  /* Fix g3 inside cards (VIF fix options) */
-  .g3 { grid-template-columns:1fr; }
+  /* Hypothesis testing concept box */
+  .card > div[style*="surface2"] { overflow-x:auto; max-width:100%; }
+
+  /* Cross-tabulation code block inside card */
+  .card .code { font-size:11px; }
+
+  /* P-value decision tables and VIF tables */
+  .card table { min-width:0; }
+
+  /* Intuitive example nested box */
+  .card > div[style*="border-radius:8px"] { overflow:hidden; max-width:100%; min-width:0; }
+
+  /* Split viz label text */
+  .split-viz { overflow:hidden; }
+  .split-viz > div[style*="font-size:11px"] { white-space:normal; word-break:break-word; }
+
+  /* Avoid common mistakes — g2 tables */
+  .card .g2 { grid-template-columns:1fr; }
+
+  /* VIF fix options g3 */
+  .card .g3 { grid-template-columns:1fr; }
+
+  /* Covariance/correlation property table wrapper */
+  .card > div[style*="surface2"][style*="border-radius:8px"] { overflow-x:auto; }
+
+  /* Any inline-styled box that might overflow */
+  [style*="overflow-x:auto"] { max-width:100%; }
 }
 
 /* ===== FAST SCROLL STRIP ===== */
