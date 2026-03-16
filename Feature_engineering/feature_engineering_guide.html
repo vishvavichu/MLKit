@@ -352,6 +352,9 @@ td.hl-r { color:var(--pink); font-weight:600; }
 #fast-scroll:hover #fs-thumb { opacity:1; }
 @media(max-width:768px) { #fast-scroll { display:none; } }
 
+/* Footer margin reset on mobile */
+@media(max-width:768px) { #site-footer { margin-left:0 !important; } }
+
 /* ===== DIVIDER ===== */
 .divider { border:none; border-top:1px solid var(--border); margin:48px 0; }
 .dataset-banner {
@@ -397,9 +400,30 @@ h3 { font-family:'Nunito',sans-serif; font-weight:800; color:var(--t1); margin:1
   #sidebar.open { transform:translateX(0); }
   #menu-btn { display:block; }
   #main { margin-left:0; }
-  .main { padding:56px 16px 32px; }
+  .main { padding:56px 12px 32px; }
   .progress-bar { left:0; }
+
+  /* All grids collapse to single column */
   .compare { grid-template-columns:1fr; }
+
+  /* Inline grid (filter methods 3-col, other encodings 2-col) */
+  [style*="grid-template-columns"] { grid-template-columns:1fr !important; }
+
+  /* Code blocks: horizontal scroll */
+  .code-block { overflow-x:auto; white-space:pre; max-width:100%; min-width:0; box-sizing:border-box; font-size:11px; }
+
+  /* Tables: horizontal scroll */
+  .table-wrap { overflow-x:auto; max-width:100%; }
+  .data-table { min-width:420px; }
+
+  /* Formula: scroll if too wide */
+  .formula { overflow-x:auto; white-space:nowrap; font-size:11px; max-width:100%; }
+
+  /* Cards */
+  .enc-card { overflow:hidden; min-width:0; }
+
+  /* Dataset banner */
+  .dataset-banner { flex-direction:column; gap:10px; }
 }
 </style>
 </head>
@@ -1299,7 +1323,7 @@ df[<span class="s">'Age_at_Purchase'</span>]  = <span class="n">2026</span> - df
 
 </div><!-- /#main -->
 
-<footer style="text-align:center;padding:36px 28px;border-top:1px solid var(--border);color:var(--t3);font-size:11px;font-family:'Source Code Pro',monospace;margin-left:240px;">
+<footer style="text-align:center;padding:36px 28px;border-top:1px solid var(--border);color:var(--t3);font-size:11px;font-family:'Source Code Pro',monospace;margin-left:240px;" id="site-footer">
   <div style="margin-bottom:10px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:800;color:var(--t2);letter-spacing:0.5px;">
     Thanks for Visiting! Hope this is a great learning journey for you.❤️
   </div>
