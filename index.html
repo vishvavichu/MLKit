@@ -133,24 +133,15 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 .hero-title-static { color:var(--t1); }
 .hero-title-dynamic {
   color:var(--accent);
+  border-right:3px solid var(--accent);
+  padding-right:4px;
+  animation:blink-cursor 0.75s step-end infinite;
   display:inline-block;
+  min-width:2px;
 }
-.hero-title-dynamic .letter {
-  display:inline-block;
-  opacity:0;
-  transform:translateY(18px) scale(0.8);
-  transition:opacity 0.3s ease, transform 0.3s ease;
-}
-.hero-title-dynamic .letter.in {
-  opacity:1;
-  transform:translateY(0) scale(1);
-}
-@keyframes glow-pulse {
-  0%,100% { text-shadow:0 0 6px rgba(46,160,67,0.4), 0 0 12px rgba(46,160,67,0.2); color:var(--accent); }
-  50%      { text-shadow:0 0 14px rgba(46,160,67,0.9), 0 0 28px rgba(46,160,67,0.5); color:#4ade80; }
-}
-.hero-title-dynamic.glow {
-  animation:glow-pulse 2.2s ease-in-out infinite;
+@keyframes blink-cursor {
+  0%,100% { border-color:var(--accent); }
+  50%      { border-color:transparent; }
 }
 .hero-stats { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
 .hero-stat { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 16px; text-align:center; }
@@ -441,38 +432,6 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 .code-wrap:hover .copy-btn { opacity:1; }
 .copy-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
 .copy-btn.copied { background:var(--accent); color:white; border-color:var(--accent); opacity:1; }
-
-/* ===== TAG TOOLTIP ===== */
-.tag { position:relative; cursor:default; }
-.tag[data-tip]:hover::after {
-  content: attr(data-tip);
-  position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%);
-  background:var(--surface3); color:var(--t1); border:1px solid var(--border);
-  border-radius:5px; padding:4px 9px; font-size:10.5px; font-family:'Outfit',sans-serif;
-  white-space:nowrap; pointer-events:none; z-index:999;
-  box-shadow:0 4px 12px rgba(0,0,0,0.25);
-  animation:tip-in 0.15s ease;
-}
-.tag[data-tip]:hover::before {
-  content:''; position:absolute; bottom:calc(100% + 1px); left:50%; transform:translateX(-50%);
-  border:5px solid transparent; border-top-color:var(--border); pointer-events:none; z-index:999;
-}
-@keyframes tip-in { from { opacity:0; transform:translateX(-50%) translateY(4px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
-
-/* ===== COLLAPSIBLE CARD ===== */
-.card-title.collapsible { cursor:pointer; user-select:none; justify-content:space-between; }
-.card-title.collapsible::after { content:'▾'; font-size:12px; color:var(--t3); transition:transform 0.25s; flex-shrink:0; }
-.card-title.collapsible.collapsed::after { transform:rotate(-90deg); }
-.card-body { overflow:hidden; transition:max-height 0.35s ease, opacity 0.3s ease; max-height:4000px; opacity:1; }
-.card-body.collapsed { max-height:0; opacity:0; }
-
-/* ===== SIDEBAR ACTIVE PULSE ===== */
-@keyframes sb-pulse {
-  0%   { box-shadow:0 0 0 0 rgba(46,160,67,0.5); }
-  60%  { box-shadow:0 0 0 6px rgba(46,160,67,0); }
-  100% { box-shadow:0 0 0 0 rgba(46,160,67,0); }
-}
-.sb-item.pulse { animation:sb-pulse 0.6s ease; }
 </style>
 </head>
 <body>
@@ -550,7 +509,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 
 <!-- HERO -->
 <div class="hero" id="top">
-  <h1><span class="hero-title-static">Machine </span><span class="hero-title-dynamic" id="hero-type">Learning</span></h1>
+  <h1><span class="hero-title-dynamic" id="hero-type">Learning</span></h1>
   <p class="hero-sub">From data fundamentals to model evaluation</p>
 
   <!-- ML ILLUSTRATION BANNER -->
@@ -2386,78 +2345,14 @@ updateFsThumb();
   const el = document.getElementById('hero-type');
   if (!el) return;
   const word = 'Learning';
-  el.innerHTML = word.split('').map(c => `<span class="letter">${c}</span>`).join('');
-  const letters = el.querySelectorAll('.letter');
-  letters.forEach((l, i) => {
-    setTimeout(() => {
-      l.classList.add('in');
-      if (i === letters.length - 1) {
-        setTimeout(() => el.classList.add('glow'), 350);
-      }
-    }, 1200 + i * 90);
-  });
-})();
-
-// ===== TAG TOOLTIPS =====
-const tagTips = {
-  // green
-  'tg': 'Recommended / Good choice',
-  // blue
-  'tb': 'Informational / Neutral',
-  // red
-  'tr': 'Warning / Avoid / Bad',
-  // orange
-  'to': 'Caution / Use with care',
-  // violet
-  'tv': 'Alternative / Special case',
-  // yellow
-  'ty': 'Note / Edge case',
-  // teal
-  'tc': 'Tip / Best practice',
-};
-document.querySelectorAll('.tag').forEach(tag => {
-  const cls = [...tag.classList].find(c => tagTips[c]);
-  if (cls && !tag.hasAttribute('data-tip')) {
-    // Use the tag's own text as the tip context
-    tag.setAttribute('data-tip', tagTips[cls]);
+  let ci = 0;
+  function tick() {
+    ci++;
+    el.textContent = word.slice(0, ci);
+    if (ci < word.length) setTimeout(tick, 90);
   }
-});
-
-// ===== COLLAPSIBLE CARDS =====
-document.querySelectorAll('.card-title').forEach(title => {
-  // Only make collapsible if there's meaningful sibling content
-  const card = title.closest('.card');
-  if (!card) return;
-  // Wrap all siblings after title in a .card-body div
-  const siblings = [];
-  let el = title.nextElementSibling;
-  while (el) { siblings.push(el); el = el.nextElementSibling; }
-  if (!siblings.length) return;
-  const body = document.createElement('div');
-  body.className = 'card-body';
-  siblings.forEach(s => body.appendChild(s));
-  card.appendChild(body);
-  title.classList.add('collapsible');
-  title.addEventListener('click', () => {
-    const collapsed = body.classList.toggle('collapsed');
-    title.classList.toggle('collapsed', collapsed);
-  });
-});
-
-// ===== SIDEBAR ACTIVE PULSE =====
-let lastPulsed = null;
-function pulseItem(id) {
-  sbItems.forEach(b => {
-    const m = (b.getAttribute('onclick') || '').match(/goTo\('([^']+)'\)/);
-    if (m && m[1] === id && b !== lastPulsed) {
-      b.classList.remove('pulse');
-      void b.offsetWidth; // reflow to restart animation
-      b.classList.add('pulse');
-      lastPulsed = b;
-      setTimeout(() => b.classList.remove('pulse'), 700);
-    }
-  });
-}
+  setTimeout(tick, 1200);
+})();
 
 
 window.addEventListener('scroll', () => {
@@ -2475,7 +2370,6 @@ window.addEventListener('scroll', () => {
     const match = onclick.match(/goTo\('([^']+)'\)/);
     if (match && match[1] === cur) b.classList.add('active');
   });
-  if (cur) pulseItem(cur);
 }, { passive:true });
 
 </script>
