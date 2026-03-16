@@ -128,6 +128,21 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 .hero-badge { display:inline-flex; align-items:center; gap:6px; background:var(--accent-light); border:1px solid var(--accent-border); color:var(--accent); padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:18px; font-family:'Source Code Pro',monospace; }
 .hero h1 { font-family:'Nunito',sans-serif; font-weight:800; font-size:clamp(28px,4vw,44px); line-height:1.1; margin-bottom:10px; color:var(--t1); }
 .hero-sub { color:var(--t2); font-size:14px; max-width:420px; margin:0 auto 20px; }
+
+/* ===== TYPEWRITER TITLE ===== */
+.hero-title-static { color:var(--t1); }
+.hero-title-dynamic {
+  color:var(--accent);
+  border-right:3px solid var(--accent);
+  padding-right:4px;
+  animation:blink-cursor 0.75s step-end infinite;
+  display:inline-block;
+  min-width:2px;
+}
+@keyframes blink-cursor {
+  0%,100% { border-color:var(--accent); }
+  50%      { border-color:transparent; }
+}
 .hero-stats { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
 .hero-stat { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 16px; text-align:center; }
 .hero-stat-n { font-size:18px; font-weight:800; color:var(--accent); font-family:'Nunito',sans-serif; }
@@ -237,8 +252,8 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 
 /* ===== SPLIT VIZ ===== */
 .split-viz { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:16px; margin:12px 0; }
-.split-bar { display:flex; height:36px; border-radius:6px; overflow:hidden; margin:8px 0; gap:2px; }
-.split-seg { display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; font-family:'Source Code Pro',monospace; transition:all 0.2s; }
+.split-bar { display:flex; height:48px; border-radius:6px; overflow:hidden; margin:8px 0; gap:2px; }
+.split-seg { display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; font-family:'Source Code Pro',monospace; transition:all 0.2s; text-align:center; padding:4px 6px; line-height:1.3; white-space:normal; word-break:break-word; min-width:0; }
 
 /* ===== CORR SCALE ===== */
 .corr-w { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:12px; margin:8px 0; }
@@ -311,10 +326,9 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   .metric-formula { font-size:10px; word-break:break-all; white-space:normal; max-width:100%; }
 
   /* Split viz */
-  .split-bar { height:auto; flex-wrap:nowrap; }
-  .split-seg { font-size:9px; padding:6px 2px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .split-bar { height:auto; min-height:44px; }
+  .split-seg { font-size:9px; padding:4px 3px; min-width:0; }
   .split-viz { overflow:hidden; }
-  .split-viz > div { white-space:normal; word-break:break-word; }
 
   /* Correlation / covariance box */
   .corr-w { overflow-x:auto; max-width:100%; }
@@ -495,7 +509,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 
 <!-- HERO -->
 <div class="hero" id="top">
-  <h1>Machine Learning</h1>
+  <h1><span class="hero-title-static">Machine </span><span class="hero-title-dynamic" id="hero-type">Learning</span></h1>
   <p class="hero-sub">From data fundamentals to model evaluation</p>
 
   <!-- ML ILLUSTRATION BANNER -->
@@ -2326,7 +2340,30 @@ document.addEventListener('mouseup', () => { fsDragging = false; });
 window.addEventListener('scroll', updateFsThumb, { passive:true });
 updateFsThumb();
 
-// ===== HOOK SCROLL FOR PROGRESS + SIDEBAR =====
+// ===== TYPEWRITER HERO TITLE =====
+(function(){
+  const el = document.getElementById('hero-type');
+  if (!el) return;
+  const words = ['Learning','Intelligence','Engineering','Modeling','Prediction','Exploration','Mastery'];
+  let wi = 0, ci = 0, deleting = false;
+  function tick() {
+    const word = words[wi];
+    if (!deleting) {
+      ci++;
+      el.textContent = word.slice(0, ci);
+      if (ci === word.length) { deleting = true; setTimeout(tick, 1800); return; }
+      setTimeout(tick, 90);
+    } else {
+      ci--;
+      el.textContent = word.slice(0, ci);
+      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(tick, 300); return; }
+      setTimeout(tick, 45);
+    }
+  }
+  setTimeout(tick, 1200);
+})();
+
+
 window.addEventListener('scroll', () => {
   updateProgress();
   const btn = document.getElementById('back-top');
