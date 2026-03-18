@@ -355,12 +355,33 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   /* Any inline-styled box that might overflow */
   [style*="overflow-x:auto"] { max-width:100%; }
 
-  /* ML Lifecycle circular diagram — scale to fit mobile */
+  /* ML Lifecycle circular diagram — fit mobile */
   #s-lifecycle > div:last-child {
-    transform-origin: top center;
-    transform: scale(0.65);
-    height: 312px;
-    margin-bottom: -168px;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 340px;
+  }
+  #s-lifecycle > div:last-child > div[style*="position:absolute"] {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    margin: 6px;
+    vertical-align: top;
+  }
+  #s-lifecycle > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+  }
+  #s-lifecycle > div:last-child > svg {
+    display: none;
   }
 }
 
@@ -1541,7 +1562,7 @@ X_clean = X.drop(columns=high_vif)</div>
       </div>
     </div>
     <a href="Feature_engineering/feature_engineering_guide.html" style="background:var(--accent);color:white;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter=''">
-      📐 Open Full FE Guide →
+      📐 Open Feature Engineering Guide
     </a>
   </div>
   <div style="padding:16px 24px;">
