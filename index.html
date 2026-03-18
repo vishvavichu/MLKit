@@ -703,54 +703,47 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 <div id="s-lifecycle" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px 24px;margin:28px 0;text-align:center;">
   <div style="font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--t1);margin-bottom:4px;">🔄 ML Lifecycle</div>
   <div style="font-size:12px;color:var(--t3);margin-bottom:20px;">The end-to-end cycle every ML project follows</div>
-  <div style="position:relative;width:380px;height:380px;margin:0 auto;">
-    <svg viewBox="0 0 380 380" style="position:absolute;inset:0;width:100%;height:100%;">
-      <circle cx="190" cy="190" r="120" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
+  <div style="position:relative;width:480px;height:480px;margin:0 auto;">
+    <svg viewBox="0 0 480 480" style="position:absolute;inset:0;width:100%;height:100%;">
+      <circle cx="240" cy="240" r="160" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
       <defs>
         <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
       </defs>
-      <!-- arc arrows: 12° gap from each node, computed on r=120 circle -->
-      <path d="M 215 73 A 120 120 0 0 1 266 97" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 297 136 A 120 120 0 0 1 310 192" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 299 240 A 120 120 0 0 1 263 285" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 218 307 A 120 120 0 0 1 162 307" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 117 285 A 120 120 0 0 1 81 240" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 70 192 A 120 120 0 0 1 83 136" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 114 97 A 120 120 0 0 1 165 73" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- arc arrows: 10° gap from each node, r=160 circle -->
+      <path d="M 268 82 A 160 160 0 0 1 346 120" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 381 163 A 160 160 0 0 1 400 248" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 387 302 A 160 160 0 0 1 333 370" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 283 394 A 160 160 0 0 1 197 394" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 147 370 A 160 160 0 0 1 93 302" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 80 248 A 160 160 0 0 1 99 163" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 134 120 A 160 160 0 0 1 212 82" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
     </svg>
-    <!-- Nodes on circle r=120, center=(190,190), 7 nodes at 51.43° apart from 270° -->
-    <!-- 1: 270° → (190, 70) -->
-    <div style="position:absolute;left:190px;top:70px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <!-- Nodes on circle r=160, center=(240,240) -->
+    <div style="position:absolute;left:240px;top:80px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--accent-light);border:2px solid var(--accent);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🎯</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--accent);font-family:'Nunito',sans-serif;line-height:1.2;">Problem<br>Definition</div>
     </div>
-    <!-- 2: 321.43° → (281, 115) -->
-    <div style="position:absolute;left:281px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <div style="position:absolute;left:365px;top:140px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📦</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Collection</div>
     </div>
-    <!-- 3: 12.86° → (307, 217) -->
-    <div style="position:absolute;left:307px;top:217px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <div style="position:absolute;left:396px;top:276px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧹</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--orange);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Preparation</div>
     </div>
-    <!-- 4: 64.29° → (242, 298) -->
-    <div style="position:absolute;left:242px;top:298px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <div style="position:absolute;left:309px;top:384px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:rgba(46,160,67,0.12);border:2px solid var(--teal);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🔬</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.2;">EDA &amp;<br>Analysis</div>
     </div>
-    <!-- 5: 115.71° → (138, 298) -->
-    <div style="position:absolute;left:138px;top:298px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <div style="position:absolute;left:171px;top:384px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--violet-light);border:2px solid var(--violet);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧮</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--violet);font-family:'Nunito',sans-serif;line-height:1.2;">Model<br>Building</div>
     </div>
-    <!-- 6: 167.14° → (73, 217) -->
-    <div style="position:absolute;left:73px;top:217px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <div style="position:absolute;left:84px;top:276px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📏</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--yellow);font-family:'Nunito',sans-serif;line-height:1.2;">Evaluation<br>&amp; Tuning</div>
     </div>
-    <!-- 7: 218.57° → (99, 115) -->
-    <div style="position:absolute;left:99px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <div style="position:absolute;left:115px;top:140px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--red-light);border:2px solid var(--red);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🚀</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--red);font-family:'Nunito',sans-serif;line-height:1.2;">Deploy &amp;<br>Monitor</div>
     </div>
