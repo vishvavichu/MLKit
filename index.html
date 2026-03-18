@@ -709,14 +709,21 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       <defs>
         <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
       </defs>
-      <!-- arc arrows between steps (7 arcs) -->
-      <path d="M 249 86 A 120 120 0 0 1 310 190" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 310 190 A 120 120 0 0 1 249 294" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 249 294 A 120 120 0 0 1 190 310" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 190 310 A 120 120 0 0 1 131 294" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 131 294 A 120 120 0 0 1 70 190" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 70 190 A 120 120 0 0 1 131 86" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 131 86 A 120 120 0 0 1 190 70" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- arc arrows between steps: start 10° after source node, end 10° before dest node -->
+      <!-- Arc 1→2: from 280° to 311.4° -->
+      <path d="M 211 73 A 120 120 0 0 1 268 100" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 2→3: from 331.4° to 2.9° -->
+      <path d="M 299 126 A 120 120 0 0 1 310 198" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 3→4: from 22.9° to 54.3° -->
+      <path d="M 303 237 A 120 120 0 0 1 264 286" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 4→5: from 74.3° to 105.7° -->
+      <path d="M 228 306 A 120 120 0 0 1 152 306" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 5→6: from 125.7° to 157.1° -->
+      <path d="M 116 286 A 120 120 0 0 1 77 237" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 6→7: from 177.1° to 208.6° -->
+      <path d="M 70 198 A 120 120 0 0 1 81 126" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 7→1: from 228.6° to 260° -->
+      <path d="M 112 100 A 120 120 0 0 1 169 73" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
     </svg>
     <!-- Step nodes: icon centered on circle point, label below -->
     <!-- 1: Top (270°) → (190, 70) -->
