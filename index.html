@@ -709,55 +709,56 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       <defs>
         <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
       </defs>
-      <!-- arc arrows between steps: start 10° after source node, end 10° before dest node -->
-      <!-- Arc 1→2: from 280° to 311.4° -->
-      <path d="M 211 73 A 120 120 0 0 1 268 100" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <!-- Arc 2→3: from 331.4° to 2.9° -->
-      <path d="M 299 126 A 120 120 0 0 1 310 198" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <!-- Arc 3→4: from 22.9° to 54.3° -->
-      <path d="M 303 237 A 120 120 0 0 1 264 286" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <!-- Arc 4→5: from 74.3° to 105.7° -->
-      <path d="M 228 306 A 120 120 0 0 1 152 306" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <!-- Arc 5→6: from 125.7° to 157.1° -->
-      <path d="M 116 286 A 120 120 0 0 1 77 237" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <!-- Arc 6→7: from 177.1° to 208.6° -->
-      <path d="M 70 198 A 120 120 0 0 1 81 126" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <!-- Arc 7→1: from 228.6° to 260° -->
-      <path d="M 112 100 A 120 120 0 0 1 169 73" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- arc arrows: each starts 8° after source, ends 8° before dest on r=120 circle -->
+      <!-- Angles: N1=270, N2=321.43, N3=12.86, N4=64.29, N5=115.71, N6=167.14, N7=218.57 -->
+      <!-- Arc 1→2: 278° to 313.43° -->
+      <path d="M 207 72 A 120 120 0 0 1 270 103" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 2→3: 329.43° to 4.86° -->
+      <path d="M 294 128 A 120 120 0 0 1 310 200" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 3→4: 20.86° to 56.29° -->
+      <path d="M 302 233 A 120 120 0 0 1 257 290" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 4→5: 72.29° to 107.71° -->
+      <path d="M 226 304 A 120 120 0 0 1 154 304" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 5→6: 123.71° to 159.14° -->
+      <path d="M 123 290 A 120 120 0 0 1 78 233" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 6→7: 175.14° to 210.57° -->
+      <path d="M 70 200 A 120 120 0 0 1 86 128" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- Arc 7→1: 226.57° to 262° -->
+      <path d="M 110 103 A 120 120 0 0 1 173 72" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
     </svg>
-    <!-- Step nodes: icon centered on circle point, label below -->
-    <!-- 1: Top (270°) → (190, 70) -->
+    <!-- Nodes on circle r=120, center=(190,190), 7 nodes at 51.43° apart from 270° -->
+    <!-- 1: 270° → (190, 70) -->
     <div style="position:absolute;left:190px;top:70px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--accent-light);border:2px solid var(--accent);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🎯</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--accent);font-family:'Nunito',sans-serif;line-height:1.2;">Problem<br>Definition</div>
     </div>
-    <!-- 2: (321.4°) → (190+120·sin51.4, 190-120·cos51.4) ≈ (284, 115) -->
-    <div style="position:absolute;left:284px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <!-- 2: 321.43° → (281, 115) -->
+    <div style="position:absolute;left:281px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📦</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Collection</div>
     </div>
-    <!-- 3: (12.9°) → (190+120·sin102.9, 190+120·cos102.9) ≈ (307, 163) -->
-    <div style="position:absolute;left:307px;top:216px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <!-- 3: 12.86° → (307, 217) -->
+    <div style="position:absolute;left:307px;top:217px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧹</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--orange);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Preparation</div>
     </div>
-    <!-- 4: (64.3°) → ≈ (248, 297) -->
-    <div style="position:absolute;left:248px;top:297px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <!-- 4: 64.29° → (242, 298) -->
+    <div style="position:absolute;left:242px;top:298px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:rgba(46,160,67,0.12);border:2px solid var(--teal);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🔬</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.2;">EDA &amp;<br>Analysis</div>
     </div>
-    <!-- 5: (115.7°) → ≈ (132, 297) -->
-    <div style="position:absolute;left:132px;top:297px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <!-- 5: 115.71° → (138, 298) -->
+    <div style="position:absolute;left:138px;top:298px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--violet-light);border:2px solid var(--violet);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧮</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--violet);font-family:'Nunito',sans-serif;line-height:1.2;">Model<br>Building</div>
     </div>
-    <!-- 6: (167.1°) → ≈ (73, 216) -->
-    <div style="position:absolute;left:73px;top:216px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <!-- 6: 167.14° → (73, 217) -->
+    <div style="position:absolute;left:73px;top:217px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📏</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--yellow);font-family:'Nunito',sans-serif;line-height:1.2;">Evaluation<br>&amp; Tuning</div>
     </div>
-    <!-- 7: (218.6°) → ≈ (96, 115) -->
-    <div style="position:absolute;left:96px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+    <!-- 7: 218.57° → (99, 115) -->
+    <div style="position:absolute;left:99px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--red-light);border:2px solid var(--red);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🚀</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--red);font-family:'Nunito',sans-serif;line-height:1.2;">Deploy &amp;<br>Monitor</div>
     </div>
