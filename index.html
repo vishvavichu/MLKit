@@ -490,7 +490,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   <button class="sb-item" onclick="goTo('s-catcat')"><span class="ic">χ²</span>Cat vs Cat</button>
 
   <div class="sb-section">Feature Engineering</div>
-  <a class="sb-item" href="Feature_engineering/feature_engineering_guide.html"><span class="ic">📐</span> Full FE Guide ↗</a>
+  <a class="sb-item" href="Feature_engineering/feature_engineering_guide.html"><span class="ic">📐</span> Feature Engineering ↗</a>
   <button class="sb-item" onclick="goTo('s-transform')"><span class="ic">📈</span>Log / Box-Cox</button>
   <button class="sb-item" onclick="goTo('s-pca')"><span class="ic">🔻</span>PCA</button>
 
@@ -703,56 +703,54 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 <div id="s-lifecycle" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px 24px;margin:28px 0;text-align:center;">
   <div style="font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--t1);margin-bottom:4px;">🔄 ML Lifecycle</div>
   <div style="font-size:12px;color:var(--t3);margin-bottom:20px;">The end-to-end cycle every ML project follows</div>
-  <div style="position:relative;width:320px;height:320px;margin:0 auto;">
-    <svg viewBox="0 0 320 320" style="position:absolute;inset:0;width:100%;height:100%;">
-      <circle cx="160" cy="160" r="108" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
+  <div style="position:relative;width:380px;height:380px;margin:0 auto;">
+    <svg viewBox="0 0 380 380" style="position:absolute;inset:0;width:100%;height:100%;">
+      <circle cx="190" cy="190" r="120" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
       <defs>
         <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
       </defs>
-      <!-- arc arrows between steps (7 arcs, one per gap) -->
-      <!-- gap 1: after step1 (top) going clockwise -->
-      <path d="M 214 74 A 108 108 0 0 1 268 160" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 268 160 A 108 108 0 0 1 214 246" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 214 246 A 108 108 0 0 1 160 268" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 160 268 A 108 108 0 0 1 106 246" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 106 246 A 108 108 0 0 1 52 160" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 52 160 A 108 108 0 0 1 106 74" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
-      <path d="M 106 74 A 108 108 0 0 1 160 52" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <!-- arc arrows between steps (7 arcs) -->
+      <path d="M 249 86 A 120 120 0 0 1 310 190" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 310 190 A 120 120 0 0 1 249 294" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 249 294 A 120 120 0 0 1 190 310" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 190 310 A 120 120 0 0 1 131 294" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 131 294 A 120 120 0 0 1 70 190" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 70 190 A 120 120 0 0 1 131 86" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 131 86 A 120 120 0 0 1 190 70" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
     </svg>
-    <!-- Step nodes positioned on circle (r=108, center=160,160) -->
-    <!-- angles: 270°(top), 321°, 12°, 63°, 141°, 192°, 231° — evenly 360/7≈51.4° apart starting top -->
-    <!-- 1: 270° → (160, 52) -->
-    <div style="position:absolute;left:50%;top:0;transform:translate(-50%,-0%);width:72px;">
+    <!-- Step nodes positioned on circle (r=120, center=190,190) -->
+    <!-- 1: Top (270°) -->
+    <div style="position:absolute;left:50%;top:36px;transform:translate(-50%,0);width:72px;text-align:center;">
       <div style="background:var(--accent-light);border:2px solid var(--accent);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🎯</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--accent);font-family:'Nunito',sans-serif;line-height:1.2;">Problem<br>Definition</div>
     </div>
-    <!-- 2: 321.4° → (160+108·cos321°, 160+108·sin321°) = (160+83.9, 160-68.0) = (244, 92) -->
-    <div style="position:absolute;left:244px;top:70px;transform:translate(-50%,-50%);width:72px;">
+    <!-- 2: Top-right -->
+    <div style="position:absolute;left:280px;top:90px;transform:translate(-50%,-50%);width:72px;text-align:center;">
       <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📦</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Collection</div>
     </div>
-    <!-- 3: 12.9° → (160+108·cos13°, 160+108·sin13°) = (265, 184) -->
-    <div style="position:absolute;left:268px;top:184px;transform:translate(-50%,-50%);width:72px;">
+    <!-- 3: Right -->
+    <div style="position:absolute;left:310px;top:210px;transform:translate(-50%,-50%);width:72px;text-align:center;">
       <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧹</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--orange);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Preparation</div>
     </div>
-    <!-- 4: 64.3° → (160+108·cos64°, 160+108·sin64°) = (207, 257) -->
-    <div style="position:absolute;left:210px;top:258px;transform:translate(-50%,-50%);width:72px;">
+    <!-- 4: Bottom-right -->
+    <div style="position:absolute;left:248px;top:300px;transform:translate(-50%,-50%);width:72px;text-align:center;">
       <div style="background:rgba(46,160,67,0.12);border:2px solid var(--teal);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🔬</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.2;">EDA &amp;<br>Analysis</div>
     </div>
-    <!-- 5: 115.7° → (160+108·cos116°, 160+108·sin116°) = (113, 257) -->
-    <div style="position:absolute;left:110px;top:258px;transform:translate(-50%,-50%);width:72px;">
+    <!-- 5: Bottom-left -->
+    <div style="position:absolute;left:132px;top:300px;transform:translate(-50%,-50%);width:72px;text-align:center;">
       <div style="background:var(--violet-light);border:2px solid var(--violet);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧮</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--violet);font-family:'Nunito',sans-serif;line-height:1.2;">Model<br>Building</div>
     </div>
-    <!-- 6: 167.1° → (160+108·cos167°, 160+108·sin167°) = (55, 184) -->
-    <div style="position:absolute;left:52px;top:184px;transform:translate(-50%,-50%);width:72px;">
+    <!-- 6: Left -->
+    <div style="position:absolute;left:70px;top:210px;transform:translate(-50%,-50%);width:72px;text-align:center;">
       <div style="background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📏</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--yellow);font-family:'Nunito',sans-serif;line-height:1.2;">Evaluation<br>&amp; Tuning</div>
     </div>
-    <!-- 7: 218.6° → (160+108·cos219°, 160+108·sin219°) = (76, 92) -->
-    <div style="position:absolute;left:76px;top:70px;transform:translate(-50%,-50%);width:72px;">
+    <!-- 7: Top-left -->
+    <div style="position:absolute;left:100px;top:90px;transform:translate(-50%,-50%);width:72px;text-align:center;">
       <div style="background:var(--red-light);border:2px solid var(--red);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🚀</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--red);font-family:'Nunito',sans-serif;line-height:1.2;">Deploy &amp;<br>Monitor</div>
     </div>
