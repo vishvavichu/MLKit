@@ -760,61 +760,89 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     </div>
   </div>
   <!-- Mobile circular SVG (hidden on desktop, shown on mobile via CSS) -->
-  <!-- viewBox 340x380: center=(170,190), r=118. Nodes at r=118 from center.
-       Angles (clockwise from top): N1=270°, N2=321°, N3=12°, N4=63°, N5=117°, N6=168°, N7=219°
-       Node coords: N1=(170,72), N2=(249,116), N3=(285,190), N4=(249,264), N5=(91,264), N6=(55,190), N7=(91,116) -->
-  <svg id="s-lifecycle-mob" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg" style="display:none;width:100%;max-width:340px;margin:0 auto;">
-    <defs>
-      <marker id="lc-ar-m" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
-    </defs>
-    <!-- dashed ring -->
-    <circle cx="170" cy="190" r="118" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
-    <!-- arc arrows (16° gap each side of node) -->
-    <path d="M 196 75 A 118 118 0 0 1 238 101" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-    <path d="M 272 143 A 118 118 0 0 1 284 186" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-    <path d="M 272 237 A 118 118 0 0 1 244 268" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-    <path d="M 196 285 A 118 118 0 0 1 144 285" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-    <path d="M 96 268 A 118 118 0 0 1 68 237" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-    <path d="M 56 186 A 118 118 0 0 1 68 143" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-    <path d="M 102 101 A 118 118 0 0 1 144 75" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-    <!-- N1: Problem Definition — top (270°) cx=170 cy=72 -->
-    <circle cx="170" cy="72" r="22" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2"/>
-    <text x="170" y="72" text-anchor="middle" dominant-baseline="middle" font-size="16">🎯</text>
-    <text x="170" y="101" text-anchor="middle" font-size="8" font-weight="700" fill="var(--accent)" font-family="Nunito,sans-serif">Problem</text>
-    <text x="170" y="111" text-anchor="middle" font-size="8" font-weight="700" fill="var(--accent)" font-family="Nunito,sans-serif">Definition</text>
-    <!-- N2: Data Collection — upper-right (321°) cx=249 cy=116 -->
-    <circle cx="249" cy="116" r="22" fill="var(--blue-light)" stroke="var(--blue)" stroke-width="2"/>
-    <text x="249" y="116" text-anchor="middle" dominant-baseline="middle" font-size="16">📦</text>
-    <text x="278" y="110" text-anchor="middle" font-size="8" font-weight="700" fill="var(--blue)" font-family="Nunito,sans-serif">Data</text>
-    <text x="278" y="120" text-anchor="middle" font-size="8" font-weight="700" fill="var(--blue)" font-family="Nunito,sans-serif">Collection</text>
-    <!-- N3: Data Preparation — right (12°) cx=285 cy=190 -->
-    <circle cx="285" cy="190" r="22" fill="var(--orange-light)" stroke="var(--orange)" stroke-width="2"/>
-    <text x="285" y="190" text-anchor="middle" dominant-baseline="middle" font-size="16">🧹</text>
-    <text x="318" y="184" text-anchor="middle" font-size="8" font-weight="700" fill="var(--orange)" font-family="Nunito,sans-serif">Data</text>
-    <text x="318" y="194" text-anchor="middle" font-size="8" font-weight="700" fill="var(--orange)" font-family="Nunito,sans-serif">Prep</text>
-    <!-- N4: EDA — lower-right (63°) cx=249 cy=264 -->
-    <circle cx="249" cy="264" r="22" fill="rgba(46,160,67,0.12)" stroke="var(--teal)" stroke-width="2"/>
-    <text x="249" y="264" text-anchor="middle" dominant-baseline="middle" font-size="16">🔬</text>
-    <text x="249" y="294" text-anchor="middle" font-size="8" font-weight="700" fill="var(--teal)" font-family="Nunito,sans-serif">EDA &amp;</text>
-    <text x="249" y="304" text-anchor="middle" font-size="8" font-weight="700" fill="var(--teal)" font-family="Nunito,sans-serif">Analysis</text>
-    <!-- N5: Model Building — lower-left (117°) cx=91 cy=264 -->
-    <circle cx="91" cy="264" r="22" fill="var(--violet-light)" stroke="var(--violet)" stroke-width="2"/>
-    <text x="91" y="264" text-anchor="middle" dominant-baseline="middle" font-size="16">🧮</text>
-    <text x="91" y="294" text-anchor="middle" font-size="8" font-weight="700" fill="var(--violet)" font-family="Nunito,sans-serif">Model</text>
-    <text x="91" y="304" text-anchor="middle" font-size="8" font-weight="700" fill="var(--violet)" font-family="Nunito,sans-serif">Building</text>
-    <!-- N6: Evaluation — left (168°) cx=55 cy=190 -->
-    <circle cx="55" cy="190" r="22" fill="var(--yellow-light)" stroke="var(--yellow)" stroke-width="2"/>
-    <text x="55" y="190" text-anchor="middle" dominant-baseline="middle" font-size="16">📏</text>
-    <text x="22" y="184" text-anchor="middle" font-size="8" font-weight="700" fill="var(--yellow)" font-family="Nunito,sans-serif">Eval &amp;</text>
-    <text x="22" y="194" text-anchor="middle" font-size="8" font-weight="700" fill="var(--yellow)" font-family="Nunito,sans-serif">Tuning</text>
-    <!-- N7: Deploy — upper-left (219°) cx=91 cy=116 -->
-    <circle cx="91" cy="116" r="22" fill="var(--red-light)" stroke="var(--red)" stroke-width="2"/>
-    <text x="91" y="116" text-anchor="middle" dominant-baseline="middle" font-size="16">🚀</text>
-    <text x="62" y="110" text-anchor="middle" font-size="8" font-weight="700" fill="var(--red)" font-family="Nunito,sans-serif">Deploy &amp;</text>
-    <text x="62" y="120" text-anchor="middle" font-size="8" font-weight="700" fill="var(--red)" font-family="Nunito,sans-serif">Monitor</text>
-    <!-- Center -->
-    <text x="170" y="183" text-anchor="middle" font-size="22">♾️</text>
-    <text x="170" y="202" text-anchor="middle" font-size="8" font-family="Source Code Pro,monospace" fill="var(--t3)" letter-spacing="1">ITERATIVE</text>
+  <!-- viewBox 340x360: center=(170,175), r=110, nodes on circle, labels outside -->
+  <svg id="s-lifecycle-mob" viewBox="0 0 340 360" xmlns="http://www.w3.org/2000/svg" style="display:none;width:100%;max-width:340px;margin:0 auto;">
+  <defs>
+    <marker id="lc-ar-m" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
+  </defs>
+  <!-- Guide circle r=110, center=(170,175) -->
+  <circle cx="170" cy="175" r="110" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
+
+  <!--
+    7 nodes evenly at 360/7 ≈ 51.4° apart, starting at 270° (top)
+    Angles: 270, 321.4, 12.9, 64.3, 115.7, 167.1, 218.6
+    cx = 170 + 110*cos(angle), cy = 175 + 110*sin(angle)
+    Node 1 (270°): cx=170, cy=65
+    Node 2 (321.4°): cx=238, cy=106
+    Node 3 (12.9°):  cx=277, cy=175
+    Node 4 (64.3°):  cx=237, cy=244
+    Node 5 (115.7°): cx=103, cy=244
+    Node 6 (167.1°): cx=63,  cy=175
+    Node 7 (218.6°): cx=102, cy=106
+    Arc arrows: start 16° after node, end 16° before next node
+  -->
+
+  <!-- Arc arrows (on the r=110 circle, 16° gap each side) -->
+  <!-- 1→2: from 286° to 305° -->
+  <path d="M 197 68 A 110 110 0 0 1 226 93" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
+  <!-- 2→3: from 337° to 357° -->
+  <path d="M 268 120 A 110 110 0 0 1 278 158" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
+  <!-- 3→4: from 29° to 48° -->
+  <path d="M 274 196 A 110 110 0 0 1 258 228" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
+  <!-- 4→5: from 80° to 100° -->
+  <path d="M 219 258 A 110 110 0 0 1 121 258" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
+  <!-- 5→6: from 132° to 151° -->
+  <path d="M 82 228 A 110 110 0 0 1 66 196" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
+  <!-- 6→7: from 183° to 203° -->
+  <path d="M 62 158 A 110 110 0 0 1 72 120" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
+  <!-- 7→1: from 235° to 254° -->
+  <path d="M 114 93 A 110 110 0 0 1 143 68" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
+
+  <!-- Node 1: Problem Definition (270°) cx=170 cy=65 -->
+  <circle cx="170" cy="65" r="22" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2"/>
+  <text x="170" y="65" text-anchor="middle" dominant-baseline="middle" font-size="16">🎯</text>
+  <text x="170" y="95" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--accent)" font-family="Nunito,sans-serif">Problem</text>
+  <text x="170" y="106" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--accent)" font-family="Nunito,sans-serif">Definition</text>
+
+  <!-- Node 2: Data Collection (321.4°) cx=238 cy=106 -->
+  <circle cx="238" cy="106" r="22" fill="var(--blue-light)" stroke="var(--blue)" stroke-width="2"/>
+  <text x="238" y="106" text-anchor="middle" dominant-baseline="middle" font-size="16">📦</text>
+  <text x="270" y="96" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--blue)" font-family="Nunito,sans-serif">Data</text>
+  <text x="270" y="107" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--blue)" font-family="Nunito,sans-serif">Collection</text>
+
+  <!-- Node 3: Data Preparation (12.9°) cx=277 cy=175 -->
+  <circle cx="277" cy="175" r="22" fill="var(--orange-light)" stroke="var(--orange)" stroke-width="2"/>
+  <text x="277" y="175" text-anchor="middle" dominant-baseline="middle" font-size="16">🧹</text>
+  <text x="310" y="170" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--orange)" font-family="Nunito,sans-serif">Data</text>
+  <text x="310" y="181" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--orange)" font-family="Nunito,sans-serif">Prep</text>
+
+  <!-- Node 4: EDA (64.3°) cx=237 cy=244 -->
+  <circle cx="237" cy="244" r="22" fill="rgba(46,160,67,0.12)" stroke="var(--teal)" stroke-width="2"/>
+  <text x="237" y="244" text-anchor="middle" dominant-baseline="middle" font-size="16">🔬</text>
+  <text x="268" y="248" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--teal)" font-family="Nunito,sans-serif">EDA &amp;</text>
+  <text x="268" y="259" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--teal)" font-family="Nunito,sans-serif">Analysis</text>
+
+  <!-- Node 5: Model Building (115.7°) cx=103 cy=244 -->
+  <circle cx="103" cy="244" r="22" fill="var(--violet-light)" stroke="var(--violet)" stroke-width="2"/>
+  <text x="103" y="244" text-anchor="middle" dominant-baseline="middle" font-size="16">🧮</text>
+  <text x="72" y="248" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--violet)" font-family="Nunito,sans-serif">Model</text>
+  <text x="72" y="259" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--violet)" font-family="Nunito,sans-serif">Building</text>
+
+  <!-- Node 6: Evaluation (167.1°) cx=63 cy=175 -->
+  <circle cx="63" cy="175" r="22" fill="var(--yellow-light)" stroke="var(--yellow)" stroke-width="2"/>
+  <text x="63" y="175" text-anchor="middle" dominant-baseline="middle" font-size="16">📏</text>
+  <text x="30" y="170" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--yellow)" font-family="Nunito,sans-serif">Eval &amp;</text>
+  <text x="30" y="181" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--yellow)" font-family="Nunito,sans-serif">Tuning</text>
+
+  <!-- Node 7: Deploy (218.6°) cx=102 cy=106 -->
+  <circle cx="102" cy="106" r="22" fill="var(--red-light)" stroke="var(--red)" stroke-width="2"/>
+  <text x="102" y="106" text-anchor="middle" dominant-baseline="middle" font-size="16">🚀</text>
+  <text x="70" y="96" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--red)" font-family="Nunito,sans-serif">Deploy &amp;</text>
+  <text x="70" y="107" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--red)" font-family="Nunito,sans-serif">Monitor</text>
+
+  <!-- Center label -->
+  <text x="170" y="170" text-anchor="middle" font-size="20">♾️</text>
+  <text x="170" y="187" text-anchor="middle" font-size="8" font-family="Source Code Pro,monospace" fill="var(--t3)" letter-spacing="1">ITERATIVE</text>
   </svg>
 </div>
 
