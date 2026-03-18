@@ -718,39 +718,39 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       <path d="M 70 190 A 120 120 0 0 1 131 86" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
       <path d="M 131 86 A 120 120 0 0 1 190 70" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
     </svg>
-    <!-- Step nodes positioned on circle (r=120, center=190,190) -->
-    <!-- 1: Top (270°) -->
-    <div style="position:absolute;left:50%;top:36px;transform:translate(-50%,0);width:72px;text-align:center;">
+    <!-- Step nodes: icon centered on circle point, label below -->
+    <!-- 1: Top (270°) → (190, 70) -->
+    <div style="position:absolute;left:190px;top:70px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--accent-light);border:2px solid var(--accent);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🎯</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--accent);font-family:'Nunito',sans-serif;line-height:1.2;">Problem<br>Definition</div>
     </div>
-    <!-- 2: Top-right -->
-    <div style="position:absolute;left:280px;top:90px;transform:translate(-50%,-50%);width:72px;text-align:center;">
+    <!-- 2: (321.4°) → (190+120·sin51.4, 190-120·cos51.4) ≈ (284, 115) -->
+    <div style="position:absolute;left:284px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📦</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Collection</div>
     </div>
-    <!-- 3: Right -->
-    <div style="position:absolute;left:310px;top:210px;transform:translate(-50%,-50%);width:72px;text-align:center;">
+    <!-- 3: (12.9°) → (190+120·sin102.9, 190+120·cos102.9) ≈ (307, 163) -->
+    <div style="position:absolute;left:307px;top:216px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧹</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--orange);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Preparation</div>
     </div>
-    <!-- 4: Bottom-right -->
-    <div style="position:absolute;left:248px;top:300px;transform:translate(-50%,-50%);width:72px;text-align:center;">
+    <!-- 4: (64.3°) → ≈ (248, 297) -->
+    <div style="position:absolute;left:248px;top:297px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:rgba(46,160,67,0.12);border:2px solid var(--teal);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🔬</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.2;">EDA &amp;<br>Analysis</div>
     </div>
-    <!-- 5: Bottom-left -->
-    <div style="position:absolute;left:132px;top:300px;transform:translate(-50%,-50%);width:72px;text-align:center;">
+    <!-- 5: (115.7°) → ≈ (132, 297) -->
+    <div style="position:absolute;left:132px;top:297px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--violet-light);border:2px solid var(--violet);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧮</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--violet);font-family:'Nunito',sans-serif;line-height:1.2;">Model<br>Building</div>
     </div>
-    <!-- 6: Left -->
-    <div style="position:absolute;left:70px;top:210px;transform:translate(-50%,-50%);width:72px;text-align:center;">
+    <!-- 6: (167.1°) → ≈ (73, 216) -->
+    <div style="position:absolute;left:73px;top:216px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📏</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--yellow);font-family:'Nunito',sans-serif;line-height:1.2;">Evaluation<br>&amp; Tuning</div>
     </div>
-    <!-- 7: Top-left -->
-    <div style="position:absolute;left:100px;top:90px;transform:translate(-50%,-50%);width:72px;text-align:center;">
+    <!-- 7: (218.6°) → ≈ (96, 115) -->
+    <div style="position:absolute;left:96px;top:115px;transform:translate(-50%,-50%);width:80px;text-align:center;">
       <div style="background:var(--red-light);border:2px solid var(--red);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🚀</div>
       <div style="font-size:10.5px;font-weight:700;color:var(--red);font-family:'Nunito',sans-serif;line-height:1.2;">Deploy &amp;<br>Monitor</div>
     </div>
