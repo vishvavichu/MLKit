@@ -355,7 +355,48 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   /* Any inline-styled box that might overflow */
   [style*="overflow-x:auto"] { max-width:100%; }
 
-  /* ML Lifecycle — handled by responsive SVG, no override needed */
+  /* ML Lifecycle — mobile matrix grid */
+  #s-lifecycle > div:last-child {
+    width: 100% !important;
+    height: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+    position: relative !important;
+  }
+  #s-lifecycle > div:last-child > svg {
+    display: none;
+  }
+  /* center label spans full row */
+  #s-lifecycle > div:last-child > div:last-child {
+    grid-column: 1 / -1;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+  }
+  #s-lifecycle > div:last-child > div[style*="position:absolute"] {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    text-align: center;
+  }
+  #s-lifecycle > div:last-child > div[style*="position:absolute"] > div:first-child {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
 }
 
 /* ===== FAST SCROLL STRIP ===== */
@@ -707,72 +748,56 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 <div id="s-lifecycle" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px 24px;margin:28px 0;text-align:center;">
   <div style="font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--t1);margin-bottom:4px;">🔄 ML Lifecycle</div>
   <div style="font-size:12px;color:var(--t3);margin-bottom:20px;">The end-to-end cycle every ML project follows</div>
-  <svg id="lc-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg"
-    style="width:100%;max-width:480px;display:block;margin:0 auto;overflow:visible;">
-    <defs>
-      <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-        <path d="M0,0 L0,6 L6,3z" fill="#2ea043"/>
-      </marker>
-    </defs>
-
-    <!-- dashed orbit -->
-    <circle cx="240" cy="240" r="160" fill="none" stroke="#484f58" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/>
-
-    <!-- arc arrows between nodes (r=160, nodes every ~51.4°, gap ~16°) -->
-    <path d="M 284 86 A 160 160 0 0 1 333 110" fill="none" stroke="#2ea043" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.7"/>
-    <path d="M 388 179 A 160 160 0 0 1 400 231" fill="none" stroke="#2ea043" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.7"/>
-    <path d="M 380 317 A 160 160 0 0 1 346 359" fill="none" stroke="#2ea043" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.7"/>
-    <path d="M 267 398 A 160 160 0 0 1 213 398" fill="none" stroke="#2ea043" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.7"/>
-    <path d="M 134 359 A 160 160 0 0 1 100 317" fill="none" stroke="#2ea043" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.7"/>
-    <path d="M 80 231 A 160 160 0 0 1 92 179" fill="none" stroke="#2ea043" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.7"/>
-    <path d="M 147 110 A 160 160 0 0 1 196 86" fill="none" stroke="#2ea043" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.7"/>
-
-    <!-- center -->
-    <text x="240" y="234" text-anchor="middle" font-size="26">♾️</text>
-    <text x="240" y="256" text-anchor="middle" font-size="9" fill="#484f58" font-family="Source Code Pro,monospace" letter-spacing="1">ITERATIVE</text>
-
-    <!-- Node 1: Problem Definition  top  (240, 80) -->
-    <circle cx="240" cy="80" r="26" fill="rgba(46,160,67,0.12)" stroke="#2ea043" stroke-width="2"/>
-    <text x="240" y="86" text-anchor="middle" font-size="18">🎯</text>
-    <text x="240" y="118" text-anchor="middle" font-size="10" font-weight="700" fill="#2ea043" font-family="Nunito,sans-serif">Problem</text>
-    <text x="240" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="#2ea043" font-family="Nunito,sans-serif">Definition</text>
-
-    <!-- Node 2: Data Collection  top-right  (365, 140) -->
-    <circle cx="365" cy="140" r="26" fill="rgba(56,139,253,0.12)" stroke="#388bfd" stroke-width="2"/>
-    <text x="365" y="146" text-anchor="middle" font-size="18">📦</text>
-    <text x="365" y="178" text-anchor="middle" font-size="10" font-weight="700" fill="#388bfd" font-family="Nunito,sans-serif">Data</text>
-    <text x="365" y="190" text-anchor="middle" font-size="10" font-weight="700" fill="#388bfd" font-family="Nunito,sans-serif">Collection</text>
-
-    <!-- Node 3: Data Preparation  right  (396, 276) -->
-    <circle cx="396" cy="276" r="26" fill="rgba(240,136,62,0.12)" stroke="#f0883e" stroke-width="2"/>
-    <text x="396" y="282" text-anchor="middle" font-size="18">🧹</text>
-    <text x="396" y="314" text-anchor="middle" font-size="10" font-weight="700" fill="#f0883e" font-family="Nunito,sans-serif">Data</text>
-    <text x="396" y="326" text-anchor="middle" font-size="10" font-weight="700" fill="#f0883e" font-family="Nunito,sans-serif">Preparation</text>
-
-    <!-- Node 4: EDA  bottom-right  (309, 384) -->
-    <circle cx="309" cy="384" r="26" fill="rgba(57,211,83,0.12)" stroke="#39d353" stroke-width="2"/>
-    <text x="309" y="390" text-anchor="middle" font-size="18">🔬</text>
-    <text x="309" y="422" text-anchor="middle" font-size="10" font-weight="700" fill="#39d353" font-family="Nunito,sans-serif">EDA &amp;</text>
-    <text x="309" y="434" text-anchor="middle" font-size="10" font-weight="700" fill="#39d353" font-family="Nunito,sans-serif">Analysis</text>
-
-    <!-- Node 5: Model Building  bottom-left  (171, 384) -->
-    <circle cx="171" cy="384" r="26" fill="rgba(163,113,247,0.12)" stroke="#a371f7" stroke-width="2"/>
-    <text x="171" y="390" text-anchor="middle" font-size="18">🧮</text>
-    <text x="171" y="422" text-anchor="middle" font-size="10" font-weight="700" fill="#a371f7" font-family="Nunito,sans-serif">Model</text>
-    <text x="171" y="434" text-anchor="middle" font-size="10" font-weight="700" fill="#a371f7" font-family="Nunito,sans-serif">Building</text>
-
-    <!-- Node 6: Evaluation  left  (84, 276) -->
-    <circle cx="84" cy="276" r="26" fill="rgba(227,179,65,0.12)" stroke="#e3b341" stroke-width="2"/>
-    <text x="84" y="282" text-anchor="middle" font-size="18">📏</text>
-    <text x="84" y="314" text-anchor="middle" font-size="10" font-weight="700" fill="#e3b341" font-family="Nunito,sans-serif">Evaluation</text>
-    <text x="84" y="326" text-anchor="middle" font-size="10" font-weight="700" fill="#e3b341" font-family="Nunito,sans-serif">&amp; Tuning</text>
-
-    <!-- Node 7: Deploy  top-left  (115, 140) -->
-    <circle cx="115" cy="140" r="26" fill="rgba(248,81,73,0.12)" stroke="#f85149" stroke-width="2"/>
-    <text x="115" y="146" text-anchor="middle" font-size="18">🚀</text>
-    <text x="115" y="178" text-anchor="middle" font-size="10" font-weight="700" fill="#f85149" font-family="Nunito,sans-serif">Deploy &amp;</text>
-    <text x="115" y="190" text-anchor="middle" font-size="10" font-weight="700" fill="#f85149" font-family="Nunito,sans-serif">Monitor</text>
-  </svg>
+  <div style="position:relative;width:480px;height:480px;margin:0 auto;max-width:100%;overflow:visible;">
+    <svg viewBox="0 0 480 480" style="position:absolute;inset:0;width:100%;height:100%;">
+      <circle cx="240" cy="240" r="160" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
+      <defs>
+        <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
+      </defs>
+      <!-- arc arrows: 16° gap from each node, r=160 circle -->
+      <path d="M 284 86 A 160 160 0 0 1 333 110" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 388 179 A 160 160 0 0 1 400 231" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 380 317 A 160 160 0 0 1 346 359" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 267 398 A 160 160 0 0 1 213 398" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 134 359 A 160 160 0 0 1 100 317" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 80 231 A 160 160 0 0 1 92 179" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+      <path d="M 147 110 A 160 160 0 0 1 196 86" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar)" opacity="0.6"/>
+    </svg>
+    <!-- Nodes on circle r=160, center=(240,240) -->
+    <div style="position:absolute;left:240px;top:80px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+      <div style="background:var(--accent-light);border:2px solid var(--accent);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🎯</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--accent);font-family:'Nunito',sans-serif;line-height:1.2;">Problem<br>Definition</div>
+    </div>
+    <div style="position:absolute;left:365px;top:140px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+      <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📦</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Collection</div>
+    </div>
+    <div style="position:absolute;left:396px;top:276px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+      <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧹</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--orange);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Preparation</div>
+    </div>
+    <div style="position:absolute;left:309px;top:384px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+      <div style="background:rgba(46,160,67,0.12);border:2px solid var(--teal);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🔬</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.2;">EDA &amp;<br>Analysis</div>
+    </div>
+    <div style="position:absolute;left:171px;top:384px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+      <div style="background:var(--violet-light);border:2px solid var(--violet);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧮</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--violet);font-family:'Nunito',sans-serif;line-height:1.2;">Model<br>Building</div>
+    </div>
+    <div style="position:absolute;left:84px;top:276px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+      <div style="background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📏</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--yellow);font-family:'Nunito',sans-serif;line-height:1.2;">Evaluation<br>&amp; Tuning</div>
+    </div>
+    <div style="position:absolute;left:115px;top:140px;transform:translate(-50%,-50%);width:80px;text-align:center;">
+      <div style="background:var(--red-light);border:2px solid var(--red);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🚀</div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--red);font-family:'Nunito',sans-serif;line-height:1.2;">Deploy &amp;<br>Monitor</div>
+    </div>
+    <!-- center label -->
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;">
+      <div style="font-size:22px;">♾️</div>
+      <div style="font-size:9px;font-family:'Source Code Pro',monospace;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Iterative</div>
+    </div>
+  </div>
 </div>
 
 <!-- ROADMAP -->
