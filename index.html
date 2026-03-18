@@ -244,7 +244,7 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 .btn-primary:hover { filter:brightness(1.1); transform:translateY(-1px); }
 
 /* ===== METRIC CARD ===== */
-.metric-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:10px; }
+.metric-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:10px; overflow:hidden; }
 .metric-header { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px; }
 .metric-name { font-family:'Nunito',sans-serif; font-size:15px; font-weight:700; color:var(--t1); }
 .metric-formula { font-family:'Source Code Pro',monospace; font-size:12px; color:var(--accent); background:var(--accent-light); border:1px solid var(--accent-border); padding:2px 8px; border-radius:4px; }
@@ -2099,28 +2099,19 @@ FN = predicted negative but was positive (missed)</div>
   </div>
 
   <div class="card mt"><div class="card-title" style="color:var(--red)">🚫 5. Avoid These Common Mistakes</div>
-    <div class="g2">
-      <div>
-        <table class="tbl">
-          <tr><th>Mistake</th><th>Why It’s Dangerous</th></tr>
+    <table class="tbl">
+      <tr><th>Mistake</th><th>Why It’s Dangerous</th></tr>
           <tr><td>Fitting scaler on full data</td><td>Test data leaks into preprocessing — inflated metrics</td></tr>
           <tr><td>Using accuracy on imbalanced data</td><td>99% accuracy by predicting majority class — useless model</td></tr>
           <tr><td>Applying SMOTE before splitting</td><td>Synthetic samples in test set — fake performance</td></tr>
           <tr><td>Dropping nulls without checking %</td><td>Losing 30% of data silently biases the model</td></tr>
           <tr><td>Label encoding nominal features</td><td>Implies false order — model learns wrong relationships</td></tr>
-        </table>
-      </div>
-      <div>
-        <table class="tbl">
-          <tr><th>Mistake</th><th>Why It’s Dangerous</th></tr>
-          <tr><td>Shuffling time series data</td><td>Future data trains the model — data leakage</td></tr>
+      <tr><td>Shuffling time series data</td><td>Future data trains the model — data leakage</td></tr>
           <tr><td>Tuning on test set</td><td>Test set becomes part of training — overly optimistic results</td></tr>
           <tr><td>Ignoring class imbalance</td><td>Model never learns minority class — fails in production</td></tr>
           <tr><td>Skipping EDA</td><td>Outliers, skew, and wrong types break models silently</td></tr>
           <tr><td>Using R² alone for regression</td><td>High R² can still mean terrible predictions on new data</td></tr>
-        </table>
-      </div>
-    </div>
+    </table>
   </div>
 
   <div class="card mt"><div class="card-title" style="color:var(--yellow)">🔁 6. Validate Properly</div>
