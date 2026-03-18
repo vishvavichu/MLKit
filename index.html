@@ -361,41 +361,32 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     height: auto !important;
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 10px !important;
-    position: relative !important;
+    gap: 12px !important;
+    position: static !important;
+  }
+  /* override the global [style*="grid-template-columns"] collapse for lifecycle */
+  #s-lifecycle > div:last-child[style] {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
   #s-lifecycle > div:last-child > svg {
-    display: none;
+    display: none !important;
   }
-  /* center label spans full row */
-  #s-lifecycle > div:last-child > div:last-child {
-    grid-column: 1 / -1;
-    position: relative !important;
+  #s-lifecycle > div:last-child > div {
+    position: static !important;
     left: auto !important;
     top: auto !important;
     transform: none !important;
     width: 100% !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 6px 0;
-  }
-  #s-lifecycle > div:last-child > div[style*="position:absolute"] {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    width: 100% !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 !important;
     text-align: center;
   }
-  #s-lifecycle > div:last-child > div[style*="position:absolute"] > div:first-child {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
+  /* center ♾️ label spans all 3 columns */
+  #s-lifecycle > div:last-child > div:last-child {
+    grid-column: 1 / -1 !important;
+    padding: 4px 0;
   }
 }
 
