@@ -757,17 +757,11 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   <!-- Mobile circular diagram - JS SVG, single shared R, exact trig -->
   <div id="s-lifecycle-mob" style="display:none;width:min(96vw,360px);margin:0 auto;">
     <style>
-      @keyframes lc-spin {
-        from { transform: rotate(0deg); }
-        to   { transform: rotate(360deg); }
-      }
       #lc-arcs {
         transform-origin: 150px 175px;
-        animation: lc-spin 18s linear infinite;
       }
       #lc-desk-arcs {
         transform-origin: 240px 240px;
-        animation: lc-spin 18s linear infinite;
       }
     </style>
     <svg id="lc-mob-svg" viewBox="-30 0 420 370" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
