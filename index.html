@@ -818,6 +818,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       function rad(d){return d*Math.PI/180;}
       function ang(i){return -90+i*(360/N);}
       function pt(a,r){var rr=r||R;return{x:CX+rr*Math.cos(rad(a)),y:CY+rr*Math.sin(rad(a))};}
+      function mk(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
       // Build clipPath: full SVG rect minus each node circle
       var defs=mk("defs",{});
       var marker=mk("marker",{id:"lc-ar",markerWidth:"6",markerHeight:"6",refX:"5",refY:"3",orient:"auto"});
