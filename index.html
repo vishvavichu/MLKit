@@ -769,15 +769,31 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     marker.appendChild(mk('path',{d:'M0,0 L0,6 L6,3z',fill:'var(--accent)'}));
     defs.appendChild(marker);svg.appendChild(defs);
     svg.appendChild(mk('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'var(--border)','stroke-width':'1.5','stroke-dasharray':'6 4',opacity:'0.5'}));
+    var arcs=mk('g',{id:'lc-desk-arcs'});
     for(var i=0;i<N;i++){
       var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
-      svg.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));
+      arcs.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));
     }
+    svg.appendChild(arcs);
   })();
   </script>
   <!-- Mobile circular diagram — 100% SVG foreignObject, zero CSS transform ambiguity -->
   <!-- Mobile circular diagram - JS SVG, single shared R, exact trig -->
   <div id="s-lifecycle-mob" style="display:none;width:min(96vw,360px);margin:0 auto;">
+    <style>
+      @keyframes lc-spin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      #lc-arcs {
+        transform-origin: 150px 175px;
+        animation: lc-spin 18s linear infinite;
+      }
+      #lc-desk-arcs {
+        transform-origin: 240px 240px;
+        animation: lc-spin 18s linear infinite;
+      }
+    </style>
     <svg id="lc-mob-svg" viewBox="-30 0 420 370" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
       <defs>
         <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
@@ -789,7 +805,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     (function(){
       var svg=document.getElementById("lc-mob-svg");
       var NS="http://www.w3.org/2000/svg";
-      var CX=165,CY=175,R=110,NR=21,N=7,GAP=16;
+      var CX=150,CY=175,R=110,NR=21,N=7,GAP=16;
       var nodes=[
         {icon:"&#127919;",label:["Problem","Definition"],bg:"var(--accent-light)",stroke:"var(--accent)"},
         {icon:"&#128230;",label:["Data","Collection"],bg:"var(--blue-light)",stroke:"var(--blue)"},
@@ -804,10 +820,12 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       function pt(a,r){var rr=r||R;return{x:CX+rr*Math.cos(rad(a)),y:CY+rr*Math.sin(rad(a))};}
       function mk(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
       svg.appendChild(mk("circle",{cx:CX,cy:CY,r:R,fill:"none",stroke:"var(--border)","stroke-width":"1.5","stroke-dasharray":"6 4",opacity:"0.5"}));
+      var arcs=mk("g",{id:"lc-arcs"});
       for(var i=0;i<N;i++){
         var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
-        svg.appendChild(mk("path",{d:"M "+s.x.toFixed(1)+" "+s.y.toFixed(1)+" A "+R+" "+R+" 0 0 1 "+e.x.toFixed(1)+" "+e.y.toFixed(1),fill:"none",stroke:"var(--accent)","stroke-width":"1.5","marker-end":"url(#lc-ar)",opacity:"0.65"}));
+        arcs.appendChild(mk("path",{d:"M "+s.x.toFixed(1)+" "+s.y.toFixed(1)+" A "+R+" "+R+" 0 0 1 "+e.x.toFixed(1)+" "+e.y.toFixed(1),fill:"none",stroke:"var(--accent)","stroke-width":"1.5","marker-end":"url(#lc-ar)",opacity:"0.65"}));
       }
+      svg.appendChild(arcs);
       var tc=mk("text",{x:CX,y:CY-6,"text-anchor":"middle","font-size":"22","dominant-baseline":"middle"});tc.textContent="\u267e\ufe0f";svg.appendChild(tc);
       var tl=mk("text",{x:CX,y:CY+14,"text-anchor":"middle","font-size":"7.5","font-family":"Source Code Pro,monospace",fill:"var(--t3)","letter-spacing":"1.5"});tl.textContent="ITERATIVE";svg.appendChild(tl);
       for(var i=0;i<N;i++){
