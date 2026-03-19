@@ -760,153 +760,55 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     </div>
   </div>
   <!-- Mobile circular diagram — 100% SVG foreignObject, zero CSS transform ambiguity -->
-  <div id="s-lifecycle-mob" style="display:none;width:min(90vw,360px);margin:0 auto;">
-    <svg id="lc-mob-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg"
-         style="width:100%;display:block;overflow:visible;">
+  <!-- Mobile circular diagram - JS SVG, single shared R, exact trig -->
+  <div id="s-lifecycle-mob" style="display:none;width:min(92vw,340px);margin:0 auto;">
+    <svg id="lc-mob-svg" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;">
       <defs>
-        <marker id="lc-mob-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
           <path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/>
         </marker>
       </defs>
-
-      <!--
-        Layout constants (all in SVG user units, viewBox 360×360):
-          CX = CY = 180   (exact center)
-          R  = 118        (node orbit radius — nodes sit ON this circle)
-          NR = 22         (node bubble radius)
-          LR = 152        (label orbit radius = R + NR + 12px gap)
-
-        7 nodes, step = 360/7 ≈ 51.4286°, start = -90° (top)
-        angle[i] = -90 + i * 51.4286   (degrees)
-
-        Node centers (cx = 180 + 118·cos(a°), cy = 180 + 118·sin(a°)):
-          0  (-90.00°):  180.0,  62.0
-          1  (-38.57°):  272.3, 106.5
-          2  ( 12.86°):  294.9, 206.2
-          3  ( 64.29°):  231.0, 286.5
-          4  (115.71°):  129.0, 286.5
-          5  (167.14°):   65.1, 206.2
-          6  (218.57°):   87.7, 106.5
-
-        Arc arrows: gap = 16° on each side of every node
-        Start of arrow i→i+1: angle[i] + 16°
-        End   of arrow i→i+1: angle[i+1] - 16°
-      -->
-
-      <!-- Dashed guide circle — same radius R=118 as nodes -->
-      <circle cx="180" cy="180" r="118" fill="none" stroke="var(--border)"
-              stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
-
-      <!-- ── Arc arrows (pre-calculated, gap=16° each side) ── -->
-      <!-- 0→1: -74° to -54.57° -->
-      <path d="M 208.7 64.8 A 118 118 0 0 1 261.5 83.5"
-            fill="none" stroke="var(--accent)" stroke-width="1.5"
-            marker-end="url(#lc-mob-ar)" opacity="0.65"/>
-      <!-- 1→2: -22.57° to 3.14° (≈ -3.14°) -->
-      <path d="M 289.0 135.6 A 118 118 0 0 1 297.9 173.5"
-            fill="none" stroke="var(--accent)" stroke-width="1.5"
-            marker-end="url(#lc-mob-ar)" opacity="0.65"/>
-      <!-- 2→3: 28.86° to 48.29° -->
-      <path d="M 283.3 237.1 A 118 118 0 0 1 253.0 272.8"
-            fill="none" stroke="var(--accent)" stroke-width="1.5"
-            marker-end="url(#lc-mob-ar)" opacity="0.65"/>
-      <!-- 3→4: 80.29° to 99.71° -->
-      <path d="M 199.6 297.6 A 118 118 0 0 1 160.4 297.6"
-            fill="none" stroke="var(--accent)" stroke-width="1.5"
-            marker-end="url(#lc-mob-ar)" opacity="0.65"/>
-      <!-- 4→5: 131.71° to 151.14° -->
-      <path d="M 107.0 272.8 A 118 118 0 0 1  76.7 237.1"
-            fill="none" stroke="var(--accent)" stroke-width="1.5"
-            marker-end="url(#lc-mob-ar)" opacity="0.65"/>
-      <!-- 5→6: 183.14° to 202.57° -->
-      <path d="M  62.1 173.5 A 118 118 0 0 1  71.0 135.6"
-            fill="none" stroke="var(--accent)" stroke-width="1.5"
-            marker-end="url(#lc-mob-ar)" opacity="0.65"/>
-      <!-- 6→0: 234.57° to 254° (= -106°) -->
-      <path d="M  98.5  83.5 A 118 118 0 0 1 151.3  64.8"
-            fill="none" stroke="var(--accent)" stroke-width="1.5"
-            marker-end="url(#lc-mob-ar)" opacity="0.65"/>
-
-      <!-- ── Center badge ── -->
-      <text x="180" y="174" text-anchor="middle" font-size="26">♾️</text>
-      <text x="180" y="192" text-anchor="middle" font-size="8"
-            font-family="Source Code Pro,monospace" fill="var(--t3)"
-            letter-spacing="1.5">ITERATIVE</text>
-
-      <!-- ══════════════════════════════════════════════
-           NODE 0 — Problem Definition  (cx=180, cy=62)
-           ══════════════════════════════════════════════ -->
-      <circle cx="180" cy="62" r="22" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2"/>
-      <text x="180" y="62" text-anchor="middle" dominant-baseline="middle" font-size="17">🎯</text>
-      <!-- label above node (top position) -->
-      <text x="180" y="28" text-anchor="middle" font-size="9" font-weight="700"
-            fill="var(--accent)" font-family="Nunito,sans-serif">Problem</text>
-      <text x="180" y="39" text-anchor="middle" font-size="9" font-weight="700"
-            fill="var(--accent)" font-family="Nunito,sans-serif">Definition</text>
-
-      <!-- ══════════════════════════════════════════════
-           NODE 1 — Data Collection  (cx=272, cy=107)
-           ══════════════════════════════════════════════ -->
-      <circle cx="272" cy="107" r="22" fill="var(--blue-light)" stroke="var(--blue)" stroke-width="2"/>
-      <text x="272" y="107" text-anchor="middle" dominant-baseline="middle" font-size="17">📦</text>
-      <!-- label: upper-right → text to the right -->
-      <text x="302" y="100" text-anchor="start" font-size="9" font-weight="700"
-            fill="var(--blue)" font-family="Nunito,sans-serif">Data</text>
-      <text x="302" y="111" text-anchor="start" font-size="9" font-weight="700"
-            fill="var(--blue)" font-family="Nunito,sans-serif">Collection</text>
-
-      <!-- ══════════════════════════════════════════════
-           NODE 2 — Data Prep  (cx=295, cy=206)
-           ══════════════════════════════════════════════ -->
-      <circle cx="295" cy="206" r="22" fill="var(--orange-light)" stroke="var(--orange)" stroke-width="2"/>
-      <text x="295" y="206" text-anchor="middle" dominant-baseline="middle" font-size="17">🧹</text>
-      <!-- label: right side -->
-      <text x="324" y="200" text-anchor="start" font-size="9" font-weight="700"
-            fill="var(--orange)" font-family="Nunito,sans-serif">Data</text>
-      <text x="324" y="211" text-anchor="start" font-size="9" font-weight="700"
-            fill="var(--orange)" font-family="Nunito,sans-serif">Prep</text>
-
-      <!-- ══════════════════════════════════════════════
-           NODE 3 — EDA  (cx=231, cy=287)
-           ══════════════════════════════════════════════ -->
-      <circle cx="231" cy="287" r="22" fill="rgba(46,160,67,0.12)" stroke="var(--teal)" stroke-width="2"/>
-      <text x="231" y="287" text-anchor="middle" dominant-baseline="middle" font-size="17">🔬</text>
-      <!-- label: lower-right → below node -->
-      <text x="231" y="318" text-anchor="middle" font-size="9" font-weight="700"
-            fill="var(--teal)" font-family="Nunito,sans-serif">EDA &amp; Analysis</text>
-
-      <!-- ══════════════════════════════════════════════
-           NODE 4 — Model Building  (cx=129, cy=287)
-           ══════════════════════════════════════════════ -->
-      <circle cx="129" cy="287" r="22" fill="var(--violet-light)" stroke="var(--violet)" stroke-width="2"/>
-      <text x="129" y="287" text-anchor="middle" dominant-baseline="middle" font-size="17">🧮</text>
-      <!-- label: lower-left → below node -->
-      <text x="129" y="318" text-anchor="middle" font-size="9" font-weight="700"
-            fill="var(--violet)" font-family="Nunito,sans-serif">Model Building</text>
-
-      <!-- ══════════════════════════════════════════════
-           NODE 5 — Eval &amp; Tuning  (cx=65, cy=206)
-           ══════════════════════════════════════════════ -->
-      <circle cx="65" cy="206" r="22" fill="var(--yellow-light)" stroke="var(--yellow)" stroke-width="2"/>
-      <text x="65" y="206" text-anchor="middle" dominant-baseline="middle" font-size="17">📏</text>
-      <!-- label: left side -->
-      <text x="36" y="200" text-anchor="end" font-size="9" font-weight="700"
-            fill="var(--yellow)" font-family="Nunito,sans-serif">Eval &amp;</text>
-      <text x="36" y="211" text-anchor="end" font-size="9" font-weight="700"
-            fill="var(--yellow)" font-family="Nunito,sans-serif">Tuning</text>
-
-      <!-- ══════════════════════════════════════════════
-           NODE 6 — Deploy &amp; Monitor  (cx=88, cy=107)
-           ══════════════════════════════════════════════ -->
-      <circle cx="88" cy="107" r="22" fill="var(--red-light)" stroke="var(--red)" stroke-width="2"/>
-      <text x="88" y="107" text-anchor="middle" dominant-baseline="middle" font-size="17">🚀</text>
-      <!-- label: upper-left → text to the left -->
-      <text x="58" y="100" text-anchor="end" font-size="9" font-weight="700"
-            fill="var(--red)" font-family="Nunito,sans-serif">Deploy &amp;</text>
-      <text x="58" y="111" text-anchor="end" font-size="9" font-weight="700"
-            fill="var(--red)" font-family="Nunito,sans-serif">Monitor</text>
-
     </svg>
+    <script>
+    (function(){
+      var svg=document.getElementById("lc-mob-svg");
+      var NS="http://www.w3.org/2000/svg";
+      var CX=170,CY=175,R=118,NR=21,N=7,GAP=16;
+      var nodes=[
+        {icon:"&#127919;",label:["Problem","Definition"],bg:"var(--accent-light)",stroke:"var(--accent)"},
+        {icon:"&#128230;",label:["Data","Collection"],bg:"var(--blue-light)",stroke:"var(--blue)"},
+        {icon:"&#129529;",label:["Data","Prep"],bg:"var(--orange-light)",stroke:"var(--orange)"},
+        {icon:"&#128300;",label:["EDA &amp;","Analysis"],bg:"rgba(46,160,67,0.12)",stroke:"var(--teal)"},
+        {icon:"&#129518;",label:["Model","Building"],bg:"var(--violet-light)",stroke:"var(--violet)"},
+        {icon:"&#128207;",label:["Eval &amp;","Tuning"],bg:"var(--yellow-light)",stroke:"var(--yellow)"},
+        {icon:"&#128640;",label:["Deploy &amp;","Monitor"],bg:"var(--red-light)",stroke:"var(--red)"}
+      ];
+      function rad(d){return d*Math.PI/180;}
+      function ang(i){return -90+i*(360/N);}
+      function pt(a,r){var rr=r||R;return{x:CX+rr*Math.cos(rad(a)),y:CY+rr*Math.sin(rad(a))};}
+      function mk(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+      svg.appendChild(mk("circle",{cx:CX,cy:CY,r:R,fill:"none",stroke:"var(--border)","stroke-width":"1.5","stroke-dasharray":"6 4",opacity:"0.5"}));
+      for(var i=0;i<N;i++){
+        var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
+        svg.appendChild(mk("path",{d:"M "+s.x.toFixed(1)+" "+s.y.toFixed(1)+" A "+R+" "+R+" 0 0 1 "+e.x.toFixed(1)+" "+e.y.toFixed(1),fill:"none",stroke:"var(--accent)","stroke-width":"1.5","marker-end":"url(#lc-ar)",opacity:"0.65"}));
+      }
+      var tc=mk("text",{x:CX,y:CY-6,"text-anchor":"middle","font-size":"22","dominant-baseline":"middle"});tc.textContent="\u267e\ufe0f";svg.appendChild(tc);
+      var tl=mk("text",{x:CX,y:CY+14,"text-anchor":"middle","font-size":"7.5","font-family":"Source Code Pro,monospace",fill:"var(--t3)","letter-spacing":"1.5"});tl.textContent="ITERATIVE";svg.appendChild(tl);
+      for(var i=0;i<N;i++){
+        var a=ang(i),p=pt(a),nd=nodes[i];
+        svg.appendChild(mk("circle",{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:NR,fill:nd.bg,stroke:nd.stroke,"stroke-width":"2"}));
+        var ti=mk("text",{x:p.x.toFixed(1),y:p.y.toFixed(1),"text-anchor":"middle","dominant-baseline":"middle","font-size":"15"});
+        ti.innerHTML=nd.icon;svg.appendChild(ti);
+        var LR=R+NR+11,lp=pt(a,LR);
+        var anchor=p.x<CX-8?"end":p.x>CX+8?"start":"middle";
+        nd.label.forEach(function(line,li){
+          var lineY=(lp.y+(li-(nd.label.length-1)/2)*11).toFixed(1);
+          var t=mk("text",{x:lp.x.toFixed(1),y:lineY,"text-anchor":anchor,"dominant-baseline":"middle","font-size":"8.5","font-weight":"700","font-family":"Nunito,sans-serif",fill:nd.stroke});
+          t.innerHTML=line;svg.appendChild(t);
+        });
+      }
+    })();
+    </script>
   </div>
 </div><!-- end #s-lifecycle -->
 
