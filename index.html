@@ -778,7 +778,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   <!-- Mobile circular diagram — 100% SVG foreignObject, zero CSS transform ambiguity -->
   <!-- Mobile circular diagram - JS SVG, single shared R, exact trig -->
   <div id="s-lifecycle-mob" style="display:none;width:min(96vw,360px);margin:0 auto;">
-    <svg id="lc-mob-svg" viewBox="0 0 360 390" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;">
+    <svg id="lc-mob-svg" viewBox="-30 0 420 370" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
       <defs>
         <marker id="lc-ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
           <path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/>
@@ -789,7 +789,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     (function(){
       var svg=document.getElementById("lc-mob-svg");
       var NS="http://www.w3.org/2000/svg";
-      var CX=180,CY=180,R=118,NR=21,N=7,GAP=16;
+      var CX=180,CY=175,R=110,NR=21,N=7,GAP=16;
       var nodes=[
         {icon:"&#127919;",label:["Problem","Definition"],bg:"var(--accent-light)",stroke:"var(--accent)"},
         {icon:"&#128230;",label:["Data","Collection"],bg:"var(--blue-light)",stroke:"var(--blue)"},
@@ -815,11 +815,11 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
         svg.appendChild(mk("circle",{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:NR,fill:nd.bg,stroke:nd.stroke,"stroke-width":"2"}));
         var ti=mk("text",{x:p.x.toFixed(1),y:p.y.toFixed(1),"text-anchor":"middle","dominant-baseline":"middle","font-size":"15"});
         ti.innerHTML=nd.icon;svg.appendChild(ti);
-        var LR=R+NR+14,lp=pt(a,LR);
-        var anchor=p.x<CX-8?"end":p.x>CX+8?"start":"middle";
+        var LR=R+NR+18,lp=pt(a,LR);
+        var anchor=p.x<CX-10?"end":p.x>CX+10?"start":"middle";
         nd.label.forEach(function(line,li){
-          var lineY=(lp.y+(li-(nd.label.length-1)/2)*11).toFixed(1);
-          var t=mk("text",{x:lp.x.toFixed(1),y:lineY,"text-anchor":anchor,"dominant-baseline":"middle","font-size":"8.5","font-weight":"700","font-family":"Nunito,sans-serif",fill:nd.stroke});
+          var lineY=(lp.y+(li-(nd.label.length-1)/2)*12).toFixed(1);
+          var t=mk("text",{x:lp.x.toFixed(1),y:lineY,"text-anchor":anchor,"dominant-baseline":"middle","font-size":"9","font-weight":"700","font-family":"Nunito,sans-serif",fill:nd.stroke});
           t.innerHTML=line;svg.appendChild(t);
         });
       }
