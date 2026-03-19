@@ -768,18 +768,18 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     var marker=mk('marker',{id:'lc-ar-d',markerWidth:'6',markerHeight:'6',refX:'5',refY:'3',orient:'auto'});
     marker.appendChild(mk('path',{d:'M0,0 L0,6 L6,3z',fill:'var(--accent)'}));
     defs.appendChild(marker);
-    var maskD=mk('mask',{id:'lc-desk-mask'});
-    maskD.appendChild(mk('rect',{x:'-50',y:'-50',width:'600',height:'600',fill:'white'}));
-    for(var i=0;i<N;i++){var a=ang(i),p=pt(a);maskD.appendChild(mk('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:'26',fill:'black'}));}
-    defs.appendChild(maskD);
     svg.appendChild(defs);
     svg.appendChild(mk('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'var(--border)','stroke-width':'1.5','stroke-dasharray':'6 4',opacity:'0.5'}));
-    var darcs=mk('g',{id:'lc-desk-arcs',mask:'url(#lc-desk-mask)'});
+    var darcs=mk('g',{id:'lc-desk-arcs'});
     for(var i=0;i<N;i++){
       var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
       darcs.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));
     }
     svg.appendChild(darcs);
+    // Static cover circles — hide arrows when passing through nodes
+    var dcovers=mk('g',{});
+    for(var i=0;i<N;i++){var a=ang(i),p=pt(a);dcovers.appendChild(mk('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:'24',fill:'var(--surface)',stroke:'none'}));}
+    svg.appendChild(dcovers);
   })();
   </script>
   <!-- Mobile circular diagram — 100% SVG foreignObject, zero CSS transform ambiguity -->
@@ -824,41 +824,22 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       var marker=mk("marker",{id:"lc-ar",markerWidth:"6",markerHeight:"6",refX:"5",refY:"3",orient:"auto"});
       marker.appendChild(mk("path",{d:"M0,0 L0,6 L6,3z",fill:"var(--accent)"}));
       defs.appendChild(marker);
-      var clip=mk("clipPath",{id:"lc-mob-clip"});
-      // Full bounding rect
-      clip.appendChild(mk("rect",{x:"-50",y:"-50",width:"520",height:"470"}));
-      // Cut out each node circle (slightly larger than NR to fully hide arrow)
-      for(var i=0;i<N;i++){
-        var a=ang(i),p=pt(a);
-        var hole=mk("rect",{
-          x:(p.x-NR-2).toFixed(1),
-          y:(p.y-NR-2).toFixed(1),
-          width:((NR+2)*2).toFixed(1),
-          height:((NR+2)*2).toFixed(1),
-          rx:(NR+2)
-        });
-        // SVG clipPath uses even-odd or nonzero — we need to subtract, so use a mask instead
-        hole.setAttribute("fill","black");
-        clip.appendChild(hole);
-      }
-      defs.appendChild(clip);
       svg.appendChild(defs);
-
-      // Use a mask instead (supports subtraction)
-      var maskEl=mk("mask",{id:"lc-mob-mask"});
-      maskEl.appendChild(mk("rect",{x:"-50",y:"-50",width:"520",height:"470",fill:"white"}));
-      for(var i=0;i<N;i++){
-        var a=ang(i),p=pt(a);
-        maskEl.appendChild(mk("circle",{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:(NR+3),fill:"black"}));
-      }
-      defs.appendChild(maskEl);
       svg.appendChild(mk("circle",{cx:CX,cy:CY,r:R,fill:"none",stroke:"var(--border)","stroke-width":"1.5","stroke-dasharray":"6 4",opacity:"0.5"}));
-      var arcs=mk("g",{id:"lc-arcs",mask:"url(#lc-mob-mask)"});
+      // Rotating arcs group
+      var arcs=mk("g",{id:"lc-arcs"});
       for(var i=0;i<N;i++){
         var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
         arcs.appendChild(mk("path",{d:"M "+s.x.toFixed(1)+" "+s.y.toFixed(1)+" A "+R+" "+R+" 0 0 1 "+e.x.toFixed(1)+" "+e.y.toFixed(1),fill:"none",stroke:"var(--accent)","stroke-width":"1.5","marker-end":"url(#lc-ar)",opacity:"0.65"}));
       }
       svg.appendChild(arcs);
+      // Static cover circles — sit on top of arcs, hide arrows when passing through nodes
+      var covers=mk("g",{});
+      for(var i=0;i<N;i++){
+        var a=ang(i),p=pt(a);
+        covers.appendChild(mk("circle",{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:(NR+1),fill:"var(--surface)",stroke:"none",opacity:"1"}));
+      }
+      svg.appendChild(covers);
       var tc=mk("text",{x:CX,y:CY-6,"text-anchor":"middle","font-size":"22","dominant-baseline":"middle"});tc.textContent="\u267e\ufe0f";svg.appendChild(tc);
       var tl=mk("text",{x:CX,y:CY+14,"text-anchor":"middle","font-size":"7.5","font-family":"Source Code Pro,monospace",fill:"var(--t3)","letter-spacing":"1.5"});tl.textContent="ITERATIVE";svg.appendChild(tl);
       for(var i=0;i<N;i++){
