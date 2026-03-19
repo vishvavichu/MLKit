@@ -709,77 +709,48 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 <div id="s-lifecycle" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px 24px;margin:28px 0;text-align:center;">
   <div style="font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--t1);margin-bottom:4px;">🔄 ML Lifecycle</div>
   <div style="font-size:12px;color:var(--t3);margin-bottom:20px;">The end-to-end cycle every ML project follows</div>
-  <div id="s-lifecycle-desktop" style="position:relative;width:480px;height:480px;margin:0 auto;max-width:100%;">
-    <svg id="lc-desk-svg" viewBox="0 0 480 480" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;"></svg>
-    <!-- Nodes: rotate(angle)translate(160px)rotate(-angle), all centered -->
-    <div style="position:absolute;left:50%;top:50%;width:0;height:0;">
-      <!-- Node 0: -90deg -->
-      <div style="position:absolute;transform:rotate(-90deg) translate(160px) rotate(90deg) translate(-50%,-50%);width:80px;text-align:center;">
-        <div style="background:var(--accent-light);border:2px solid var(--accent);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🎯</div>
-        <div style="font-size:10.5px;font-weight:700;color:var(--accent);font-family:'Nunito',sans-serif;line-height:1.2;">Problem<br>Definition</div>
-      </div>
-      <!-- Node 1: -90+51.43=-38.57deg -->
-      <div style="position:absolute;transform:rotate(-38.57deg) translate(160px) rotate(38.57deg) translate(-50%,-50%);width:80px;text-align:center;">
-        <div style="background:var(--blue-light);border:2px solid var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📦</div>
-        <div style="font-size:10.5px;font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Collection</div>
-      </div>
-      <!-- Node 2: 12.86deg -->
-      <div style="position:absolute;transform:rotate(12.86deg) translate(160px) rotate(-12.86deg) translate(-50%,-50%);width:80px;text-align:center;">
-        <div style="background:var(--orange-light);border:2px solid var(--orange);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧹</div>
-        <div style="font-size:10.5px;font-weight:700;color:var(--orange);font-family:'Nunito',sans-serif;line-height:1.2;">Data<br>Preparation</div>
-      </div>
-      <!-- Node 3: 64.29deg -->
-      <div style="position:absolute;transform:rotate(64.29deg) translate(160px) rotate(-64.29deg) translate(-50%,-50%);width:80px;text-align:center;">
-        <div style="background:rgba(46,160,67,0.12);border:2px solid var(--teal);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🔬</div>
-        <div style="font-size:10.5px;font-weight:700;color:var(--teal);font-family:'Nunito',sans-serif;line-height:1.2;">EDA &amp;<br>Analysis</div>
-      </div>
-      <!-- Node 4: 115.71deg -->
-      <div style="position:absolute;transform:rotate(115.71deg) translate(160px) rotate(-115.71deg) translate(-50%,-50%);width:80px;text-align:center;">
-        <div style="background:var(--violet-light);border:2px solid var(--violet);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🧮</div>
-        <div style="font-size:10.5px;font-weight:700;color:var(--violet);font-family:'Nunito',sans-serif;line-height:1.2;">Model<br>Building</div>
-      </div>
-      <!-- Node 5: 167.14deg -->
-      <div style="position:absolute;transform:rotate(167.14deg) translate(160px) rotate(-167.14deg) translate(-50%,-50%);width:80px;text-align:center;">
-        <div style="background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">📏</div>
-        <div style="font-size:10.5px;font-weight:700;color:var(--yellow);font-family:'Nunito',sans-serif;line-height:1.2;">Evaluation<br>&amp; Tuning</div>
-      </div>
-      <!-- Node 6: 218.57deg -->
-      <div style="position:absolute;transform:rotate(218.57deg) translate(160px) rotate(-218.57deg) translate(-50%,-50%);width:80px;text-align:center;">
-        <div style="background:var(--red-light);border:2px solid var(--red);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 4px;">🚀</div>
-        <div style="font-size:10.5px;font-weight:700;color:var(--red);font-family:'Nunito',sans-serif;line-height:1.2;">Deploy &amp;<br>Monitor</div>
-      </div>
-    </div>
-    <!-- center label -->
-    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;">
-      <div style="font-size:22px;">♾️</div>
-      <div style="font-size:9px;font-family:'Source Code Pro',monospace;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Iterative</div>
-    </div>
+  <div id="s-lifecycle-desktop" style="width:520px;height:520px;margin:0 auto;max-width:100%;">
+    <svg id="lc-desk-svg" viewBox="0 0 520 520" style="width:100%;display:block;"></svg>
   </div>
   <script>
   (function(){
     var svg=document.getElementById('lc-desk-svg');
     var NS='http://www.w3.org/2000/svg';
-    var CX=240,CY=240,R=160,N=7,GAP=26;
+    var CX=260,CY=260,R=170,NR=26,N=7,GAP=24;
+    var nodes=[
+      {icon:'&#127919;',label:['Problem','Definition'],bg:'var(--accent-light)',stroke:'var(--accent)'},
+      {icon:'&#128230;',label:['Data','Collection'],bg:'var(--blue-light)',stroke:'var(--blue)'},
+      {icon:'&#129529;',label:['Data','Preparation'],bg:'var(--orange-light)',stroke:'var(--orange)'},
+      {icon:'&#128300;',label:['EDA &amp;','Analysis'],bg:'rgba(46,160,67,0.12)',stroke:'var(--teal)'},
+      {icon:'&#129518;',label:['Model','Building'],bg:'var(--violet-light)',stroke:'var(--violet)'},
+      {icon:'&#128207;',label:['Evaluation','&amp; Tuning'],bg:'var(--yellow-light)',stroke:'var(--yellow)'},
+      {icon:'&#128640;',label:['Deploy &amp;','Monitor'],bg:'var(--red-light)',stroke:'var(--red)'}
+    ];
     function rad(d){return d*Math.PI/180;}
     function ang(i){return -90+i*(360/N);}
-    function pt(a){return{x:CX+R*Math.cos(rad(a)),y:CY+R*Math.sin(rad(a))};}
+    function pt(a,r){var rr=r||R;return{x:CX+rr*Math.cos(rad(a)),y:CY+rr*Math.sin(rad(a))};}
     function mk(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
     var defs=mk('defs',{});
     var marker=mk('marker',{id:'lc-ar-d',markerWidth:'6',markerHeight:'6',refX:'5',refY:'3',orient:'auto'});
     marker.appendChild(mk('path',{d:'M0,0 L0,6 L6,3z',fill:'var(--accent)'}));
-    defs.appendChild(marker);
-    svg.appendChild(defs);
+    defs.appendChild(marker);svg.appendChild(defs);
     svg.appendChild(mk('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'var(--border)','stroke-width':'1.5','stroke-dasharray':'6 4',opacity:'0.5'}));
     var darcs=mk('g',{id:'lc-desk-arcs'});
-    for(var i=0;i<N;i++){
-      var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
-      darcs.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));
-    }
+    for(var i=0;i<N;i++){var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);darcs.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));}
     svg.appendChild(darcs);
-    // Static cover circles — hide arrows when passing through nodes
-    var dcovers=mk('g',{});
-    for(var i=0;i<N;i++){var a=ang(i),p=pt(a);dcovers.appendChild(mk('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:'32',fill:'var(--surface)',stroke:'none'}));}
-    svg.appendChild(dcovers);
+    var covers=mk('g',{});
+    for(var i=0;i<N;i++){var a=ang(i),p=pt(a);covers.appendChild(mk('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:(NR+2),fill:'var(--surface)',stroke:'none'}));}
+    svg.appendChild(covers);
+    for(var i=0;i<N;i++){
+      var a=ang(i),p=pt(a),nd=nodes[i];
+      svg.appendChild(mk('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:NR,fill:nd.bg,stroke:nd.stroke,'stroke-width':'2'}));
+      var ti=mk('text',{x:p.x.toFixed(1),y:p.y.toFixed(1),'text-anchor':'middle','dominant-baseline':'middle','font-size':'18'});ti.innerHTML=nd.icon;svg.appendChild(ti);
+      var LR=R+NR+18,lp=pt(a,LR);
+      var anchor=p.x<CX-10?'end':p.x>CX+10?'start':'middle';
+      nd.label.forEach(function(line,li){var lineY=(lp.y+(li-(nd.label.length-1)/2)*14).toFixed(1);var t=mk('text',{x:lp.x.toFixed(1),y:lineY,'text-anchor':anchor,'dominant-baseline':'middle','font-size':'11','font-weight':'700','font-family':'Nunito,sans-serif',fill:nd.stroke});t.innerHTML=line;svg.appendChild(t);});
+    }
+    var tc=mk('text',{x:CX,y:CY-8,'text-anchor':'middle','font-size':'26','dominant-baseline':'middle'});tc.textContent='\u267e\ufe0f';svg.appendChild(tc);
+    var tl=mk('text',{x:CX,y:CY+14,'text-anchor':'middle','font-size':'9','font-family':'Source Code Pro,monospace',fill:'var(--t3)','letter-spacing':'1.5'});tl.textContent='ITERATIVE';svg.appendChild(tl);
   })();
   </script>
   <!-- Mobile circular diagram — 100% SVG foreignObject, zero CSS transform ambiguity -->
@@ -805,7 +776,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     (function(){
       var svg=document.getElementById("lc-mob-svg");
       var NS="http://www.w3.org/2000/svg";
-      var CX=150,CY=175,R=110,NR=21,N=7,GAP=16;
+      var CX=150,CY=175,R=110,NR=21,N=7,GAP=22;
       var nodes=[
         {icon:"&#127919;",label:["Problem","Definition"],bg:"var(--accent-light)",stroke:"var(--accent)"},
         {icon:"&#128230;",label:["Data","Collection"],bg:"var(--blue-light)",stroke:"var(--blue)"},
