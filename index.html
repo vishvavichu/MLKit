@@ -760,83 +760,174 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     </div>
   </div>
   <!-- Mobile circular diagram (hidden on desktop, shown on mobile via CSS) -->
-  <div id="s-lifecycle-mob" style="display:none;max-width:340px;margin:0 auto;">
-    <svg viewBox="0 0 340 350" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <defs>
-        <marker id="lc-ar-m" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/></marker>
-      </defs>
+  <div id="s-lifecycle-mob" style="display:none;">
+    <style>
+      .lc-ring {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+      }
+      .lc-ring svg.lc-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      .lc-center {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+      }
+      .lc-center-icon { font-size: 22px; line-height: 1; }
+      .lc-center-text {
+        font-size: 8px;
+        font-family: 'Source Code Pro', monospace;
+        color: var(--t3);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
+      /* Each node is positioned via JS-calculated transform */
+      .lc-node {
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        /* top-left corner anchored at center; offset by -22px each side */
+        top: 50%;
+        left: 50%;
+        margin-top: -22px;
+        margin-left: -22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        border: 2px solid;
+        transition: transform 0.2s;
+      }
+      .lc-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 9px;
+        font-weight: 700;
+        font-family: 'Nunito', sans-serif;
+        line-height: 1.25;
+        text-align: center;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+    </style>
 
-      <!-- Guide circle r=110, center=(170,185) -->
-      <circle cx="170" cy="185" r="110" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
-
-      <!--
-        7 nodes at 360/7 ≈ 51.4° apart, starting at 270° (top)
-        cx = 170 + 110*cos(angle°),  cy = 185 + 110*sin(angle°)
-        Node 1 (270°): 170, 75
-        Node 2 (321.4°): 238, 116
-        Node 3 (12.9°):  277, 185
-        Node 4 (64.3°):  237, 254
-        Node 5 (115.7°): 103, 254
-        Node 6 (167.1°):  63, 185
-        Node 7 (218.6°): 102, 116
-      -->
-
-      <!-- Arc arrows -->
-      <path d="M 197 78 A 110 110 0 0 1 226 103" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-      <path d="M 268 130 A 110 110 0 0 1 278 168" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-      <path d="M 274 206 A 110 110 0 0 1 258 238" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-      <path d="M 219 268 A 110 110 0 0 1 121 268" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-      <path d="M 82 238 A 110 110 0 0 1 66 206" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-      <path d="M 62 168 A 110 110 0 0 1 72 130" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-      <path d="M 114 103 A 110 110 0 0 1 143 78" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#lc-ar-m)" opacity="0.6"/>
-
-      <!-- Node 1: Problem Definition (top) -->
-      <circle cx="170" cy="75" r="22" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2"/>
-      <text x="170" y="75" text-anchor="middle" dominant-baseline="middle" font-size="16">🎯</text>
-      <text x="170" y="46" text-anchor="middle" font-size="9" font-weight="700" fill="var(--accent)" font-family="Nunito,sans-serif">Problem</text>
-      <text x="170" y="57" text-anchor="middle" font-size="9" font-weight="700" fill="var(--accent)" font-family="Nunito,sans-serif">Definition</text>
-
-      <!-- Node 2: Data Collection (upper-right) -->
-      <circle cx="238" cy="116" r="22" fill="var(--blue-light)" stroke="var(--blue)" stroke-width="2"/>
-      <text x="238" y="116" text-anchor="middle" dominant-baseline="middle" font-size="16">📦</text>
-      <text x="278" y="106" text-anchor="middle" font-size="9" font-weight="700" fill="var(--blue)" font-family="Nunito,sans-serif">Data</text>
-      <text x="278" y="117" text-anchor="middle" font-size="9" font-weight="700" fill="var(--blue)" font-family="Nunito,sans-serif">Collection</text>
-
-      <!-- Node 3: Data Preparation (right) -->
-      <circle cx="277" cy="185" r="22" fill="var(--orange-light)" stroke="var(--orange)" stroke-width="2"/>
-      <text x="277" y="185" text-anchor="middle" dominant-baseline="middle" font-size="16">🧹</text>
-      <text x="318" y="180" text-anchor="middle" font-size="9" font-weight="700" fill="var(--orange)" font-family="Nunito,sans-serif">Data</text>
-      <text x="318" y="191" text-anchor="middle" font-size="9" font-weight="700" fill="var(--orange)" font-family="Nunito,sans-serif">Prep</text>
-
-      <!-- Node 4: EDA (lower-right) -->
-      <circle cx="237" cy="254" r="22" fill="rgba(46,160,67,0.12)" stroke="var(--teal)" stroke-width="2"/>
-      <text x="237" y="254" text-anchor="middle" dominant-baseline="middle" font-size="16">🔬</text>
-      <text x="276" y="258" text-anchor="middle" font-size="9" font-weight="700" fill="var(--teal)" font-family="Nunito,sans-serif">EDA &amp;</text>
-      <text x="276" y="269" text-anchor="middle" font-size="9" font-weight="700" fill="var(--teal)" font-family="Nunito,sans-serif">Analysis</text>
-
-      <!-- Node 5: Model Building (lower-left) -->
-      <circle cx="103" cy="254" r="22" fill="var(--violet-light)" stroke="var(--violet)" stroke-width="2"/>
-      <text x="103" y="254" text-anchor="middle" dominant-baseline="middle" font-size="16">🧮</text>
-      <text x="64" y="258" text-anchor="middle" font-size="9" font-weight="700" fill="var(--violet)" font-family="Nunito,sans-serif">Model</text>
-      <text x="64" y="269" text-anchor="middle" font-size="9" font-weight="700" fill="var(--violet)" font-family="Nunito,sans-serif">Building</text>
-
-      <!-- Node 6: Evaluation (left) -->
-      <circle cx="63" cy="185" r="22" fill="var(--yellow-light)" stroke="var(--yellow)" stroke-width="2"/>
-      <text x="63" y="185" text-anchor="middle" dominant-baseline="middle" font-size="16">📏</text>
-      <text x="22" y="180" text-anchor="middle" font-size="9" font-weight="700" fill="var(--yellow)" font-family="Nunito,sans-serif">Eval &amp;</text>
-      <text x="22" y="191" text-anchor="middle" font-size="9" font-weight="700" fill="var(--yellow)" font-family="Nunito,sans-serif">Tuning</text>
-
-      <!-- Node 7: Deploy (upper-left) -->
-      <circle cx="102" cy="116" r="22" fill="var(--red-light)" stroke="var(--red)" stroke-width="2"/>
-      <text x="102" y="116" text-anchor="middle" dominant-baseline="middle" font-size="16">🚀</text>
-      <text x="62" y="106" text-anchor="middle" font-size="9" font-weight="700" fill="var(--red)" font-family="Nunito,sans-serif">Deploy &amp;</text>
-      <text x="62" y="117" text-anchor="middle" font-size="9" font-weight="700" fill="var(--red)" font-family="Nunito,sans-serif">Monitor</text>
+    <div class="lc-ring" id="lc-ring">
+      <!-- SVG dashed guide circle + arc arrows -->
+      <svg class="lc-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="lc-ar-m" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+        <!-- Guide circle -->
+        <circle cx="150" cy="150" r="110" fill="none" stroke="var(--border)"
+          stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5"/>
+        <!-- Arc arrows drawn by JS -->
+        <g id="lc-arrows"></g>
+      </svg>
 
       <!-- Center label -->
-      <text x="170" y="180" text-anchor="middle" font-size="20">♾️</text>
-      <text x="170" y="197" text-anchor="middle" font-size="8" font-family="Source Code Pro,monospace" fill="var(--t3)" letter-spacing="1">ITERATIVE</text>
-    </svg>
+      <div class="lc-center">
+        <span class="lc-center-icon">♾️</span>
+        <span class="lc-center-text">Iterative</span>
+      </div>
+
+      <!-- 7 nodes — JS will position them -->
+      <div class="lc-node" id="lc-n0" style="background:var(--accent-light);border-color:var(--accent);">🎯</div>
+      <div class="lc-node" id="lc-n1" style="background:var(--blue-light);border-color:var(--blue);">📦</div>
+      <div class="lc-node" id="lc-n2" style="background:var(--orange-light);border-color:var(--orange);">🧹</div>
+      <div class="lc-node" id="lc-n3" style="background:rgba(46,160,67,0.12);border-color:var(--teal);">🔬</div>
+      <div class="lc-node" id="lc-n4" style="background:var(--violet-light);border-color:var(--violet);">🧮</div>
+      <div class="lc-node" id="lc-n5" style="background:var(--yellow-light);border-color:var(--yellow);">📏</div>
+      <div class="lc-node" id="lc-n6" style="background:var(--red-light);border-color:var(--red);">🚀</div>
+
+      <!-- 7 labels — JS will position them -->
+      <div class="lc-label" id="lc-l0" style="color:var(--accent);">Problem<br>Definition</div>
+      <div class="lc-label" id="lc-l1" style="color:var(--blue);">Data<br>Collection</div>
+      <div class="lc-label" id="lc-l2" style="color:var(--orange);">Data<br>Prep</div>
+      <div class="lc-label" id="lc-l3" style="color:var(--teal);">EDA &amp;<br>Analysis</div>
+      <div class="lc-label" id="lc-l4" style="color:var(--violet);">Model<br>Building</div>
+      <div class="lc-label" id="lc-l5" style="color:var(--yellow);">Eval &amp;<br>Tuning</div>
+      <div class="lc-label" id="lc-l6" style="color:var(--red);">Deploy &amp;<br>Monitor</div>
+    </div>
+
+    <script>
+    (function(){
+      var N = 7, R = 110, CX = 150, CY = 150;
+      var nodeR = 22;   // node circle radius (px)
+      var labelGap = 30; // distance from node center to label center
+
+      // angles: start at -90deg (top), go clockwise
+      function angle(i) { return (i * 360 / N - 90) * Math.PI / 180; }
+
+      // Position nodes
+      for (var i = 0; i < N; i++) {
+        var a = angle(i);
+        var nx = CX + R * Math.cos(a); // SVG coords
+        var ny = CY + R * Math.sin(a);
+        // Convert SVG coords to % of 300px container
+        var pxL = nx / 300 * 100;
+        var pxT = ny / 300 * 100;
+        var node = document.getElementById('lc-n' + i);
+        if (node) {
+          node.style.left = pxL + '%';
+          node.style.top  = pxT + '%';
+        }
+
+        // Position labels further out from node
+        var lx = CX + (R + labelGap) * Math.cos(a);
+        var ly = CY + (R + labelGap) * Math.sin(a);
+        var label = document.getElementById('lc-l' + i);
+        if (label) {
+          // translate(-50%,-50%) centres the label on the point
+          label.style.left = (lx / 300 * 100) + '%';
+          label.style.top  = (ly / 300 * 100) + '%';
+          label.style.transform = 'translate(-50%,-50%)';
+        }
+      }
+
+      // Draw arc arrows between consecutive nodes
+      var arrowsG = document.getElementById('lc-arrows');
+      if (arrowsG) {
+        var svg = 'http://www.w3.org/2000/svg';
+        for (var i = 0; i < N; i++) {
+          var a1 = angle(i);
+          var a2 = angle((i + 1) % N);
+          // Start point: on circle, 18deg clockwise from node i
+          var gap = 18 * Math.PI / 180;
+          var sx = CX + R * Math.cos(a1 + gap);
+          var sy = CY + R * Math.sin(a1 + gap);
+          // End point: on circle, 18deg counter-clockwise from node i+1
+          var ex = CX + R * Math.cos(a2 - gap);
+          var ey = CY + R * Math.sin(a2 - gap);
+          var path = document.createElementNS(svg, 'path');
+          path.setAttribute('d', 'M '+sx+' '+sy+' A '+R+' '+R+' 0 0 1 '+ex+' '+ey);
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', 'var(--accent)');
+          path.setAttribute('stroke-width', '1.5');
+          path.setAttribute('marker-end', 'url(#lc-ar-m)');
+          path.setAttribute('opacity', '0.65');
+          arrowsG.appendChild(path);
+        }
+      }
+    })();
+    </script>
   </div>
+</div><!-- end #s-lifecycle -->
 
 <!-- ROADMAP -->
 <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;margin:28px 0;" id="s-roadmap">
