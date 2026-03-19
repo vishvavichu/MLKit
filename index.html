@@ -769,12 +769,10 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     marker.appendChild(mk('path',{d:'M0,0 L0,6 L6,3z',fill:'var(--accent)'}));
     defs.appendChild(marker);svg.appendChild(defs);
     svg.appendChild(mk('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'var(--border)','stroke-width':'1.5','stroke-dasharray':'6 4',opacity:'0.5'}));
-    var arcs=mk('g',{id:'lc-desk-arcs'});
     for(var i=0;i<N;i++){
       var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
-      arcs.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));
+      svg.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));
     }
-    svg.appendChild(arcs);
   })();
   </script>
   <!-- Mobile circular diagram — 100% SVG foreignObject, zero CSS transform ambiguity -->
@@ -787,10 +785,6 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       }
       #lc-arcs {
         transform-origin: 150px 175px;
-        animation: lc-spin 18s linear infinite;
-      }
-      #lc-desk-arcs {
-        transform-origin: 240px 240px;
         animation: lc-spin 18s linear infinite;
       }
     </style>
