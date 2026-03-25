@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,6 +156,14 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
   background:var(--surface); border:1px solid var(--border);
   border-radius:8px; padding:8px 11px; cursor:pointer;
   color:var(--t1); font-size:16px; line-height:1; box-shadow:var(--shadow);
+  transition:transform 0.3s ease, opacity 0.3s ease;
+  transform:translateY(0);
+  opacity:1;
+}
+#menu-btn.hide {
+  transform:translateY(-70px);
+  opacity:0;
+  pointer-events:none;
 }
 #overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:150; }
 #overlay.show { display:block; }
@@ -443,10 +451,60 @@ h3 { font-family:'Nunito',sans-serif; font-weight:800; color:var(--t1); margin:1
   /* Card meta badges wrap */
   .card-meta { flex-wrap:wrap; }
 }
+
+/* STICKY TITLE BAR */
+#sticky-title{position:fixed;top:0;left:260px;right:6px;z-index:180;height:36px;display:flex;align-items:center;gap:10px;padding:0 18px;background:var(--bg2);border-bottom:1px solid var(--border);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--t2);transform:translateY(-100%);transition:transform 0.25s ease,background 0.3s;pointer-events:none}
+#sticky-title.visible{transform:translateY(0)}
+#sticky-title .st-icon{font-size:14px}
+#sticky-title .st-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--t1)}
+
+@media(max-width:768px) {
+  #sticky-title{left:0;padding:0 12px 0 48px;font-size:12px}
+  
+  #sidebar { transform:translateX(-100%); }
+  #sidebar.open { transform:translateX(0); }
+  #menu-btn { display:block; }
+  #main { margin-left:0; }
+  .main { padding:56px 12px 32px; }
+  .progress-bar { left:0; }
+
+  /* All named grids collapse to single column */
+  .compare { grid-template-columns:1fr; }
+
+  /* All inline-styled grids collapse to single column */
+  [style*="grid-template-columns"] { grid-template-columns:1fr !important; }
+
+  /* Tables: horizontal scroll */
+  .table-wrap { overflow-x:auto; max-width:100%; }
+  .data-table { min-width:420px; }
+
+  /* Formula: scroll if too wide */
+  .formula { overflow-x:auto; white-space:nowrap; font-size:11px; max-width:100%; }
+
+  /* Cards: contain all children */
+  .enc-card { overflow:hidden; min-width:0; }
+  .enc-card .compare-box { min-width:0; overflow:hidden; }
+
+  /* Insight boxes */
+  .insight { flex-wrap:wrap; }
+
+  /* Dataset banner */
+  .dataset-banner { flex-direction:column; gap:10px; }
+
+  /* Section header badge + title wrap */
+  .section-header { flex-wrap:wrap; }
+
+  /* Badge text wrap */
+  .badge { white-space:normal; word-break:break-word; }
+
+  /* Card meta badges wrap */
+  .card-meta { flex-wrap:wrap; }
+}
 </style>
 </head>
 <body>
 
+<div id="sticky-title"><span class="st-icon">📐</span><span class="st-label" id="st-label"></span></div>
 <button id="menu-btn" onclick="toggleSB()">☰</button>
 <div id="overlay" onclick="toggleSB()"></div>
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -471,8 +529,8 @@ h3 { font-family:'Nunito',sans-serif; font-weight:800; color:var(--t1); margin:1
     </div>
   </div>
 
-  <div class="sb-section">Back to</div>
-  <a class="sb-item" href="../"><span class="ic">←</span>MLKit Home Page</a>
+  <div class="sb-section">Navigation</div>
+  <a class="sb-item" href="../index.html"><span class="ic">🏠</span>MLKit Home</a>
 
   <div class="sb-section">Encoding</div>
   <a class="sb-item" href="#label"><span class="ic">🏷️</span> Label Encoding</a>
@@ -1370,6 +1428,51 @@ function toggleSB() {
   document.getElementById('overlay').classList.toggle('show');
 }
 
+/* AUTO-CLOSE SIDEBAR ON MOBILE */
+// Close sidebar when clicking a navigation link on mobile
+document.querySelectorAll('#sidebar .sb-item, #sidebar a').forEach(link => {
+  link.addEventListener('click', function() {
+    if (window.innerWidth <= 768) {
+      toggleSB();
+    }
+  });
+});
+
+// Close sidebar when scrolling on mobile
+let lastScrollTop = 0;
+let scrollTimeout;
+window.addEventListener('scroll', function() {
+  if (window.innerWidth <= 768) {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const menuBtn = document.getElementById('menu-btn');
+    const currentScroll = window.scrollY;
+    
+    // Show/hide menu button based on scroll direction
+    if (currentScroll > lastScrollTop && currentScroll > 100) {
+      // Scrolling down - hide menu button
+      menuBtn.classList.add('hide');
+    } else if (currentScroll < lastScrollTop) {
+      // Scrolling up - show menu button
+      menuBtn.classList.remove('hide');
+    }
+    
+    // Close sidebar if open and scrolled
+    if (sidebar.classList.contains('open')) {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function() {
+        // Close sidebar if scrolled more than 50px
+        if (Math.abs(currentScroll - lastScrollTop) > 50) {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('show');
+        }
+      }, 100);
+    }
+    
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }
+}, {passive: true});
+
 // Fast scroll strip
 const fsStrip = document.getElementById('fast-scroll');
 const fsThumb = document.getElementById('fs-thumb');
@@ -1433,6 +1536,71 @@ navItems.forEach(item => {
     }
   });
 });
+
+/* STICKY TITLE BAR - Show on scroll up */
+(function(){
+  const bar = document.getElementById('sticky-title');
+  const label = document.getElementById('st-label');
+  const sections = [
+    {id:'s-intro',label:'Introduction'},
+    {id:'s-why',label:'Why Feature Engineering'},
+    {id:'s-types',label:'Types of Features'},
+    {id:'s-null',label:'Null Treatment'},
+    {id:'s-encoding',label:'Encoding'},
+    {id:'s-scaling',label:'Scaling'},
+    {id:'s-transform',label:'Transformation'},
+    {id:'s-binning',label:'Binning'},
+    {id:'s-interaction',label:'Interaction Features'},
+    {id:'s-datetime',label:'DateTime Features'},
+    {id:'s-text',label:'Text Features'},
+    {id:'s-selection',label:'Feature Selection'}
+  ];
+  const els = sections.map(s => ({el:document.getElementById(s.id),label:s.label})).filter(s => s.el);
+  let current = null;
+  let lastScrollY = 0;
+  let ticking = false;
+  
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      window.requestAnimationFrame(function(){
+        const sy = window.scrollY;
+        
+        // Hide if at top
+        if(sy < 200){
+          bar.classList.remove('visible');
+          current = null;
+          ticking = false;
+          return;
+        }
+        
+        // Find active section
+        let active = null;
+        for(let i = 0; i < els.length; i++){
+          if(sy >= els[i].el.getBoundingClientRect().top + sy - 60) active = els[i];
+        }
+        
+        // Update label if changed
+        if(active && active !== current){
+          label.textContent = active.label;
+          current = active;
+        }
+        
+        // Show/hide based on scroll direction
+        if(sy > lastScrollY && sy > 300){
+          // Scrolling down - hide
+          bar.classList.remove('visible');
+        } else if(sy < lastScrollY && active){
+          // Scrolling up - show
+          bar.classList.add('visible');
+        }
+        
+        lastScrollY = sy;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive:true});
+})();
 </script>
 </body>
 </html>
