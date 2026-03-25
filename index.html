@@ -111,7 +111,7 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 .toggle-thumb { width:12px; height:12px; background:white; border-radius:50%; position:absolute; top:3px; left:3px; transition:transform 0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.3); }
 [data-theme="light"] .toggle-thumb { transform:translateX(16px); }
 .sb-section { padding:12px 12px 2px; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--t3); font-family:'Source Code Pro',monospace; font-weight:600; }
-.sb-item { display:flex; align-items:center; gap:8px; width:calc(100% - 16px); margin:1px 8px; padding:7px 10px; border-radius:6px; border:none; background:none; color:var(--t2); font-size:13px; font-family:'Outfit',sans-serif; cursor:pointer; text-align:left; transition:all 0.15s; }
+.sb-item { display:flex; align-items:center; gap:8px; width:calc(100% - 16px); margin:1px 8px; padding:7px 10px; border-radius:6px; border:none; background:none; color:var(--t2); font-size:13px; font-family:'Outfit',sans-serif; cursor:pointer; text-align:left; transition:all 0.15s; text-decoration:none; }
 .sb-item:hover { background:var(--surface2); color:var(--t1); }
 .sb-item.active { background:var(--accent-light); color:var(--accent); font-weight:600; }
 .sb-item .ic { font-size:13px; flex-shrink:0; opacity:0.8; }
@@ -121,13 +121,13 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 
 /* ===== MAIN ===== */
 #main { margin-left:260px; }
-.page { max-width:1320px; margin:0 auto; padding:48px 24px 32px; }
+.page { max-width:1320px; margin:0 auto; padding:48px 24px 8px; }
 
 /* ===== HERO ===== */
 .hero { text-align:center; padding:60px 0 44px; background:var(--hero-gradient); border-bottom:1px solid var(--border); margin-bottom:0; }
 .hero-badge { display:inline-flex; align-items:center; gap:6px; background:var(--accent-light); border:1px solid var(--accent-border); color:var(--accent); padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:18px; font-family:'Source Code Pro',monospace; }
 .hero h1 { font-family:'Nunito',sans-serif; font-weight:800; font-size:clamp(28px,4vw,44px); line-height:1.1; margin-bottom:10px; color:var(--t1); }
-.hero-sub { color:var(--t2); font-size:14px; max-width:420px; margin:0 auto 20px; }
+.hero-sub { color:var(--t2); font-size:14px; max-width:420px; margin:0 auto 20px; text-align:center; width:100%; }
 
 /* ===== TYPEWRITER TITLE ===== */
 .hero-title-static { color:var(--t1); }
@@ -155,6 +155,7 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 
 /* ===== SECTIONS ===== */
 .section { margin-bottom:56px; scroll-margin-top:20px; }
+.section:last-of-type { margin-bottom:0; }
 .sec-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--border); }
 .sec-num { font-family:'Source Code Pro',monospace; font-size:10px; font-weight:600; color:var(--accent); background:var(--accent-light); border:1px solid var(--accent-border); padding:3px 8px; border-radius:4px; }
 .sec-title { font-family:'Nunito',sans-serif; font-size:22px; font-weight:800; color:var(--t1); }
@@ -166,7 +167,7 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 .ww-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; font-family:'Source Code Pro',monospace; }
 .ww-label.what { color:var(--blue); }
 .ww-label.why { color:var(--orange); }
-.ww-box p { font-size:14.5px; color:var(--t2); margin:0; }
+.ww-box p { font-size:14.5px; color:var(--t2); margin:0; text-align:justify; }
 
 /* ===== CARDS ===== */
 .card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:18px; margin-bottom:12px; transition:border-color 0.2s, box-shadow 0.2s; }
@@ -216,7 +217,7 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 .steps { counter-reset:step; }
 .step { counter-increment:step; display:flex; gap:10px; align-items:center; margin-bottom:8px; }
 .step::before { content:counter(step); min-width:19.5px; height:19.5px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; font-family:'Source Code Pro',monospace; flex-shrink:0; }
-.step-body { font-size:13.5px; color:var(--t2); }
+.step-body { font-size:13.5px; color:var(--t2); text-align:justify; }
 
 /* ===== RANGE BARS ===== */
 .rbar { margin:6px 0; display:flex; align-items:center; gap:10px; }
@@ -250,7 +251,7 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 .metric-header { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px; }
 .metric-name { font-family:'Nunito',sans-serif; font-size:15px; font-weight:700; color:var(--t1); }
 .metric-formula { font-family:'Source Code Pro',monospace; font-size:12px; color:var(--accent); background:var(--accent-light); border:1px solid var(--accent-border); padding:2px 8px; border-radius:4px; }
-.metric-body { font-size:13.5px; color:var(--t2); }
+.metric-body { font-size:13.5px; color:var(--t2); text-align:justify; }
 
 /* ===== SPLIT VIZ ===== */
 .split-viz { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:16px; margin:12px 0; }
@@ -264,9 +265,9 @@ body { background:var(--bg); color:var(--t1); font-family:'Outfit',sans-serif; f
 [data-theme="light"] .corr-bar { background:linear-gradient(to right,#cf222e,#d85929,#e3b341,#f6f8fa,#e3b341,#d85929,#cf222e); }
 .corr-lb { display:flex; justify-content:space-between; font-size:9.5px; font-family:'Source Code Pro',monospace; color:var(--t3); }
 
-p { color:var(--t2); margin-bottom:8px; font-size:14.5px; }
+p { color:var(--t2); margin-bottom:8px; font-size:14.5px; text-align:justify; }
 ul,ol { color:var(--t2); padding-left:18px; font-size:14.5px; margin-bottom:8px; }
-li { margin-bottom:3px; }
+li { margin-bottom:3px; text-align:justify; }
 h4 { color:var(--t1); margin:12px 0 6px; font-size:14.5px; font-weight:700; }
 h5 { color:var(--accent); margin:10px 0 4px; font-size:11.5px; font-family:'Source Code Pro',monospace; letter-spacing:1px; text-transform:uppercase; font-weight:600; }
 strong { color:var(--t1); }
@@ -280,6 +281,164 @@ strong { color:var(--t1); }
 
 footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border); color:var(--t3); font-size:11px; font-family:'Source Code Pro',monospace; }
 
+/* ===== DATASET DEMO STYLES ===== */
+.dd-header {
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  color: #fff;
+  padding: 40px 32px 32px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+}
+.dd-header h1 { font-size: 2rem; font-weight: 700; }
+.dd-header p  { opacity: .85; margin-top: 6px; font-size: .95rem; }
+.dd-badge {
+  display: inline-block;
+  background: rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: .78rem;
+  margin-top: 10px;
+  letter-spacing: .04em;
+}
+.dd-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4f46e5;
+  border-left: 4px solid #4f46e5;
+  padding-left: 12px;
+  margin: 40px 0 20px;
+}
+.dd-sub-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--t1);
+  margin: 24px 0 10px;
+}
+.dd-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.dd-table-wrap { overflow-x: auto; }
+.dd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+.dd-table thead th {
+  background: #4f46e5;
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+.dd-table tbody tr:nth-child(even) { background: var(--surface2); }
+.dd-table tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  color: var(--t2);
+}
+.dd-null-cell { color: var(--red); font-style: italic; }
+.dd-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.dd-stat-box {
+  background: var(--blue-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  border: 1px solid rgba(56,139,253,0.2);
+}
+.dd-stat-box .label { font-size: .75rem; color: var(--t3); text-transform: uppercase; letter-spacing: .05em; }
+.dd-stat-box .value { font-size: 1.3rem; font-weight: 700; color: #4f46e5; margin-top: 4px; }
+.dd-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.dd-chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+.dd-chart-card h3 {
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--t3);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.dd-chart-card canvas { max-height: 260px; }
+.dd-stats-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.dd-stats-table th {
+  background: var(--surface2);
+  padding: 9px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--t3);
+  border-bottom: 2px solid var(--border);
+}
+.dd-stats-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--t2); }
+.dd-stats-table tr:hover td { background: var(--surface2); }
+.dd-vc-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.dd-vc-table th { background: var(--surface2); padding: 8px 12px; text-align: left; font-weight: 600; color: var(--t3); border-bottom: 2px solid var(--border); }
+.dd-vc-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--t2); }
+.dd-bar-fill { height: 8px; border-radius: 4px; background: #4f46e5; display: inline-block; }
+.dd-insight {
+  background: var(--yellow-light);
+  border-left: 4px solid var(--yellow);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: .85rem;
+  color: var(--t1);
+  margin-top: 12px;
+}
+.dd-nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #4f46e5;
+  font-weight: 600;
+  font-size: .9rem;
+  margin-bottom: 28px;
+}
+.dd-nav-back:hover { text-decoration: underline; }
+.dd-tab-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.dd-tab-btn {
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--t3);
+  transition: all .2s;
+}
+.dd-tab-btn.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.dd-tab-content { display: none; }
+.dd-tab-content.active { display: block; }
+.dd-mv-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-size: .85rem; }
+.dd-mv-label { width: 140px; font-weight: 600; color: var(--t1); flex-shrink: 0; }
+.dd-mv-track { flex: 1; height: 12px; background: var(--surface3); border-radius: 6px; overflow: hidden; }
+.dd-mv-fill { height: 100%; border-radius: 6px; background: var(--red); }
+.dd-mv-pct { width: 50px; text-align: right; color: var(--t3); }
+@media (max-width: 640px) {
+  .dd-chart-grid { grid-template-columns: 1fr; }
+  .dd-stat-grid  { grid-template-columns: repeat(2,1fr); }
+}
+
 /* ===== ML BANNER THEME ===== */
 [data-theme="light"] .ml-banner .banner-glow { opacity: 0.3; }
 [data-theme="dark"]  .ml-banner .banner-glow { opacity: 1; }
@@ -291,7 +450,7 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   #sidebar.open { transform:translateX(0); }
   #menu-btn { display:block; }
   #main { margin-left:0; }
-  .page { padding:56px 12px 32px; }
+  .page { padding:56px 12px 8px; }
   .what-why { grid-template-columns:1fr; }
 
   /* All named grids collapse to single column */
@@ -344,6 +503,11 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   /* Flow boxes */
   .frow { flex-direction:column; align-items:center; }
   .fbox { min-width:unset; width:100%; max-width:100%; box-sizing:border-box; }
+  
+  /* Flow arrow text alignment */
+  .farr { text-align:center; width:100%; }
+  .flow-arr { text-align:center; width:100%; font-size:0 !important; padding:4px 0 !important; }
+  .flow-arr::before { content:'\2193'; font-size:18px; color:var(--accent); }
 
   /* Hero stats */
   .hero-stats { gap:8px; }
@@ -438,9 +602,33 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 .code-wrap:hover .copy-btn { opacity:1; }
 .copy-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
 .copy-btn.copied { background:var(--accent); color:white; border-color:var(--accent); opacity:1; }
+/* ===== SECTION NAV BUTTONS ===== */
+.sec-nav {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:32px; padding-top:16px; border-top:1px solid var(--border);
+  gap:8px; flex-wrap:wrap;
+}
+.sec-nav-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 16px; border-radius:8px; border:1px solid var(--border);
+  background:var(--surface2); color:var(--t2); font-size:12px;
+  font-family:'Outfit',sans-serif; font-weight:600; cursor:pointer;
+  transition:all 0.2s; text-decoration:none; white-space:nowrap;
+}
+.sec-nav-btn:hover { background:var(--accent-light); color:var(--accent); border-color:var(--accent-border); }
+.sec-nav-btn.next { background:var(--accent); color:white; border-color:var(--accent); }
+.sec-nav-btn.next:hover { filter:brightness(1.1); }
+.sec-nav-spacer { flex:1; }
+#sticky-title{position:fixed;top:0;left:260px;right:6px;z-index:180;height:36px;display:flex;align-items:center;gap:10px;padding:0 18px;background:var(--bg2);border-bottom:1px solid var(--border);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--t2);transform:translateY(-100%);transition:transform 0.25s ease,background 0.3s;pointer-events:none;}
+#sticky-title.visible{transform:translateY(0);}
+
+#sticky-title .st-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--t1);}
+#sticky-title 
+@media(max-width:768px){#sticky-title{left:0;padding:0 12px 0 48px;font-size:12px;}}
 </style>
 </head>
 <body>
+<div id="sticky-title"><span class="st-label" id="st-label"></span></div>
 <div id="progress-bar"></div>
 
 <!-- FAST SCROLL STRIP -->
@@ -496,18 +684,36 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   <button class="sb-item" onclick="goTo('s-catcat')"><span class="ic">χ²</span>Cat vs Cat</button>
 
   <div class="sb-section">Feature Engineering</div>
-  <a class="sb-item" href="Feature_engineering/feature_engineering_guide.html"><span class="ic">📐</span> Feature Engineering ↗</a>
+  <a class="sb-item" href="Feature_engineering/feature_engineering_guide.html"><span class="ic">📐</span> Feature Engineering</a>
   <button class="sb-item" onclick="goTo('s-transform')"><span class="ic">📈</span>Log / Box-Cox</button>
   <button class="sb-item" onclick="goTo('s-pca')"><span class="ic">🔻</span>PCA</button>
 
   <div class="sb-section">Modeling</div>
   <button class="sb-item" onclick="goTo('s-models')"><span class="ic">🧮</span>Model Types</button>
+  <button class="sb-item" onclick="goTo('s-ensemble')"><span class="ic">🌳</span>Ensemble Methods</button>
+  <button class="sb-item" onclick="goTo('s-clustering')"><span class="ic">🔵</span>Clustering (K-Means / DBSCAN)</button>
   <button class="sb-item" onclick="goTo('s-split')"><span class="ic">✂️</span>Train / Test Split</button>
   <button class="sb-item" onclick="goTo('s-reg')"><span class="ic">📉</span>Overfitting &amp; Regularization</button>
   <button class="sb-item" onclick="goTo('s-eval')"><span class="ic">📏</span>Evaluation Metrics</button>
+  <button class="sb-item" onclick="goTo('s-cv')"><span class="ic">🔁</span>Cross-Validation</button>
+  <button class="sb-item" onclick="goTo('s-learning-curves')"><span class="ic">📉</span>Learning Curves</button>
+  <button class="sb-item" onclick="goTo('s-data-leakage')"><span class="ic">🚨</span>Data Leakage</button>
+  <button class="sb-item" onclick="goTo('s-explain')"><span class="ic">🔎</span>Model Explainability (SHAP/LIME)</button>
+  <button class="sb-item" onclick="goTo('s-hyperparam')"><span class="ic">🎛️</span>Hyperparameter Tuning</button>
+  <button class="sb-item" onclick="goTo('s-pipeline')"><span class="ic">🔗</span>sklearn Pipeline</button>
 
   <div class="sb-section">Best Practices</div>
   <button class="sb-item" onclick="goTo('s-bestpractices')"><span class="ic">🏆</span>Best Practices</button>
+
+  <div class="sb-section">Deployment</div>
+  <button class="sb-item" onclick="goTo('s-mlops')"><span class="ic">🚀</span>MLOps &amp; Deployment</button>
+  <button class="sb-item" onclick="goTo('s-inference')"><span class="ic">&#x26A1;</span>Model Inference</button>
+  <div class="sb-section">Deep Learning &amp; NLP</div>
+  <button class="sb-item" onclick="goTo('s-nn')"><span class="ic">&#x1F9E0;</span>Neural Networks</button>
+  <button class="sb-item" onclick="goTo('s-nlp')"><span class="ic">&#x1F4AC;</span>NLP Fundamentals</button>
+
+  <div class="sb-section">Demo</div>
+  <a class="sb-item" href="Feature_engineering/Dataset_demo.html"><span class="ic">📊 </span>Interactive Dataset Explorer</a>
   </div>
 </nav>
 
@@ -698,9 +904,9 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
   </div>
 
   <div class="hero-stats">
-    <div class="hero-stat"><div class="hero-stat-n">22+</div><div class="hero-stat-l">Topics</div></div>
-    <div class="hero-stat"><div class="hero-stat-n">70+</div><div class="hero-stat-l">Concepts</div></div>
-    <div class="hero-stat"><div class="hero-stat-n">25+</div><div class="hero-stat-l">Code Blocks</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">34+</div><div class="hero-stat-l">Topics</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">100+</div><div class="hero-stat-l">Concepts</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">80+</div><div class="hero-stat-l">Code Blocks</div></div>
     <div class="hero-stat"><div class="hero-stat-n">∞</div><div class="hero-stat-l">Reference</div></div>
   </div>
 </div>
@@ -735,9 +941,19 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     marker.appendChild(mk('path',{d:'M0,0 L0,6 L6,3z',fill:'var(--accent)'}));
     defs.appendChild(marker);svg.appendChild(defs);
     svg.appendChild(mk('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'var(--border)','stroke-width':'1.5','stroke-dasharray':'6 4',opacity:'0.5'}));
-    var darcs=mk('g',{id:'lc-desk-arcs'});
-    for(var i=0;i<N;i++){var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);darcs.appendChild(mk('path',{d:'M '+s.x.toFixed(1)+' '+s.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+e.x.toFixed(1)+' '+e.y.toFixed(1),fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'}));}
-    svg.appendChild(darcs);
+    var darcPaths=[];
+    for(var i=0;i<N;i++){var p=mk('path',{fill:'none',stroke:'var(--accent)','stroke-width':'1.5','marker-end':'url(#lc-ar-d)',opacity:'0.6'});svg.appendChild(p);darcPaths.push(p);}
+    var dRot=0;
+    function animDesk(){
+      dRot=(dRot+0.5)%360;
+      for(var i=0;i<N;i++){
+        var sa=ang(i)+dRot+GAP,ea=ang((i+1)%N)+dRot-GAP;
+        var sp=pt(sa),ep=pt(ea);
+        darcPaths[i].setAttribute('d','M '+sp.x.toFixed(1)+' '+sp.y.toFixed(1)+' A '+R+' '+R+' 0 0 1 '+ep.x.toFixed(1)+' '+ep.y.toFixed(1));
+      }
+      requestAnimationFrame(animDesk);
+    }
+    animDesk();
     var covers=mk('g',{});
     for(var i=0;i<N;i++){var a=ang(i),p=pt(a);covers.appendChild(mk('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:(NR+2),fill:'var(--surface)',stroke:'none'}));}
     svg.appendChild(covers);
@@ -759,9 +975,6 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
     <style>
       #lc-arcs {
         transform-origin: 150px 175px;
-      }
-      #lc-desk-arcs {
-        transform-origin: 240px 240px;
       }
     </style>
     <svg id="lc-mob-svg" viewBox="-30 0 420 370" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
@@ -792,12 +1005,19 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
       svg.appendChild(defs);
       svg.appendChild(mk("circle",{cx:CX,cy:CY,r:R,fill:"none",stroke:"var(--border)","stroke-width":"1.5","stroke-dasharray":"6 4",opacity:"0.5"}));
       // Rotating arcs group
-      var arcs=mk("g",{id:"lc-arcs"});
-      for(var i=0;i<N;i++){
-        var s=pt(ang(i)+GAP),e=pt(ang((i+1)%N)-GAP);
-        arcs.appendChild(mk("path",{d:"M "+s.x.toFixed(1)+" "+s.y.toFixed(1)+" A "+R+" "+R+" 0 0 1 "+e.x.toFixed(1)+" "+e.y.toFixed(1),fill:"none",stroke:"var(--accent)","stroke-width":"1.5","marker-end":"url(#lc-ar)",opacity:"0.65"}));
+      var marcPaths=[];
+      for(var i=0;i<N;i++){var p=mk("path",{fill:"none",stroke:"var(--accent)","stroke-width":"1.5","marker-end":"url(#lc-ar)",opacity:"0.65"});svg.appendChild(p);marcPaths.push(p);}
+      var mRot=0;
+      function animMob(){
+        mRot=(mRot+0.5)%360;
+        for(var i=0;i<N;i++){
+          var sa=ang(i)+mRot+GAP,ea=ang((i+1)%N)+mRot-GAP;
+          var sp=pt(sa),ep=pt(ea);
+          marcPaths[i].setAttribute("d","M "+sp.x.toFixed(1)+" "+sp.y.toFixed(1)+" A "+R+" "+R+" 0 0 1 "+ep.x.toFixed(1)+" "+ep.y.toFixed(1));
+        }
+        requestAnimationFrame(animMob);
       }
-      svg.appendChild(arcs);
+      animMob();
       // Static cover circles — sit on top of arcs, hide arrows when passing through nodes
       var covers=mk("g",{});
       for(var i=0;i<N;i++){
@@ -860,25 +1080,16 @@ footer { text-align:center; padding:36px 28px; border-top:1px solid var(--border
 <line x1="410" y1="494" x2="410" y2="530" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
 <line x1="640" y1="494" x2="460" y2="530" stroke="#484f58" stroke-width="1.2" marker-end="url(#ar2)"/>
 <g onclick="window.location.href='Feature_engineering/feature_engineering_guide.html'" style="cursor:pointer"><rect x="255" y="534" width="310" height="52" rx="8" fill="rgba(240,136,62,0.1)" stroke="#f0883e" stroke-width="2"/><text x="410" y="555" fill="#f0883e" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">⚙️ Feature Engineering</text><text x="410" y="574" fill="rgba(240,136,62,0.55)" font-size="10" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">click to open full guide ↗</text></g>
-<!-- FE sub-nodes: 3 boxes centred around x=410 with equal spacing -->
-<!-- Box widths: 200 each, gap 16 → total = 3×200 + 2×16 = 632 → start x = 410 - 316 = 94 -->
-<!-- cx1=194, cx2=410, cx3=626 -->
-<line x1="364" y1="586" x2="194" y2="616" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
-<line x1="410" y1="586" x2="410" y2="616" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
-<line x1="456" y1="586" x2="626" y2="616" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
-<g onclick="goTo('s-transform')" style="cursor:pointer"><rect x="94" y="620" width="200" height="38" rx="7" fill="rgba(46,160,67,0.07)" stroke="#2ea043" stroke-width="1.1"/><text x="194" y="639" fill="#2ea043" font-size="11.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📈 Log / Box-Cox</text></g>
-<g onclick="goTo('s-smote')" style="cursor:pointer"><rect x="310" y="620" width="200" height="38" rx="7" fill="rgba(248,81,73,0.07)" stroke="#f85149" stroke-width="1.1"/><text x="410" y="639" fill="#f85149" font-size="11.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">⚖️ SMOTE</text></g>
-<g onclick="goTo('s-pca')" style="cursor:pointer"><rect x="526" y="620" width="200" height="38" rx="7" fill="rgba(163,113,247,0.07)" stroke="#a371f7" stroke-width="1.1"/><text x="626" y="639" fill="#a371f7" font-size="11.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🔻 PCA</text></g>
-<line x1="194" y1="658" x2="370" y2="692" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
-<line x1="410" y1="658" x2="410" y2="692" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
-<line x1="626" y1="658" x2="450" y2="692" stroke="#484f58" stroke-width="1.1" marker-end="url(#ar2)"/>
-<g onclick="goTo('s-models')" style="cursor:pointer"><rect x="255" y="696" width="310" height="48" rx="8" fill="rgba(163,113,247,0.1)" stroke="#a371f7" stroke-width="2"/><text x="410" y="720" fill="#a371f7" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🧮 ML Model Types</text></g>
-<line x1="410" y1="744" x2="410" y2="766" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
-<g onclick="goTo('s-split')" style="cursor:pointer"><rect x="255" y="770" width="310" height="48" rx="8" fill="rgba(57,211,83,0.1)" stroke="#39d353" stroke-width="2"/><text x="410" y="794" fill="#39d353" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">✂️ Train / Test / Validation</text></g>
-<line x1="410" y1="818" x2="410" y2="840" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
-<g onclick="goTo('s-reg')" style="cursor:pointer"><rect x="255" y="844" width="310" height="48" rx="8" fill="rgba(240,136,62,0.1)" stroke="#f0883e" stroke-width="2"/><text x="410" y="868" fill="#f0883e" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📉 Overfitting / L1 / L2</text></g>
-<line x1="410" y1="892" x2="410" y2="914" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
-<g onclick="goTo('s-eval')" style="cursor:pointer"><rect x="255" y="918" width="310" height="48" rx="8" fill="rgba(56,139,253,0.1)" stroke="#388bfd" stroke-width="2"/><text x="410" y="942" fill="#388bfd" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📏 Evaluation Metrics</text></g>
+<line x1="410" y1="586" x2="410" y2="608" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-models')" style="cursor:pointer"><rect x="255" y="612" width="310" height="48" rx="8" fill="rgba(163,113,247,0.1)" stroke="#a371f7" stroke-width="2"/><text x="410" y="636" fill="#a371f7" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🧮 ML Model Types</text></g>
+<line x1="410" y1="660" x2="410" y2="682" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-split')" style="cursor:pointer"><rect x="255" y="686" width="310" height="48" rx="8" fill="rgba(57,211,83,0.1)" stroke="#39d353" stroke-width="2"/><text x="410" y="710" fill="#39d353" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">✂️ Train / Test / Validation</text></g>
+<line x1="410" y1="734" x2="410" y2="756" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-reg')" style="cursor:pointer"><rect x="255" y="760" width="310" height="48" rx="8" fill="rgba(240,136,62,0.1)" stroke="#f0883e" stroke-width="2"/><text x="410" y="784" fill="#f0883e" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📉 Overfitting & Regularization</text></g>
+<line x1="410" y1="808" x2="410" y2="830" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-eval')" style="cursor:pointer"><rect x="255" y="834" width="310" height="48" rx="8" fill="rgba(56,139,253,0.1)" stroke="#388bfd" stroke-width="2"/><text x="410" y="858" fill="#388bfd" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">📏 Evaluation Metrics</text></g>
+<line x1="410" y1="882" x2="410" y2="904" stroke="#2ea043" stroke-width="1.5" marker-end="url(#ar)"/>
+<g onclick="goTo('s-hyperparam')" style="cursor:pointer"><rect x="255" y="908" width="310" height="48" rx="8" fill="rgba(163,113,247,0.1)" stroke="#a371f7" stroke-width="2"/><text x="410" y="932" fill="#a371f7" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" font-family="Outfit,sans-serif">🎛️ Hyperparameter Tuning</text></g>
 </svg>
   </div>
 </div>
@@ -1879,6 +2090,367 @@ X_pca = pca.fit_transform(X_scaled)</div>
   </div>
 </section>
 
+<!-- S-ENSEMBLE: ENSEMBLE METHODS -->
+<section class="section" id="s-ensemble">
+  <div class="sec-header"><span class="sec-title">Ensemble Methods</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Ensemble methods combine <strong>multiple models</strong> to produce a stronger prediction than any single model alone. The core idea: a group of weak learners working together outperforms one strong learner.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Single models overfit or underfit. Ensembles reduce both variance (bagging) and bias (boosting) simultaneously. Random Forest and XGBoost — the two most used ML models in production — are both ensemble methods.</p></div>
+  </div>
+
+  <!-- Bagging vs Boosting vs Stacking -->
+  <div class="card"><div class="card-title">Bagging vs Boosting vs Stacking — The Big Picture</div>
+    <div class="g3">
+      <div style="background:var(--surface2);border:2px solid var(--blue);border-radius:8px;padding:14px;">
+        <div style="font-weight:800;color:var(--blue);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:8px;">Bagging</div>
+        <p style="font-size:12.5px;color:var(--t2);margin-bottom:8px;">Train models <strong>in parallel</strong> on random subsets of data. Combine by averaging (regression) or majority vote (classification).</p>
+        <div class="note blue" style="font-size:12px;">Reduces <strong>Variance</strong> — fixes overfitting</div>
+        <div style="margin-top:8px;font-size:12px;color:var(--t3);">Example: <strong style="color:var(--blue)">Random Forest</strong></div>
+      </div>
+      <div style="background:var(--surface2);border:2px solid var(--orange);border-radius:8px;padding:14px;">
+        <div style="font-weight:800;color:var(--orange);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:8px;">Boosting</div>
+        <p style="font-size:12.5px;color:var(--t2);margin-bottom:8px;">Train models <strong>sequentially</strong>. Each new model focuses on the mistakes of the previous one. Combine by weighted sum.</p>
+        <div class="note orange" style="font-size:12px;">Reduces <strong>Bias</strong> — fixes underfitting</div>
+        <div style="margin-top:8px;font-size:12px;color:var(--t3);">Example: <strong style="color:var(--orange)">XGBoost, AdaBoost</strong></div>
+      </div>
+      <div style="background:var(--surface2);border:2px solid var(--violet);border-radius:8px;padding:14px;">
+        <div style="font-weight:800;color:var(--violet);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:8px;">Stacking</div>
+        <p style="font-size:12.5px;color:var(--t2);margin-bottom:8px;">Train diverse base models, then train a <strong>meta-model</strong> on their predictions. The meta-model learns how to best combine them.</p>
+        <div class="note violet" style="font-size:12px;">Reduces both — most powerful but complex</div>
+        <div style="margin-top:8px;font-size:12px;color:var(--t3);">Example: <strong style="color:var(--violet)">StackingClassifier</strong></div>
+      </div>
+    </div>
+
+    <!-- Short real-world analogies -->
+    <div class="g3 mt">
+      <div style="background:var(--blue-light);border:1px solid rgba(56,139,253,0.3);border-radius:8px;padding:12px 14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Bagging in real life</div>
+        <p style="font-size:13px;color:var(--t2);margin:0;">Ask <strong>10 doctors</strong> the same question, each with different patient records. Take the majority answer. No single doctor can be too wrong.</p>
+      </div>
+      <div style="background:var(--orange-light);border:1px solid rgba(240,136,62,0.3);border-radius:8px;padding:12px 14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Boosting in real life</div>
+        <p style="font-size:13px;color:var(--t2);margin:0;">A student takes a test, reviews <strong>only the wrong answers</strong>, retakes it, reviews wrong answers again — each round getting better at the hard questions.</p>
+      </div>
+      <div style="background:var(--violet-light);border:1px solid rgba(163,113,247,0.3);border-radius:8px;padding:12px 14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--violet);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Stacking in real life</div>
+        <p style="font-size:13px;color:var(--t2);margin:0;">Ask 3 specialists (doctor, nutritionist, trainer) for their opinion. Then a <strong>senior consultant</strong> listens to all 3 and makes the final decision.</p>
+      </div>
+    </div>
+
+    <table class="tbl mt">
+      <tr><th>Property</th><th style="color:var(--blue)">Bagging</th><th style="color:var(--orange)">Boosting</th><th style="color:var(--violet)">Stacking</th></tr>
+      <tr><td>Training order</td><td>Parallel</td><td>Sequential</td><td>Two-stage</td></tr>
+      <tr><td>Fixes</td><td>High variance (overfitting)</td><td>High bias (underfitting)</td><td>Both</td></tr>
+      <tr><td>Speed</td><td>Fast (parallelizable)</td><td>Slower (sequential)</td><td>Slowest</td></tr>
+      <tr><td>Best model</td><td>Random Forest</td><td>XGBoost / LightGBM</td><td>Custom meta-learner</td></tr>
+    </table>
+  </div>
+
+  <!-- Random Forest Internals -->
+  <div class="card mt"><div class="card-title" style="color:var(--blue)">🌲 Random Forest — How It Works Internally</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Random Forest builds <strong>many decision trees</strong>, each trained on a random bootstrap sample of the data and using a random subset of features at each split. Final prediction = majority vote (classification) or mean (regression) across all trees.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why is it powerful?</div><p>Two sources of randomness — bootstrap sampling and random feature selection — ensure trees are <strong>decorrelated</strong>. Averaging decorrelated trees dramatically reduces variance without increasing bias.</p></div>
+    </div>
+    <div style="background:var(--blue-light);border:1px solid rgba(56,139,253,0.3);border-radius:8px;padding:14px 16px;margin:12px 0;">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">💡 Think of it like this</div>
+      <p style="font-size:13.5px;color:var(--t2);margin:0;">Imagine asking <strong>100 different people</strong> to guess the price of a house, but each person only sees a <em>random selection</em> of details (some see location, some see size, some see age). Each person gives a different answer. You take the <strong>average of all 100 answers</strong>. No single person can be too wrong, and their combined wisdom beats any one expert.</p>
+    </div>
+    <h5 class="mt">How Random Forest Trains</h5>
+    <div class="steps">
+      <div class="step"><div class="step-body"><strong>Bootstrap Sampling:</strong> For each tree, randomly sample N rows <em>with replacement</em> from the training data (~63% unique rows per tree)</div></div>
+      <div class="step"><div class="step-body"><strong>Random Feature Selection:</strong> At each node split, consider only a random subset of features (default: √p for classification, p/3 for regression)</div></div>
+      <div class="step"><div class="step-body"><strong>Grow Full Tree:</strong> Build each decision tree to maximum depth — no pruning. High variance individually, but that's OK</div></div>
+      <div class="step"><div class="step-body"><strong>Repeat:</strong> Build n_estimators trees (default 100), each on a different bootstrap sample with different random features</div></div>
+      <div class="step"><div class="step-body"><strong>Aggregate:</strong> Classification → majority vote across all trees. Regression → mean of all tree predictions</div></div>
+    </div>
+    <div class="g2 mt">
+      <div>
+        <h5>Out-of-Bag (OOB) Score</h5>
+        <p style="font-size:13px">Since each tree only sees ~63% of data, the remaining ~37% (out-of-bag samples) can be used as a free validation set — no need for a separate val split.</p>
+        <div class="code"><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=<span class="num">200</span>,
+    max_features=<span class="str">'sqrt'</span>,    <span class="cm"># random feature subset</span>
+    oob_score=<span class="kw">True</span>,          <span class="cm"># free validation</span>
+    random_state=<span class="num">42</span>,
+    n_jobs=-<span class="num">1</span>
+)
+rf.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(<span class="str">f"OOB Score: {rf.oob_score_:.4f}"</span>)
+
+<span class="cm"># Feature importances (mean decrease impurity)</span>
+importances = rf.feature_importances_</div>
+      </div>
+      <div>
+        <h5>Key Hyperparameters</h5>
+        <table class="tbl">
+          <tr><th>Parameter</th><th>Effect</th><th>Default</th></tr>
+          <tr><td>n_estimators</td><td>More trees = more stable, slower</td><td>100</td></tr>
+          <tr><td>max_depth</td><td>Limits tree depth — controls overfitting</td><td>None</td></tr>
+          <tr><td>max_features</td><td>Features per split — controls diversity</td><td>sqrt</td></tr>
+          <tr><td>min_samples_leaf</td><td>Min samples at leaf — smooths predictions</td><td>1</td></tr>
+          <tr><td>oob_score</td><td>Free validation using out-of-bag samples</td><td>False</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- XGBoost / Gradient Boosting -->
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">⚡ XGBoost / Gradient Boosting</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Gradient Boosting builds trees <strong>sequentially</strong>. Each new tree is trained to predict the <em>residual errors</em> (mistakes) of all previous trees combined. XGBoost is an optimized, regularized implementation of gradient boosting.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why is it the best?</div><p>By focusing each new tree on what the current ensemble gets wrong, boosting <strong>directly minimizes the loss function</strong>. XGBoost adds L1/L2 regularization, parallel tree building, and missing value handling — making it the #1 algorithm for tabular data.</p></div>
+    </div>
+    <div style="background:var(--orange-light);border:1px solid rgba(240,136,62,0.3);border-radius:8px;padding:14px 16px;margin:12px 0;">
+      <div style="font-size:11px;font-weight:700;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">💡 Think of it like this</div>
+      <p style="font-size:13.5px;color:var(--t2);margin:0;">Imagine a <strong>coaching class</strong> where after every mock test, the teacher only focuses on the questions <em>most students got wrong</em>. The next class fixes those weak spots. The class after that fixes the remaining weak spots. Each session builds on the previous one — getting better and better at the hard problems until almost nothing is missed.</p>
+    </div>
+    <h5 class="mt">How Gradient Boosting Works</h5>
+    <div class="steps">
+      <div class="step"><div class="step-body">Start with a <strong>baseline prediction</strong> — usually the mean of the target (for regression) or log-odds (for classification)</div></div>
+      <div class="step"><div class="step-body">Calculate <strong>residuals</strong> = actual − predicted. These are the errors the current model makes</div></div>
+      <div class="step"><div class="step-body">Train a new <strong>shallow decision tree</strong> to predict these residuals (not the original target)</div></div>
+      <div class="step"><div class="step-body">Add this tree to the ensemble: <strong>new prediction = old prediction + learning_rate × tree_prediction</strong></div></div>
+      <div class="step"><div class="step-body">Recalculate residuals with the updated ensemble. Repeat steps 2–4 for n_estimators rounds</div></div>
+    </div>
+    <div class="formula mt">F_m(x) = F_{m-1}(x) + η × h_m(x) &nbsp;&nbsp; where η = learning_rate, h_m = new tree</div>
+    <div class="g2 mt">
+      <div>
+        <h5>XGBoost Code</h5>
+        <div class="code"><span class="kw">from</span> xgboost <span class="kw">import</span> XGBClassifier
+
+xgb = XGBClassifier(
+    n_estimators=<span class="num">300</span>,
+    learning_rate=<span class="num">0.05</span>,   <span class="cm"># shrinkage — smaller = better</span>
+    max_depth=<span class="num">6</span>,
+    subsample=<span class="num">0.8</span>,         <span class="cm"># row sampling per tree</span>
+    colsample_bytree=<span class="num">0.8</span>,  <span class="cm"># feature sampling per tree</span>
+    reg_alpha=<span class="num">0.1</span>,          <span class="cm"># L1 regularization</span>
+    reg_lambda=<span class="num">1.0</span>,         <span class="cm"># L2 regularization</span>
+    eval_metric=<span class="str">'logloss'</span>,
+    random_state=<span class="num">42</span>
+)
+xgb.<span class="fn">fit</span>(X_train, y_train,
+    eval_set=[(X_test, y_test)],
+    verbose=<span class="num">50</span>)</div>
+      </div>
+      <div>
+        <h5>Key XGBoost Parameters</h5>
+        <table class="tbl">
+          <tr><th>Parameter</th><th>Effect</th></tr>
+          <tr><td>learning_rate</td><td>Shrinks each tree's contribution — lower = more trees needed but better generalization</td></tr>
+          <tr><td>n_estimators</td><td>Number of trees — use early stopping to find optimal</td></tr>
+          <tr><td>max_depth</td><td>Tree depth — 3–8 typical. Deeper = more complex</td></tr>
+          <tr><td>subsample</td><td>Row fraction per tree — adds randomness like bagging</td></tr>
+          <tr><td>colsample_bytree</td><td>Feature fraction per tree — reduces overfitting</td></tr>
+          <tr><td>reg_alpha / lambda</td><td>L1/L2 regularization on leaf weights</td></tr>
+        </table>
+        <div class="note orange mt">Rule of thumb: low learning_rate (0.01–0.1) + high n_estimators + early stopping = best results.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voting Classifier -->
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">🗳️ Voting Classifier</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>A Voting Classifier combines <strong>multiple different model types</strong> (e.g. Logistic Regression + Random Forest + XGBoost) and aggregates their predictions by majority vote (hard voting) or averaged probabilities (soft voting).</p></div>
+      <div class="ww-box"><div class="ww-label why">When to use?</div><p>When you have several good models with different strengths — one is better on certain patterns, another on others. Voting combines their complementary strengths and often beats any individual model.</p></div>
+    </div>
+    <div class="g2 mt">
+      <div class="card" style="border-color:rgba(46,160,67,0.3)">
+        <div class="card-title" style="color:var(--accent);font-size:14px;">Hard Voting</div>
+        <p style="font-size:13px">Each model votes for a class. The class with the <strong>most votes wins</strong>. Works with any classifier.</p>
+        <div class="code" style="font-size:11.5px;">Model 1: Class A
+Model 2: Class A  ← 2 votes
+Model 3: Class B
+Result:  Class A ✓</div>
+      </div>
+      <div class="card" style="border-color:rgba(56,139,253,0.3)">
+        <div class="card-title" style="color:var(--blue);font-size:14px;">Soft Voting</div>
+        <p style="font-size:13px">Each model outputs <strong>class probabilities</strong>. Average the probabilities, pick the highest. More accurate than hard voting.</p>
+        <div class="code" style="font-size:11.5px;">Model 1: [0.7, 0.3]
+Model 2: [0.6, 0.4]
+Model 3: [0.4, 0.6]
+Avg:     [0.57, 0.43] → Class A ✓</div>
+      </div>
+    </div>
+    <div class="code mt"><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> VotingClassifier
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LogisticRegression
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+<span class="kw">from</span> xgboost <span class="kw">import</span> XGBClassifier
+
+voting = VotingClassifier(
+    estimators=[
+        (<span class="str">'lr'</span>,  LogisticRegression(max_iter=<span class="num">1000</span>)),
+        (<span class="str">'rf'</span>,  RandomForestClassifier(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>)),
+        (<span class="str">'xgb'</span>, XGBClassifier(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>, eval_metric=<span class="str">'logloss'</span>))
+    ],
+    voting=<span class="str">'soft'</span>   <span class="cm"># use probabilities — usually better than 'hard'</span>
+)
+voting.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(voting.<span class="fn">score</span>(X_test, y_test))</div>
+    <div class="note green mt">✅ Soft voting almost always outperforms hard voting. Use it whenever all your models support <code>predict_proba</code>.</div>
+  </div>
+
+  <!-- Stacking -->
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">🏗️ Stacking — Meta-Learning</div>
+    <p>Imagine you have <strong>3 friends</strong> who are each good at predicting cricket match results, but in different ways — one uses player stats, one uses weather, one uses team history. Instead of picking just one friend to trust, you <strong>ask all 3</strong>, then ask a <strong>4th expert friend</strong> who knows how reliable each of the first 3 are — and that expert makes the final call.</p>
+    <p class="mt">That 4th expert is the <strong>meta-model</strong>. The 3 friends are the <strong>base models</strong>. Stacking is exactly this — train multiple models, then train one more model on top of their predictions to learn the best way to combine them.</p>
+    <div class="flow mt">
+      <div class="frow">
+        <div class="fbox" style="border-color:var(--blue)">Model 1<br><span style="font-size:10px;color:var(--t3)">Logistic Regression</span></div>
+        <div class="fbox" style="border-color:var(--accent)">Model 2<br><span style="font-size:10px;color:var(--t3)">Random Forest</span></div>
+        <div class="fbox" style="border-color:var(--orange)">Model 3<br><span style="font-size:10px;color:var(--t3)">XGBoost</span></div>
+      </div>
+      <div class="farr">↓</div>
+      <div style="font-size:12px;color:var(--accent);text-align:center;margin:-2px 0 4px;">their predictions become new features</div>
+      <div class="fbox" style="border-color:var(--violet);color:var(--violet);font-weight:600">Meta-Model (learns who to trust &amp; when)</div>
+      <div class="farr">↓</div>
+      <div class="fbox" style="border-color:var(--accent);color:var(--accent);font-weight:600">✅ Final Prediction</div>
+    </div>
+    <div class="note violet mt">💡 The meta-model doesn’t see the raw data — it only sees what each base model predicted. It learns: <em>"When Model 1 says Yes and Model 2 says No, the answer is usually Yes."</em></div>
+    <div class="code mt"><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> StackingClassifier
+
+stacking = StackingClassifier(
+    estimators=[
+        (<span class="str">'lr'</span>,  LogisticRegression(max_iter=<span class="num">1000</span>)),
+        (<span class="str">'rf'</span>,  RandomForestClassifier(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>)),
+        (<span class="str">'xgb'</span>, XGBClassifier(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>, eval_metric=<span class="str">'logloss'</span>))
+    ],
+    final_estimator=LogisticRegression(),  <span class="cm"># meta-model</span>
+    cv=<span class="num">5</span>   <span class="cm"># use 5-fold CV to generate meta-features (prevents leakage)</span>
+)
+stacking.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(stacking.<span class="fn">score</span>(X_test, y_test))</div>
+    <div class="note violet mt">💡 Always use cross-validation (cv=5) inside StackingClassifier. This prevents the meta-model from seeing the same data the base models trained on — avoiding leakage.</div>
+  </div>
+</section>
+
+<!-- S-CLUSTERING: K-MEANS & DBSCAN -->
+<section class="section" id="s-clustering">
+  <div class="sec-header"><span class="sec-title">Clustering — K-Means &amp; DBSCAN</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Clustering is an <strong>unsupervised learning</strong> technique that groups similar data points together without any labels. The algorithm discovers natural groupings purely from the data's structure.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Used for customer segmentation, anomaly detection, document grouping, and image compression — any problem where you want to find hidden structure without labeled data.</p></div>
+  </div>
+
+  <!-- K-MEANS -->
+  <div class="card"><div class="card-title" style="color:var(--blue)">🔵 K-Means Clustering</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>K-Means partitions data into <strong>K clusters</strong> by iteratively assigning each point to the nearest centroid and then recomputing centroids until convergence. You must specify K in advance.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why use it?</div><p>Fast, scalable, and easy to interpret. Works well when clusters are roughly spherical and similar in size. The go-to first choice for clustering tasks.</p></div>
+    </div>
+    <div style="background:var(--blue-light);border:1px solid rgba(56,139,253,0.3);border-radius:8px;padding:14px 16px;margin:12px 0;">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">💡 Think of it like this</div>
+      <p style="font-size:13.5px;color:var(--t2);margin:0;">Imagine you walk into a cafeteria and want to arrange <strong>100 students into 3 groups</strong> by where they sit. You randomly place 3 chairs as group centers, assign each student to the nearest chair, then move each chair to the middle of its group. Repeat until no one needs to switch groups. That’s K-Means — you decide the number of groups (K=3), it figures out who belongs where.</p>
+    </div>
+    <div class="steps mt">
+      <div class="step"><div class="step-body">Choose K — the number of clusters you want</div></div>
+      <div class="step"><div class="step-body">Randomly place K centroids in the feature space</div></div>
+      <div class="step"><div class="step-body">Assign each data point to the <strong>nearest centroid</strong> (Euclidean distance)</div></div>
+      <div class="step"><div class="step-body">Recompute each centroid as the <strong>mean of all points</strong> assigned to it</div></div>
+      <div class="step"><div class="step-body">Repeat steps 3–4 until centroids stop moving (convergence)</div></div>
+    </div>
+    <div class="formula mt">Objective: Minimize WCSS = Σ Σ ||xᵢ − μₖ||²  (Within-Cluster Sum of Squares)</div>
+    <h5 class="mt">Choosing K — The Elbow Method</h5>
+    <p>Run K-Means for K = 1 to 10. Plot WCSS vs K. The "elbow" point where WCSS stops dropping sharply is the optimal K.</p>
+    <div class="code"><span class="kw">from</span> sklearn.cluster <span class="kw">import</span> KMeans
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+wcss = []
+<span class="kw">for</span> k <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    km = KMeans(n_clusters=k, random_state=<span class="num">42</span>, n_init=<span class="num">10</span>)
+    km.<span class="fn">fit</span>(X)
+    wcss.<span class="fn">append</span>(km.inertia_)
+
+plt.<span class="fn">plot</span>(<span class="fn">range</span>(<span class="num">1</span>,<span class="num">11</span>), wcss, marker=<span class="str">'o'</span>)
+plt.<span class="fn">xlabel</span>(<span class="str">'K'</span>); plt.<span class="fn">ylabel</span>(<span class="str">'WCSS'</span>); plt.<span class="fn">title</span>(<span class="str">'Elbow Method'</span>)
+
+<span class="cm"># Fit final model</span>
+km = KMeans(n_clusters=<span class="num">3</span>, random_state=<span class="num">42</span>, n_init=<span class="num">10</span>)
+df[<span class="str">'Cluster'</span>] = km.<span class="fn">fit_predict</span>(X)</div>
+    <div class="g2 mt">
+      <div>
+        <h5>K-Means Strengths</h5>
+        <ul style="font-size:13px">
+          <li>Fast — O(n·K·iterations)</li>
+          <li>Easy to understand and implement</li>
+          <li>Scales to large datasets</li>
+          <li>Works well with spherical clusters</li>
+        </ul>
+      </div>
+      <div>
+        <h5>K-Means Weaknesses</h5>
+        <ul style="font-size:13px">
+          <li>Must specify K in advance</li>
+          <li>Sensitive to outliers (centroid gets pulled)</li>
+          <li>Fails on non-spherical / irregular shapes</li>
+          <li>Different random init → different results (use n_init=10)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DBSCAN -->
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">🔮 DBSCAN — Density-Based Clustering</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>DBSCAN (Density-Based Spatial Clustering of Applications with Noise) groups points that are <strong>closely packed together</strong> and marks points in low-density regions as <strong>outliers/noise</strong>. No need to specify K.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why use it?</div><p>Finds clusters of <strong>arbitrary shape</strong>, automatically detects outliers, and doesn't require you to specify the number of clusters. Perfect for anomaly detection and geographic data.</p></div>
+    </div>
+    <div style="background:var(--violet-light);border:1px solid rgba(163,113,247,0.3);border-radius:8px;padding:14px 16px;margin:12px 0;">
+      <div style="font-size:11px;font-weight:700;color:var(--violet);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">💡 Think of it like this</div>
+      <p style="font-size:13.5px;color:var(--t2);margin:0;">Imagine people standing in a park. Some people are <strong>standing in groups</strong> close together — those are clusters. Some people are <strong>standing alone far away</strong> from everyone — those are noise/outliers. DBSCAN automatically finds the groups and flags the loners — without you telling it how many groups to look for.</p>
+    </div>
+    <h5 class="mt">Two Key Parameters</h5>
+    <div class="g2">
+      <div class="card" style="border-color:rgba(163,113,247,0.3)">
+        <div class="card-title" style="color:var(--violet);font-size:14px;">ε (epsilon) — Neighborhood Radius</div>
+        <p style="font-size:13px">The maximum distance between two points for them to be considered neighbors. Too small → everything is noise. Too large → everything merges into one cluster.</p>
+      </div>
+      <div class="card" style="border-color:rgba(163,113,247,0.3)">
+        <div class="card-title" style="color:var(--violet);font-size:14px;">min_samples — Core Point Threshold</div>
+        <p style="font-size:13px">Minimum number of points within ε radius to form a dense region (core point). Higher = stricter, more noise points. Rule of thumb: min_samples ≥ dimensions + 1.</p>
+      </div>
+    </div>
+    <h5 class="mt">Point Types in DBSCAN</h5>
+    <table class="tbl">
+      <tr><th>Point Type</th><th>Definition</th><th>Role</th></tr>
+      <tr><td><span class="tag tg">Core Point</span></td><td>Has ≥ min_samples neighbors within ε</td><td>Forms the dense center of a cluster</td></tr>
+      <tr><td><span class="tag tb">Border Point</span></td><td>Within ε of a core point but has &lt; min_samples neighbors</td><td>On the edge of a cluster</td></tr>
+      <tr><td><span class="tag tr">Noise Point</span></td><td>Not within ε of any core point</td><td>Labeled as −1 (outlier)</td></tr>
+    </table>
+    <div class="code mt"><span class="kw">from</span> sklearn.cluster <span class="kw">import</span> DBSCAN
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+
+<span class="cm"># Scale first — DBSCAN is distance-based</span>
+X_scaled = StandardScaler().<span class="fn">fit_transform</span>(X)
+
+db = DBSCAN(eps=<span class="num">0.5</span>, min_samples=<span class="num">5</span>)
+df[<span class="str">'Cluster'</span>] = db.<span class="fn">fit_predict</span>(X_scaled)
+
+<span class="cm"># -1 = noise/outlier points</span>
+n_clusters = <span class="fn">len</span>(<span class="fn">set</span>(df[<span class="str">'Cluster'</span>])) - (<span class="num">1</span> <span class="kw">if</span> -<span class="num">1</span> <span class="kw">in</span> df[<span class="str">'Cluster'</span>].values <span class="kw">else</span> <span class="num">0</span>)
+n_noise  = (df[<span class="str">'Cluster'</span>] == -<span class="num">1</span>).<span class="fn">sum</span>()
+<span class="fn">print</span>(<span class="str">f"Clusters: {n_clusters}, Noise points: {n_noise}"</span>)</div>
+  </div>
+
+  <!-- K-MEANS vs DBSCAN -->
+  <div class="card mt"><div class="card-title">K-Means vs DBSCAN — When to Use Which</div>
+    <table class="tbl">
+      <tr><th>Property</th><th style="color:var(--blue)">K-Means</th><th style="color:var(--violet)">DBSCAN</th></tr>
+      <tr><td>Need to specify K?</td><td>✅ Yes — required</td><td>❌ No — auto-discovers</td></tr>
+      <tr><td>Cluster shape</td><td>Spherical only</td><td>Any arbitrary shape</td></tr>
+      <tr><td>Handles outliers?</td><td>❌ Pulled by outliers</td><td>✅ Labels them as noise (−1)</td></tr>
+      <tr><td>Speed</td><td>Fast — O(n·K·i)</td><td>Slower on large data</td></tr>
+      <tr><td>Best use case</td><td>Customer segmentation, image compression</td><td>Anomaly detection, geographic clustering</td></tr>
+      <tr><td>Cluster sizes</td><td>Assumes similar sizes</td><td>Handles varying density</td></tr>
+    </table>
+    <div class="note green mt">🔑 Start with K-Means. If clusters are irregular or you need outlier detection, switch to DBSCAN.</div>
+  </div>
+</section>
+
 <!-- S18: TRAIN TEST SPLIT -->
 <section class="section" id="s-split">
   <div class="sec-header"><span class="sec-title">Train / Test / Validation Split</span></div>
@@ -2118,6 +2690,490 @@ FN = predicted negative but was positive (missed)</div>
   </div>
 </section>
 
+<!-- S-CV: CROSS-VALIDATION IN DEPTH -->
+<section class="section" id="s-cv">
+  <div class="sec-header"><span class="sec-title">Cross-Validation</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Cross-validation is a technique that <strong>splits your data into K equal parts (folds)</strong>, then trains and tests your model K times — each time using a different fold as the test set and the remaining folds for training. This gives you K performance scores that you average together for a more reliable estimate than a single train/test split.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>A single train/test split can be lucky or unlucky — you might accidentally put all the easy examples in training or all the hard ones in testing. Cross-validation removes this randomness by testing on <strong>every part of your data exactly once</strong>, giving you a trustworthy mean ± standard deviation score that shows both performance and consistency.</p></div>
+  </div>
+  <div style="background:var(--blue-light);border:1px solid rgba(56,139,253,0.3);border-radius:8px;padding:14px 16px;margin:12px 0;">
+    <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">💡 Think of it like this</div>
+    <p style="font-size:13.5px;color:var(--t2);margin:0;">Imagine you're a teacher testing a student's knowledge. Instead of giving just <strong>one test</strong> (which might be too easy or too hard by chance), you give <strong>5 different tests</strong> covering different topics. Each test uses different questions, and you average all 5 scores. This gives you a much more reliable measure of the student's true ability — not just how they performed on one lucky or unlucky test. That's exactly what cross-validation does for your model.</p>
+  </div>
+  <div class="card"><div class="card-title" style="color:var(--blue)">🔁 K-Fold Cross-Validation</div>
+    <p>Split data into K equal folds. Train on K-1 folds, test on the remaining 1. Repeat K times rotating the test fold. Report mean ± std of all K scores.</p>
+    <div class="split-viz mt">
+      <div style="font-size:11px;color:var(--t3);margin-bottom:6px;font-family:'Source Code Pro',monospace;">5-Fold CV — each fold takes a turn as the test set</div>
+      <div class="split-bar" style="height:32px;margin:3px 0;"><div class="split-seg" style="flex:1;background:var(--red);">Test</div><div class="split-seg" style="flex:4;background:var(--accent);">Train</div></div>
+      <div class="split-bar" style="height:32px;margin:3px 0;"><div class="split-seg" style="flex:1;background:var(--accent);">Train</div><div class="split-seg" style="flex:1;background:var(--red);">Test</div><div class="split-seg" style="flex:3;background:var(--accent);">Train</div></div>
+      <div class="split-bar" style="height:32px;margin:3px 0;"><div class="split-seg" style="flex:2;background:var(--accent);">Train</div><div class="split-seg" style="flex:1;background:var(--red);">Test</div><div class="split-seg" style="flex:2;background:var(--accent);">Train</div></div>
+      <div class="split-bar" style="height:32px;margin:3px 0;"><div class="split-seg" style="flex:3;background:var(--accent);">Train</div><div class="split-seg" style="flex:1;background:var(--red);">Test</div><div class="split-seg" style="flex:1;background:var(--accent);">Train</div></div>
+      <div class="split-bar" style="height:32px;margin:3px 0;"><div class="split-seg" style="flex:4;background:var(--accent);">Train</div><div class="split-seg" style="flex:1;background:var(--red);">Test</div></div>
+    </div>
+    <div class="code mt"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> cross_val_score, KFold
+
+kf = KFold(n_splits=<span class="num">5</span>, shuffle=<span class="kw">True</span>, random_state=<span class="num">42</span>)
+scores = cross_val_score(model, X, y, cv=kf, scoring=<span class="str">'f1'</span>)
+<span class="fn">print</span>(<span class="str">f"F1: {scores.mean():.4f} ± {scores.std():.4f}"</span>)
+<span class="cm"># High std = unstable model. Low std = consistent.</span></div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">⚖️ Stratified K-Fold — For Classification</div>
+    <p>Preserves the <strong>class ratio in every fold</strong>. Always use this for classification tasks, especially imbalanced ones.</p>
+    <div class="code"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> StratifiedKFold
+
+skf = StratifiedKFold(n_splits=<span class="num">5</span>, shuffle=<span class="kw">True</span>, random_state=<span class="num">42</span>)
+scores = cross_val_score(model, X, y, cv=skf, scoring=<span class="str">'f1'</span>)
+<span class="fn">print</span>(<span class="str">f"Stratified F1: {scores.mean():.4f} ± {scores.std():.4f}"</span>)</div>
+    <div class="note green mt">✅ Always use StratifiedKFold for imbalanced classification. Regular KFold can create folds with 0 minority samples.</div>
+  </div>
+  <div class="card mt"><div class="card-title">Which CV Method to Use?</div>
+    <table class="tbl">
+      <tr><th>Method</th><th>When to Use</th><th>Notes</th></tr>
+      <tr><td><span class="tag tb">KFold</span></td><td>Regression, balanced classification</td><td>Standard choice, K=5 or 10</td></tr>
+      <tr><td><span class="tag tg">StratifiedKFold</span></td><td>Classification (especially imbalanced)</td><td>Preserves class ratio per fold</td></tr>
+      <tr><td><span class="tag to">Leave-One-Out</span></td><td>Very small datasets (&lt;50 rows)</td><td>N folds = N rows — expensive but thorough</td></tr>
+      <tr><td><span class="tag tv">TimeSeriesSplit</span></td><td>Time series data</td><td>Always train on past, test on future</td></tr>
+      <tr><td><span class="tag ty">RepeatedKFold</span></td><td>Need very stable estimate</td><td>Runs KFold multiple times with different seeds</td></tr>
+    </table>
+    <div class="note orange mt">⚠️ K=10 gives a better estimate but takes 2x longer. K=5 is the standard default for most problems.</div>
+  </div>
+</section>
+
+<!-- S-LEARNING-CURVES: LEARNING CURVES -->
+<section class="section" id="s-learning-curves">
+  <div class="sec-header"><span class="sec-title">Learning Curves</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>A learning curve plots <strong>model performance vs training set size</strong>. It shows both training score and validation score as you increase data — revealing whether your model is overfitting, underfitting, or just right.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Answers two critical questions: <strong>"Does my model need more data?"</strong> and <strong>"Is my model too complex or too simple?"</strong> — without guessing.</p></div>
+  </div>
+  <div class="card"><div class="card-title">Reading Learning Curves — 3 Patterns</div>
+    <div class="g3">
+      <div style="background:var(--surface2);border:2px solid var(--red);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-weight:800;color:var(--red);font-family:'Nunito',sans-serif;font-size:14px;margin-bottom:6px;">📈 Overfitting</div>
+        <p style="font-size:12px;color:var(--t2);">Train high, Val low. <strong>Large gap.</strong></p>
+        <div class="note red" style="font-size:11.5px;margin-top:8px;">Fix: More data, regularization, simpler model</div>
+      </div>
+      <div style="background:var(--surface2);border:2px solid var(--blue);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-weight:800;color:var(--blue);font-family:'Nunito',sans-serif;font-size:14px;margin-bottom:6px;">📉 Underfitting</div>
+        <p style="font-size:12px;color:var(--t2);">Both low. <strong>Converge at low value.</strong></p>
+        <div class="note blue" style="font-size:11.5px;margin-top:8px;">Fix: More features, complex model</div>
+      </div>
+      <div style="background:var(--surface2);border:2px solid var(--accent);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-weight:800;color:var(--accent);font-family:'Nunito',sans-serif;font-size:14px;margin-bottom:6px;">✅ Good Fit</div>
+        <p style="font-size:12px;color:var(--t2);">Both high. <strong>Small gap.</strong></p>
+        <div class="note green" style="font-size:11.5px;margin-top:8px;">Goal — model generalizes well</div>
+      </div>
+    </div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">Code — Plot Learning Curves</div>
+    <div class="code"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> learning_curve
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+train_sizes, train_scores, val_scores = <span class="fn">learning_curve</span>(
+    model, X, y, cv=<span class="num">5</span>, scoring=<span class="str">'f1'</span>,
+    train_sizes=np.<span class="fn">linspace</span>(<span class="num">0.1</span>, <span class="num">1.0</span>, <span class="num">10</span>), n_jobs=-<span class="num">1</span>
+)
+train_mean = train_scores.<span class="fn">mean</span>(axis=<span class="num">1</span>)
+val_mean   = val_scores.<span class="fn">mean</span>(axis=<span class="num">1</span>)
+
+plt.<span class="fn">plot</span>(train_sizes, train_mean, label=<span class="str">'Train'</span>, color=<span class="str">'green'</span>)
+plt.<span class="fn">plot</span>(train_sizes, val_mean,   label=<span class="str">'Validation'</span>, color=<span class="str">'red'</span>)
+plt.<span class="fn">xlabel</span>(<span class="str">'Training Set Size'</span>); plt.<span class="fn">ylabel</span>(<span class="str">'F1 Score'</span>)
+plt.<span class="fn">legend</span>(); plt.<span class="fn">title</span>(<span class="str">'Learning Curve'</span>); plt.<span class="fn">show</span>()</div>
+  </div>
+  <div class="card mt"><div class="card-title">What Learning Curves Tell You</div>
+    <table class="tbl">
+      <tr><th>Observation</th><th>Diagnosis</th><th>Action</th></tr>
+      <tr><td>Large gap, val score low</td><td>Overfitting</td><td>More data, regularization, simpler model</td></tr>
+      <tr><td>Both scores low, converged</td><td>Underfitting</td><td>More features, complex model</td></tr>
+      <tr><td>Val score still rising with more data</td><td>Need more data</td><td>Collect more training samples</td></tr>
+      <tr><td>Val score plateaued</td><td>Data is sufficient</td><td>Focus on model/features instead</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- S-DATA-LEAKAGE: DATA LEAKAGE -->
+<section class="section" id="s-data-leakage">
+  <div class="sec-header"><span class="sec-title">Data Leakage</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Data leakage happens when <strong>information from outside the training set</strong> (from the future or from the target) is used to train the model. The model looks great in evaluation but <strong>fails completely in production</strong>.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why is it dangerous?</div><p>Leakage is silent — your metrics look amazing, you deploy, and it fails. A model with 99% accuracy due to leakage is <strong>worse than useless</strong> — it’s misleading.</p></div>
+  </div>
+  <div class="card"><div class="card-title" style="color:var(--red)">🚨 Type 1: Target Leakage</div>
+    <p>A feature <strong>derived from or correlated with the target</strong> is included in training. The model learns the answer from the answer itself.</p>
+    <div class="g2 mt">
+      <div class="card" style="border-color:rgba(248,81,73,0.3)"><div class="card-title" style="color:var(--red);font-size:14px;">❌ Example</div>
+        <p style="font-size:13px">Predicting <strong>loan default</strong>. Feature <code style="background:var(--code-bg);padding:1px 5px;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:12px;">debt_collection_calls</code> only exists <em>after</em> default — useless for real prediction.</p>
+      </div>
+      <div class="card" style="border-color:rgba(46,160,67,0.3)"><div class="card-title" style="color:var(--accent);font-size:14px;">✅ Fix</div>
+        <p style="font-size:13px">Only use features <strong>available at prediction time</strong>. Ask: "Would I know this when making the prediction?"</p>
+      </div>
+    </div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">🚨 Type 2: Train-Test Leakage (Preprocessing)</div>
+    <p>Fitting a scaler/encoder on the <strong>full dataset before splitting</strong> — test data statistics leak into training.</p>
+    <div class="g2 mt">
+      <div class="card" style="border-color:rgba(248,81,73,0.3)"><div class="card-title" style="color:var(--red);font-size:14px;">❌ Wrong</div>
+        <div class="code" style="font-size:11.5px;">scaler.<span class="fn">fit_transform</span>(X)  <span class="cm"># full data ❌</span>
+X_train, X_test = <span class="fn">train_test_split</span>(X_scaled)</div>
+      </div>
+      <div class="card" style="border-color:rgba(46,160,67,0.3)"><div class="card-title" style="color:var(--accent);font-size:14px;">✅ Correct</div>
+        <div class="code" style="font-size:11.5px;">X_train, X_test = <span class="fn">train_test_split</span>(X)
+scaler.<span class="fn">fit_transform</span>(X_train)  <span class="cm"># train only ✔</span>
+scaler.<span class="fn">transform</span>(X_test)       <span class="cm"># no fit! ✔</span></div>
+      </div>
+    </div>
+    <div class="note red mt">⚠️ Using a Pipeline automatically prevents this — another reason to always use sklearn Pipeline.</div>
+  </div>
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">🚨 Type 3: Time Series Leakage</div>
+    <p>Shuffling time series data — future data ends up in training, past data in test.</p>
+    <div class="g2 mt">
+      <div class="card" style="border-color:rgba(248,81,73,0.3)"><div class="card-title" style="color:var(--red);font-size:14px;">❌ Wrong</div>
+        <div class="code" style="font-size:11.5px;">train_test_split(X, y, shuffle=<span class="kw">True</span>)  <span class="cm"># ❌</span></div>
+      </div>
+      <div class="card" style="border-color:rgba(46,160,67,0.3)"><div class="card-title" style="color:var(--accent);font-size:14px;">✅ Correct</div>
+        <div class="code" style="font-size:11.5px;">X_train, X_test = X[:<span class="num">-100</span>], X[-<span class="num">100</span>:]
+<span class="cm"># Or use TimeSeriesSplit for CV</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card mt"><div class="card-title">Data Leakage Detection Checklist</div>
+    <table class="tbl">
+      <tr><th>Red Flag</th><th>Likely Cause</th><th>Fix</th></tr>
+      <tr><td>Accuracy &gt; 99% on first try</td><td>Target leakage</td><td>Audit all features for future info</td></tr>
+      <tr><td>Train = Test = perfect</td><td>Test data in training</td><td>Split before any preprocessing</td></tr>
+      <tr><td>Model fails in production</td><td>Leakage during development</td><td>Simulate real prediction conditions</td></tr>
+      <tr><td>Feature corr with target &gt; 0.99</td><td>Feature derived from target</td><td>Remove or investigate</td></tr>
+      <tr><td>SMOTE applied before split</td><td>Synthetic test samples</td><td>Apply SMOTE on training data only</td></tr>
+    </table>
+    <div class="note red mt">🔑 <strong>Golden rule:</strong> At prediction time, what information is available? Only use that.</div>
+  </div>
+</section>
+
+<!-- S-EXPLAIN: MODEL EXPLAINABILITY -->
+<section class="section" id="s-explain">
+  <div class="sec-header"><span class="sec-title">Model Explainability — SHAP &amp; LIME</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Model explainability answers <strong>"why did the model make this prediction?"</strong> — breaking open black-box models like XGBoost, Random Forest, and Neural Networks to show which features drove each decision.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>In medical, legal, and financial domains, a prediction without explanation is useless or illegal. Explainability also helps you <strong>debug wrong predictions</strong>, detect bias, and build stakeholder trust.</p></div>
+  </div>
+
+  <!-- Global vs Local -->
+  <div class="card"><div class="card-title">Global vs Local Explainability</div>
+    <div class="g2">
+      <div class="card" style="border-color:rgba(56,139,253,0.3)">
+        <div class="card-title" style="color:var(--blue);font-size:14px;">🌍 Global Explainability</div>
+        <p style="font-size:13px">Explains the model's <strong>overall behavior</strong> across all predictions. Which features matter most on average? Used for model validation and feature selection.</p>
+        <div class="note blue">Example: "Income is the most important feature across all loan decisions."</div>
+      </div>
+      <div class="card" style="border-color:rgba(46,160,67,0.3)">
+        <div class="card-title" style="color:var(--accent);font-size:14px;">🔍 Local Explainability</div>
+        <p style="font-size:13px">Explains <strong>one specific prediction</strong>. Why was this particular customer denied a loan? Used for auditing individual decisions.</p>
+        <div class="note green">Example: "This customer was denied because Age=22 and Income=18000 pushed the score down."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHAP -->
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">🟠 SHAP — SHapley Additive exPlanations</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>SHAP assigns each feature a <strong>Shapley value</strong> — borrowed from game theory — that represents how much that feature <em>contributed</em> to pushing the prediction above or below the baseline (average prediction). Positive SHAP = pushed prediction up. Negative SHAP = pushed it down.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why use SHAP?</div><p>SHAP is <strong>mathematically consistent</strong> — it's the only method that satisfies all fairness axioms from game theory. It works for any model, gives both global and local explanations, and produces beautiful visualizations that are easy to communicate.</p></div>
+    </div>
+    <div class="formula mt">Prediction = baseline + SHAP(feature_1) + SHAP(feature_2) + ... + SHAP(feature_n)</div>
+    <h5 class="mt">SHAP Visualizations</h5>
+    <div class="g3">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:6px;">summary_plot</div>
+        <p style="font-size:12px;color:var(--t2);">Global — shows all features ranked by mean |SHAP|. Each dot is one sample, colored by feature value (red=high, blue=low).</p>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px;">waterfall_plot</div>
+        <p style="font-size:12px;color:var(--t2);">Local — shows how each feature pushed one prediction from the baseline to the final output. Red bars push up, blue bars push down.</p>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--violet);margin-bottom:6px;">beeswarm_plot</div>
+        <p style="font-size:12px;color:var(--t2);">Global — distribution of SHAP values per feature across all samples. Shows both direction and magnitude of each feature's impact.</p>
+      </div>
+    </div>
+    <div class="code mt"><span class="kw">import</span> shap
+<span class="kw">from</span> xgboost <span class="kw">import</span> XGBClassifier
+
+model = XGBClassifier().<span class="fn">fit</span>(X_train, y_train)
+
+<span class="cm"># TreeExplainer — fast for tree-based models (XGBoost, RF, LightGBM)</span>
+explainer = shap.<span class="fn">TreeExplainer</span>(model)
+shap_values = explainer.<span class="fn">shap_values</span>(X_test)
+
+<span class="cm"># Global: feature importance summary</span>
+shap.<span class="fn">summary_plot</span>(shap_values, X_test)
+
+<span class="cm"># Local: explain one prediction (row 0)</span>
+shap.<span class="fn">waterfall_plot</span>(explainer(X_test)[<span class="num">0</span>])
+
+<span class="cm"># Beeswarm: distribution of all SHAP values</span>
+shap.<span class="fn">plots</span>.<span class="fn">beeswarm</span>(explainer(X_test))</div>
+    <div class="note orange mt">💡 Use <strong>TreeExplainer</strong> for XGBoost/Random Forest (fast). Use <strong>KernelExplainer</strong> for any model (slower, model-agnostic).</div>
+  </div>
+
+  <!-- LIME -->
+  <div class="card mt"><div class="card-title" style="color:var(--blue)">🔵 LIME — Local Interpretable Model-agnostic Explanations</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>LIME explains <strong>one prediction at a time</strong> by creating slightly perturbed versions of that input, getting the model's predictions for all of them, and fitting a <strong>simple linear model</strong> locally around that point. The linear model's coefficients are the explanation.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why use LIME?</div><p>LIME is <strong>model-agnostic</strong> — works with any black-box model including neural networks. It's intuitive: the explanation is just a linear equation anyone can read. Best for explaining individual decisions to non-technical stakeholders.</p></div>
+    </div>
+    <div class="code mt"><span class="kw">from</span> lime.lime_tabular <span class="kw">import</span> LimeTabularExplainer
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+explainer = <span class="fn">LimeTabularExplainer</span>(
+    X_train.values,
+    feature_names=X_train.columns.<span class="fn">tolist</span>(),
+    class_names=[<span class="str">'No'</span>, <span class="str">'Yes'</span>],
+    mode=<span class="str">'classification'</span>
+)
+
+<span class="cm"># Explain one prediction (row 5 from test set)</span>
+exp = explainer.<span class="fn">explain_instance</span>(
+    X_test.values[<span class="num">5</span>],
+    model.predict_proba,
+    num_features=<span class="num">6</span>
+)
+
+exp.<span class="fn">show_in_notebook</span>()   <span class="cm"># Interactive visualization in Jupyter</span>
+exp.<span class="fn">as_list</span>()            <span class="cm"># [(feature, weight), ...] as plain list</span></div>
+  </div>
+
+  <!-- SHAP vs LIME -->
+  <div class="card mt"><div class="card-title">SHAP vs LIME — When to Use Which</div>
+    <table class="tbl">
+      <tr><th>Property</th><th style="color:var(--orange)">SHAP</th><th style="color:var(--blue)">LIME</th></tr>
+      <tr><td>Explanation type</td><td>Global + Local</td><td>Local only</td></tr>
+      <tr><td>Model-agnostic?</td><td>✅ Yes (KernelExplainer) / ⚡ Fast for trees</td><td>✅ Yes — any model</td></tr>
+      <tr><td>Mathematical guarantee</td><td>✅ Shapley axioms — provably fair</td><td>❌ Approximation — can be unstable</td></tr>
+      <tr><td>Speed</td><td>Fast for trees, slow for others</td><td>Slow — runs many model calls</td></tr>
+      <tr><td>Best for</td><td>Tree models, global analysis, feature importance</td><td>Any model, single prediction explanation</td></tr>
+      <tr><td>Output</td><td>SHAP values (additive contributions)</td><td>Linear model coefficients locally</td></tr>
+    </table>
+    <div class="note green mt">🔑 <strong>Default choice: SHAP</strong> for tree-based models. Use LIME when you need to explain a neural network or any non-tree model to a non-technical audience.</div>
+  </div>
+
+  <!-- When to use explainability -->
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">📋 When Explainability is Required</div>
+    <table class="tbl">
+      <tr><th>Domain</th><th>Why Explainability Matters</th><th>Tool</th></tr>
+      <tr><td>Healthcare / Medical</td><td>Doctors must understand why a diagnosis was made — black box = liability</td><td><span class="tag to">SHAP</span></td></tr>
+      <tr><td>Finance / Credit</td><td>GDPR &amp; regulations require explaining loan/credit decisions to customers</td><td><span class="tag to">SHAP</span></td></tr>
+      <tr><td>Legal / HR</td><td>Hiring or sentencing decisions must be auditable and bias-free</td><td><span class="tag tb">LIME</span></td></tr>
+      <tr><td>Model Debugging</td><td>Model predicts wrong — SHAP shows which feature caused the error</td><td><span class="tag to">SHAP</span></td></tr>
+      <tr><td>Feature Selection</td><td>Use global SHAP importance to drop features with near-zero contribution</td><td><span class="tag to">SHAP</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- S-HYPERPARAM: HYPERPARAMETER TUNING -->
+<section class="section" id="s-hyperparam">
+  <div class="sec-header"><span class="sec-title">Hyperparameter Tuning</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>Hyperparameters are settings you configure <strong>before</strong> training (e.g. max_depth, learning_rate, n_estimators). Tuning finds the combination that gives the best model performance on validation data.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Default hyperparameters rarely give optimal results. A well-tuned model can improve accuracy by 5–15%. It’s the difference between a good model and a great one.</p></div>
+  </div>
+
+  <!-- GridSearchCV -->
+  <div class="card"><div class="card-title" style="color:var(--blue)">🔍 GridSearchCV — Exhaustive Search</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Tries <strong>every possible combination</strong> of hyperparameter values you specify. If you give 3 values for param A and 4 for param B → it trains 3×4 = 12 models, each with cross-validation.</p></div>
+      <div class="ww-box"><div class="ww-label why">When to use?</div><p>When your search space is small (few parameters, few values) and you want to guarantee finding the best combination within that grid. Slow but thorough.</p></div>
+    </div>
+    <div class="code mt"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> GridSearchCV
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+
+param_grid = {
+    <span class="str">'n_estimators'</span>: [<span class="num">100</span>, <span class="num">200</span>, <span class="num">300</span>],
+    <span class="str">'max_depth'</span>:    [<span class="num">3</span>, <span class="num">5</span>, <span class="num">10</span>, <span class="kw">None</span>],
+    <span class="str">'min_samples_split'</span>: [<span class="num">2</span>, <span class="num">5</span>]
+}  <span class="cm"># 3 × 4 × 2 = 24 combinations × 5-fold CV = 120 fits</span>
+
+grid = GridSearchCV(
+    RandomForestClassifier(random_state=<span class="num">42</span>),
+    param_grid, cv=<span class="num">5</span>, scoring=<span class="str">'f1'</span>, n_jobs=-<span class="num">1</span>, verbose=<span class="num">1</span>
+)
+grid.<span class="fn">fit</span>(X_train, y_train)
+
+<span class="fn">print</span>(grid.best_params_)   <span class="cm"># Best combination found</span>
+<span class="fn">print</span>(grid.best_score_)    <span class="cm"># Best CV score</span>
+best_model = grid.best_estimator_</div>
+  </div>
+
+  <!-- RandomizedSearchCV -->
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">🎲 RandomizedSearchCV — Random Sampling</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Instead of trying every combination, it <strong>randomly samples</strong> n_iter combinations from the parameter distributions. Covers a much wider search space in the same compute budget.</p></div>
+      <div class="ww-box"><div class="ww-label why">When to use?</div><p>When your search space is large (many parameters or continuous ranges). Research shows random search finds near-optimal results much faster than grid search in high dimensions.</p></div>
+    </div>
+    <div class="code mt"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> RandomizedSearchCV
+<span class="kw">from</span> scipy.stats <span class="kw">import</span> randint, uniform
+
+param_dist = {
+    <span class="str">'n_estimators'</span>:     randint(<span class="num">100</span>, <span class="num">500</span>),    <span class="cm"># sample from range</span>
+    <span class="str">'max_depth'</span>:        randint(<span class="num">3</span>, <span class="num">20</span>),
+    <span class="str">'min_samples_split'</span>: randint(<span class="num">2</span>, <span class="num">10</span>),
+    <span class="str">'max_features'</span>:     uniform(<span class="num">0.3</span>, <span class="num">0.7</span>)   <span class="cm"># continuous range</span>
+}
+
+rand = RandomizedSearchCV(
+    RandomForestClassifier(random_state=<span class="num">42</span>),
+    param_dist, n_iter=<span class="num">50</span>, cv=<span class="num">5</span>,
+    scoring=<span class="str">'f1'</span>, n_jobs=-<span class="num">1</span>, random_state=<span class="num">42</span>
+)
+rand.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(rand.best_params_, rand.best_score_)</div>
+  </div>
+
+  <!-- Optuna -->
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">⚡ Optuna — Bayesian Optimization</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is it?</div><p>Optuna uses <strong>Bayesian optimization</strong> — it learns from previous trials to intelligently decide which hyperparameter combinations to try next. Smarter than random, faster than grid search.</p></div>
+      <div class="ww-box"><div class="ww-label why">When to use?</div><p>When training is expensive (deep learning, XGBoost on large data) and you want the best result with the fewest trials. Industry standard for serious ML competitions and production tuning.</p></div>
+    </div>
+    <div class="code mt"><span class="kw">import</span> optuna
+optuna.logging.<span class="fn">set_verbosity</span>(optuna.logging.WARNING)
+
+<span class="kw">def</span> <span class="fn">objective</span>(trial):
+    params = {
+        <span class="str">'n_estimators'</span>:      trial.<span class="fn">suggest_int</span>(<span class="str">'n_estimators'</span>, <span class="num">100</span>, <span class="num">500</span>),
+        <span class="str">'max_depth'</span>:         trial.<span class="fn">suggest_int</span>(<span class="str">'max_depth'</span>, <span class="num">3</span>, <span class="num">15</span>),
+        <span class="str">'learning_rate'</span>:     trial.<span class="fn">suggest_float</span>(<span class="str">'learning_rate'</span>, <span class="num">0.01</span>, <span class="num">0.3</span>, log=<span class="kw">True</span>),
+        <span class="str">'subsample'</span>:         trial.<span class="fn">suggest_float</span>(<span class="str">'subsample'</span>, <span class="num">0.6</span>, <span class="num">1.0</span>)
+    }
+    <span class="kw">from</span> xgboost <span class="kw">import</span> XGBClassifier
+    model = <span class="fn">XGBClassifier</span>(**params, random_state=<span class="num">42</span>, eval_metric=<span class="str">'logloss'</span>)
+    <span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> cross_val_score
+    score = cross_val_score(model, X_train, y_train, cv=<span class="num">5</span>, scoring=<span class="str">'f1'</span>).<span class="fn">mean</span>()
+    <span class="kw">return</span> score
+
+study = optuna.<span class="fn">create_study</span>(direction=<span class="str">'maximize'</span>)
+study.<span class="fn">optimize</span>(objective, n_trials=<span class="num">50</span>)
+
+<span class="fn">print</span>(study.best_params)
+<span class="fn">print</span>(<span class="str">f"Best F1: {study.best_value:.4f}"</span>)</div>
+    <div class="note violet mt">💡 Optuna automatically prunes unpromising trials early — saving even more compute time.</div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="card mt"><div class="card-title">Which Tuning Method to Use?</div>
+    <table class="tbl">
+      <tr><th>Method</th><th>Strategy</th><th>Speed</th><th>Best For</th></tr>
+      <tr><td><span class="tag tb">GridSearchCV</span></td><td>Try all combinations</td><td>🐢 Slow</td><td>Small grid, guaranteed best in grid</td></tr>
+      <tr><td><span class="tag to">RandomizedSearchCV</span></td><td>Random sampling</td><td>🟡 Medium</td><td>Large search space, quick exploration</td></tr>
+      <tr><td><span class="tag tv">Optuna</span></td><td>Bayesian — learns from trials</td><td>⚡ Fast</td><td>Expensive models, production tuning</td></tr>
+    </table>
+    <div class="note orange mt">⚠️ Always tune on <strong>validation/CV data</strong>, never on test data. Tuning on test data is data leakage.</div>
+  </div>
+</section>
+
+<!-- S-PIPELINE: SKLEARN PIPELINE -->
+<section class="section" id="s-pipeline">
+  <div class="sec-header"><span class="sec-title">sklearn Pipeline</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>A Pipeline chains multiple preprocessing steps and a model into a <strong>single object</strong>. Each step’s output becomes the next step’s input. Fit once, predict once — no manual step management.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>Without a pipeline, it’s easy to accidentally fit scalers on test data (leakage). A pipeline <strong>guarantees correct train/test separation</strong> automatically and makes your code clean, reproducible, and deployable.</p></div>
+  </div>
+
+  <div class="card"><div class="card-title" style="color:var(--accent)">🔗 Basic Pipeline</div>
+    <div class="flow mt">
+      <div class="frow">
+        <div class="fbox" style="border-color:var(--blue)">Raw Data</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--orange)">Imputer</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--violet)">Scaler</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--accent)">Model</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--pink)">Prediction</div>
+      </div>
+    </div>
+    <div class="code mt"><span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.impute <span class="kw">import</span> SimpleImputer
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+
+pipe = Pipeline([
+    (<span class="str">'imputer'</span>, SimpleImputer(strategy=<span class="str">'median'</span>)),
+    (<span class="str">'scaler'</span>,  StandardScaler()),
+    (<span class="str">'model'</span>,   RandomForestClassifier(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>))
+])
+
+pipe.<span class="fn">fit</span>(X_train, y_train)   <span class="cm"># fits imputer+scaler on train only ✔</span>
+pipe.<span class="fn">predict</span>(X_test)         <span class="cm"># transforms test with train params ✔</span>
+pipe.<span class="fn">score</span>(X_test, y_test)</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">🔧 ColumnTransformer — Different Steps for Different Columns</div>
+    <p>Real datasets have mixed types — numerical columns need scaling, categorical columns need encoding. ColumnTransformer applies different pipelines to different column groups simultaneously.</p>
+    <div class="code mt"><span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.compose <span class="kw">import</span> ColumnTransformer
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler, OneHotEncoder
+<span class="kw">from</span> sklearn.impute <span class="kw">import</span> SimpleImputer
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+
+num_cols = [<span class="str">'Age'</span>, <span class="str">'Income'</span>, <span class="str">'Score'</span>]
+cat_cols = [<span class="str">'City'</span>, <span class="str">'Gender'</span>]
+
+num_pipe = Pipeline([
+    (<span class="str">'imputer'</span>, SimpleImputer(strategy=<span class="str">'median'</span>)),
+    (<span class="str">'scaler'</span>,  StandardScaler())
+])
+cat_pipe = Pipeline([
+    (<span class="str">'imputer'</span>, SimpleImputer(strategy=<span class="str">'most_frequent'</span>)),
+    (<span class="str">'encoder'</span>, OneHotEncoder(handle_unknown=<span class="str">'ignore'</span>))
+])
+
+preprocessor = ColumnTransformer([
+    (<span class="str">'num'</span>, num_pipe, num_cols),
+    (<span class="str">'cat'</span>, cat_pipe, cat_cols)
+])
+
+full_pipe = Pipeline([
+    (<span class="str">'preprocessor'</span>, preprocessor),
+    (<span class="str">'model'</span>, RandomForestClassifier(random_state=<span class="num">42</span>))
+])
+
+full_pipe.<span class="fn">fit</span>(X_train, y_train)
+full_pipe.<span class="fn">score</span>(X_test, y_test)</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">🎯 Pipeline + GridSearchCV</div>
+    <p>Pipelines work seamlessly with GridSearchCV. Use <code style="background:var(--code-bg);padding:1px 5px;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:12px;">stepname__param</code> (double underscore) to reference parameters inside the pipeline.</p>
+    <div class="code mt"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> GridSearchCV
+
+param_grid = {
+    <span class="str">'model__n_estimators'</span>: [<span class="num">100</span>, <span class="num">200</span>],
+    <span class="str">'model__max_depth'</span>:    [<span class="num">5</span>, <span class="num">10</span>, <span class="kw">None</span>],
+    <span class="str">'preprocessor__num__scaler'</span>: [StandardScaler()]
+}
+
+grid = GridSearchCV(full_pipe, param_grid, cv=<span class="num">5</span>, scoring=<span class="str">'f1'</span>, n_jobs=-<span class="num">1</span>)
+grid.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(grid.best_params_)</div>
+    <div class="note green mt">✅ The pipeline ensures the scaler is <strong>never fit on test data</strong> — even inside cross-validation folds. This is the correct way to do ML.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title">Why Pipeline Over Manual Steps?</div>
+    <table class="tbl">
+      <tr><th>Without Pipeline</th><th>With Pipeline</th></tr>
+      <tr><td>❌ Scaler fit on full data — leakage risk</td><td>✅ Scaler fit on train fold only — always safe</td></tr>
+      <tr><td>❌ 10 lines of transform code per prediction</td><td>✅ One <code>pipe.predict(X)</code> call</td></tr>
+      <tr><td>❌ Easy to forget a step in production</td><td>✅ All steps bundled — nothing forgotten</td></tr>
+      <tr><td>❌ Hard to serialize and deploy</td><td>✅ <code>joblib.dump(pipe, 'model.pkl')</code> saves everything</td></tr>
+    </table>
+  </div>
+</section>
+
 <hr class="divider">
 
 <!-- S21: BEST PRACTICES -->
@@ -2211,6 +3267,813 @@ FN = predicted negative but was positive (missed)</div>
   </div>
 </section>
 
+<!-- S-MLOPS: MLOPS & DEPLOYMENT -->
+<section class="section" id="s-mlops">
+  <div class="sec-header"><span class="sec-title">MLOps &amp; Model Deployment</span></div>
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>MLOps (Machine Learning Operations) is the practice of <strong>deploying, monitoring, and maintaining ML models in production</strong>. It bridges the gap between a trained model on your laptop and a live API serving real users.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why do we need it?</div><p>A model that only runs in a Jupyter notebook has zero business value. MLOps turns your model into a <strong>reliable, scalable, versioned service</strong> that can be updated, monitored, and rolled back safely.</p></div>
+  </div>
+
+  <div class="card"><div class="card-title" style="color:var(--accent)">🔄 ML Deployment Flow</div>
+    <div class="flow mt">
+      <div class="frow">
+        <div class="fbox" style="border-color:var(--blue)">Train Model</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--orange)">Save Model<br><span style="font-size:10px;color:var(--t3)">joblib / pickle</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--violet)">FastAPI<br><span style="font-size:10px;color:var(--t3)">REST API</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--pink)">Docker<br><span style="font-size:10px;color:var(--t3)">Container</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">→</div>
+        <div class="fbox" style="border-color:var(--accent)">CI/CD<br><span style="font-size:10px;color:var(--t3)">Auto Deploy</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--blue)">💾 Step 1 — Save Your Model</div>
+    <p>After training, serialize the model (and pipeline) to disk so it can be loaded by the API server without retraining.</p>
+    <div class="code"><span class="kw">import</span> joblib
+
+<span class="cm"># Save the full pipeline (preprocessor + model)</span>
+joblib.<span class="fn">dump</span>(full_pipe, <span class="str">'model.pkl'</span>)
+
+<span class="cm"># Load it back anywhere</span>
+loaded_model = joblib.<span class="fn">load</span>(<span class="str">'model.pkl'</span>)
+loaded_model.<span class="fn">predict</span>(X_new)</div>
+    <div class="note blue mt">💡 Always save the <strong>full pipeline</strong>, not just the model. This ensures preprocessing steps are included and no manual transforms are needed at inference time.</div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--violet)">⚡ Step 2 — Serve with FastAPI</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is FastAPI?</div><p>FastAPI is a modern Python web framework for building <strong>REST APIs</strong>. It's fast, auto-generates docs at <code style="background:var(--code-bg);padding:1px 5px;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:12px;">/docs</code>, and validates inputs automatically using Pydantic models.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why FastAPI over Flask?</div><p>FastAPI is <strong>async-native</strong>, 2–3x faster than Flask, auto-generates Swagger UI, and validates request data automatically — making it the industry standard for serving ML models.</p></div>
+    </div>
+    <div class="code mt"><span class="cm"># main.py</span>
+<span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI
+<span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel
+<span class="kw">import</span> joblib, numpy <span class="kw">as</span> np
+
+app = <span class="fn">FastAPI</span>(title=<span class="str">'ML Model API'</span>)
+model = joblib.<span class="fn">load</span>(<span class="str">'model.pkl'</span>)
+
+<span class="kw">class</span> <span class="fn">InputData</span>(BaseModel):
+    age:    float
+    income: float
+    score:  float
+
+<span class="kw">class</span> <span class="fn">Prediction</span>(BaseModel):
+    prediction: int
+    probability: float
+
+@app.<span class="fn">post</span>(<span class="str">'/predict'</span>, response_model=Prediction)
+<span class="kw">def</span> <span class="fn">predict</span>(data: InputData):
+    X = np.<span class="fn">array</span>([[data.age, data.income, data.score]])
+    pred  = model.<span class="fn">predict</span>(X)[<span class="num">0</span>]
+    proba = model.<span class="fn">predict_proba</span>(X)[<span class="num">0</span>][<span class="num">1</span>]
+    <span class="kw">return</span> {<span class="str">'prediction'</span>: <span class="fn">int</span>(pred), <span class="str">'probability'</span>: <span class="fn">round</span>(<span class="fn">float</span>(proba), <span class="num">4</span>)}
+
+<span class="cm"># Run: uvicorn main:app --reload</span>
+<span class="cm"># Docs auto-generated at: http://localhost:8000/docs</span></div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--orange)">🐳 Step 3 — Containerize with Docker</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is Docker?</div><p>Docker packages your app, its dependencies, and the runtime into a <strong>container</strong> — a lightweight, portable unit that runs identically on any machine. "Works on my machine" is no longer an excuse.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why Docker for ML?</div><p>Eliminates environment issues (Python version, library conflicts). Makes deployment to any cloud (AWS, GCP, Azure) trivial. Enables horizontal scaling — spin up 10 identical containers under load.</p></div>
+    </div>
+    <div class="g2 mt">
+      <div>
+        <h5>Dockerfile</h5>
+        <div class="code">FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY model.pkl .
+COPY main.py .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "main:app",
+     "--host", "0.0.0.0",
+     "--port", "8000"]</div>
+      </div>
+      <div>
+        <h5>requirements.txt &amp; Commands</h5>
+        <div class="code"><span class="cm"># requirements.txt</span>
+fastapi
+uvicorn
+scikit-learn
+joblib
+numpy
+pandas
+
+<span class="cm"># Build the image</span>
+docker build -t ml-api .
+
+<span class="cm"># Run the container</span>
+docker run -p 8000:8000 ml-api
+
+<span class="cm"># Test it</span>
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":30,"income":50000,"score":720}'</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt"><div class="card-title" style="color:var(--accent)">🔄 Step 4 — CI/CD with GitHub Actions</div>
+    <div class="what-why">
+      <div class="ww-box"><div class="ww-label what">What is CI/CD?</div><p><strong>Continuous Integration / Continuous Deployment</strong>. Every time you push code to GitHub, an automated pipeline runs tests, builds the Docker image, and deploys to production — with zero manual steps.</p></div>
+      <div class="ww-box"><div class="ww-label why">Why CI/CD for ML?</div><p>Prevents broken models from reaching production. Automates the tedious build-test-deploy cycle. Enables <strong>model versioning</strong> — every deployment is traceable to a specific commit and model artifact.</p></div>
+    </div>
+    <div class="code mt"><span class="cm"># .github/workflows/deploy.yml</span>
+name: ML API Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with: { python-version: '3.11' }
+
+      - name: Install and Test
+        run: |
+          pip install -r requirements.txt
+          pytest tests/
+
+      - name: Build Docker Image
+        run: docker build -t ml-api .
+
+      - name: Push to Registry
+        run: |
+          docker tag ml-api ghcr.io/user/ml-api:latest
+          docker push ghcr.io/user/ml-api:latest
+
+      - name: Deploy to Server
+        run: ssh user@server "docker pull && docker restart ml-api"</div>
+  </div>
+
+  <div class="card mt"><div class="card-title">MLOps Stack Summary</div>
+    <table class="tbl">
+      <tr><th>Stage</th><th>Tool</th><th>Purpose</th></tr>
+      <tr><td>Model Saving</td><td><span class="tag tg">joblib / pickle</span></td><td>Serialize trained pipeline to disk</td></tr>
+      <tr><td>API Server</td><td><span class="tag tv">FastAPI</span></td><td>Expose model as REST endpoint</td></tr>
+      <tr><td>Containerization</td><td><span class="tag to">Docker</span></td><td>Package app + dependencies portably</td></tr>
+      <tr><td>Orchestration</td><td><span class="tag tb">Kubernetes</span></td><td>Scale containers, manage traffic</td></tr>
+      <tr><td>CI/CD</td><td><span class="tag tg">GitHub Actions</span></td><td>Auto test, build, deploy on push</td></tr>
+      <tr><td>Experiment Tracking</td><td><span class="tag ty">MLflow / W&amp;B</span></td><td>Log metrics, params, model versions</td></tr>
+      <tr><td>Model Monitoring</td><td><span class="tag tr">Evidently / Grafana</span></td><td>Detect data drift, performance decay</td></tr>
+    </table>
+    <div class="note green mt">✅ Minimum viable MLOps stack: <strong>joblib + FastAPI + Docker + GitHub Actions</strong>. Start here before adding Kubernetes or MLflow.</div>
+  </div>
+</section>
+
+<!-- S-INFERENCE: MODEL INFERENCE -->
+<section class="section" id="s-inference">
+  <div class="sec-header"><span class="sec-title">Model Inference</span></div>
+
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is Inference?</div><p>Inference is using a <strong>trained model to make predictions</strong> on new, unseen data. Training happens once; inference happens continuously in production.</p></div>
+    <div class="ww-box"><div class="ww-label why">Batch vs Real-Time</div><p>The two core inference modes differ in <strong>when</strong> predictions are made â€” all at once on a schedule, or instantly on demand as each request arrives.</p></div>
+  </div>
+
+  <div class="g2 mt">
+    <div class="card">
+      <div class="card-title" style="color:var(--blue)">&#x23F0; Batch Inference</div>
+      <p>Predictions are generated for a <strong>large dataset all at once</strong>, typically on a schedule (hourly, nightly). Results are stored and served later.</p>
+      <h5>When to Use</h5>
+      <ul>
+        <li>Predictions don't need to be instant (e.g. next-day recommendations)</li>
+        <li>Large volumes of data to score at once</li>
+        <li>Downstream systems consume pre-computed results</li>
+      </ul>
+      <h5>Examples</h5>
+      <ul>
+        <li>Nightly churn score for all customers</li>
+        <li>Weekly fraud risk scoring on transactions</li>
+        <li>Daily product recommendations for email campaigns</li>
+      </ul>
+      <h5>Pros &amp; Cons</h5>
+      <table class="tbl mt">
+        <tr><th>Pros</th><th>Cons</th></tr>
+        <tr><td>&#x2705; High throughput</td><td>&#x274C; Predictions go stale</td></tr>
+        <tr><td>&#x2705; Simple infrastructure</td><td>&#x274C; Not suitable for real-time needs</td></tr>
+        <tr><td>&#x2705; Cost efficient</td><td>&#x274C; Latency between event &amp; prediction</td></tr>
+      </table>
+      <div class="code-wrap mt"><div class="code"><span class="kw">import</span> joblib
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+model = joblib.<span class="fn">load</span>(<span class="str">'model.pkl'</span>)
+df    = pd.<span class="fn">read_csv</span>(<span class="str">'customers.csv'</span>)
+
+df[<span class="str">'churn_score'</span>] = model.<span class="fn">predict_proba</span>(df)<span class="op">[:,</span> <span class="num">1</span>]
+df.<span class="fn">to_csv</span>(<span class="str">'scores.csv'</span>, index=<span class="kw">False</span>)  <span class="cm"># store results</span></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="color:var(--accent)">&#x26A1; Real-Time Inference</div>
+      <p>Predictions are generated <strong>on demand, one request at a time</strong>, with low latency. The model is served behind an API endpoint.</p>
+      <h5>When to Use</h5>
+      <ul>
+        <li>User is waiting for the result (e.g. fraud check at checkout)</li>
+        <li>Predictions depend on live/streaming data</li>
+        <li>Personalisation must reflect the current moment</li>
+      </ul>
+      <h5>Examples</h5>
+      <ul>
+        <li>Fraud detection at point of transaction</li>
+        <li>Loan approval during online application</li>
+        <li>Search ranking &amp; ad targeting</li>
+      </ul>
+      <h5>Pros &amp; Cons</h5>
+      <table class="tbl mt">
+        <tr><th>Pros</th><th>Cons</th></tr>
+        <tr><td>&#x2705; Always fresh predictions</td><td>&#x274C; Needs low-latency infra</td></tr>
+        <tr><td>&#x2705; Reacts to live events</td><td>&#x274C; Harder to scale under load</td></tr>
+        <tr><td>&#x2705; Better user experience</td><td>&#x274C; More expensive to operate</td></tr>
+      </table>
+      <div class="code-wrap mt"><div class="code"><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI
+<span class="kw">import</span> joblib, numpy <span class="kw">as</span> np
+
+app   = <span class="fn">FastAPI</span>()
+model = joblib.<span class="fn">load</span>(<span class="str">'model.pkl'</span>)
+
+<span class="kw">@app</span>.post(<span class="str">'/predict'</span>)
+<span class="kw">def</span> <span class="fn">predict</span>(features: list):
+    X   = np.<span class="fn">array</span>(features).<span class="fn">reshape</span>(<span class="num">1</span>, <span class="op">-</span><span class="num">1</span>)
+    <span class="kw">return</span> {<span class="str">"prediction"</span>: model.<span class="fn">predict</span>(X)[<span class="num">0</span>]}</div></div>
+    </div>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title" style="color:var(--blue)">&#x23F0; Batch Example &mdash; Nightly Customer Churn Scoring</div>
+    <p>Every night, the model scores <strong>all customers at once</strong> and saves results to a CSV. The marketing team reads pre-computed scores next morning &mdash; no API needed.</p>
+    <h5>How It Works</h5>
+    <div class="flow mt">
+      <div class="frow">
+        <div class="fbox" style="border-color:var(--blue)">Load all customers<br><span style="font-size:10px;color:var(--t3)">from DB / CSV</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--orange)">Preprocess features<br><span style="font-size:10px;color:var(--t3)">scale, encode</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--violet)">Model scores all rows<br><span style="font-size:10px;color:var(--t3)">predict_proba</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--accent);color:var(--accent);font-weight:600">Save scores to CSV<br><span style="font-size:10px;color:var(--t3)">ready by morning</span></div>
+      </div>
+    </div>
+    <h5>Training the Model</h5>
+    <div class="code-wrap"><div class="code"><span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+<span class="kw">import</span> pandas <span class="kw">as</span> pd, joblib
+
+df   = pd.<span class="fn">read_csv</span>(<span class="str">"customers_train.csv"</span>)
+X, y = df.<span class="fn">drop</span>(<span class="str">"churned"</span>, axis=<span class="num">1</span>), df[<span class="str">"churned"</span>]
+
+pipe = Pipeline([
+    (<span class="str">"scaler"</span>, StandardScaler()),
+    (<span class="str">"clf"</span>,    RandomForestClassifier(n_estimators=<span class="num">100</span>, random_state=<span class="num">42</span>))
+])
+pipe.<span class="fn">fit</span>(X, y)
+joblib.<span class="fn">dump</span>(pipe, <span class="str">"churn_model.pkl"</span>)  <span class="cm"># save once</span></div></div>
+    <h5>Nightly Batch Scoring Script</h5>
+    <div class="code-wrap"><div class="code"><span class="kw">import</span> pandas <span class="kw">as</span> pd, joblib
+<span class="kw">from</span> datetime <span class="kw">import</span> date
+
+model = joblib.<span class="fn">load</span>(<span class="str">"churn_model.pkl"</span>)
+df    = pd.<span class="fn">read_csv</span>(<span class="str">"customers_today.csv"</span>)  <span class="cm"># all customers</span>
+
+df[<span class="str">"churn_score"</span>] = model.<span class="fn">predict_proba</span>(df)[:, <span class="num">1</span>]
+df[<span class="str">"risk_label"</span>]  = df[<span class="str">"churn_score"</span>].<span class="fn">apply</span>(
+    <span class="kw">lambda</span> s: <span class="str">"High"</span> <span class="kw">if</span> s &gt; <span class="num">0.7</span> <span class="kw">else</span> (<span class="str">"Medium"</span> <span class="kw">if</span> s &gt; <span class="num">0.4</span> <span class="kw">else</span> <span class="str">"Low"</span>))
+df[<span class="str">"scored_date"</span>] = str(date.<span class="fn">today</span>())
+
+df[[<span class="str">"customer_id"</span>, <span class="str">"churn_score"</span>, <span class="str">"risk_label"</span>, <span class="str">"scored_date"</span>]].<span class="fn">to_csv</span>(
+    <span class="str">"churn_scores_output.csv"</span>, index=<span class="kw">False</span>)
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Scored {len(df)} customers"</span>)</div></div>
+    <h5>Sample Output</h5>
+    <div class="code-wrap"><div class="code"><span class="cm"># churn_scores_output.csv</span>
+customer_id  churn_score  risk_label  scored_date
+C001         <span class="num">0.87</span>         High        2025-07-15
+C002         <span class="num">0.23</span>         Low         2025-07-15
+C003         <span class="num">0.55</span>         Medium      2025-07-15
+C004         <span class="num">0.91</span>         High        2025-07-15</div></div>
+    <div class="note blue mt">&#x23F0; <strong>Schedule this script</strong> with a cron job (<code>0 2 * * *</code> = runs at 2am daily) or use <strong>Apache Airflow</strong> for complex pipelines with retries and monitoring.</div>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title" style="color:var(--blue)">&#x1F4CB; Sample Input &mdash; What customers_today.csv Looks Like</div>
+    <p style="font-size:13px;color:var(--t2)">Each row is one customer. The model reads all rows at once and adds <code>churn_score</code> and <code>risk_label</code> columns.</p>
+    <div class="code-wrap mt"><div class="code"><span class="cm"># customers_today.csv (input)</span>
+customer_id  tenure_months  monthly_charges  num_products  support_calls  last_login_days
+C001         3              89.50            1             5              28
+C002         36             45.00            3             0              2
+C003         12             67.20            2             2              10
+C004         2              95.80            1             8              45
+C005         48             32.00            4             0              1</div></div>
+    <h5>Feature Meaning</h5>
+    <table class="tbl mt">
+      <tr><th>Feature</th><th>Meaning</th><th>High Churn Signal?</th></tr>
+      <tr><td><code>tenure_months</code></td><td>How long customer has been with us</td><td><span class="tag tr">Low tenure = risky</span></td></tr>
+      <tr><td><code>monthly_charges</code></td><td>Monthly bill amount</td><td><span class="tag ty">High charges = risky</span></td></tr>
+      <tr><td><code>num_products</code></td><td>Number of products subscribed</td><td><span class="tag tg">More products = loyal</span></td></tr>
+      <tr><td><code>support_calls</code></td><td>Support calls in last 90 days</td><td><span class="tag tr">Many calls = risky</span></td></tr>
+      <tr><td><code>last_login_days</code></td><td>Days since last login</td><td><span class="tag tr">Long gap = risky</span></td></tr>
+    </table>
+    <h5 style="margin-top:14px;">&#x1F9EA; Try It &mdash; Batch Churn Scorer</h5>
+    <p style="font-size:13px;color:var(--t2)">Fill in a customer profile and see the predicted churn risk.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+      <div>
+        <label style="font-size:11px;color:var(--t3);font-family:Source Code Pro,monospace;">TENURE (months)</label>
+        <input id="b-tenure" type="number" value="3" min="0" max="120" style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--t1);font-size:13px;box-sizing:border-box;margin-top:4px;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--t3);font-family:Source Code Pro,monospace;">MONTHLY CHARGES ($)</label>
+        <input id="b-charges" type="number" value="89" min="0" max="200" style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--t1);font-size:13px;box-sizing:border-box;margin-top:4px;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--t3);font-family:Source Code Pro,monospace;">NUM PRODUCTS</label>
+        <input id="b-products" type="number" value="1" min="1" max="10" style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--t1);font-size:13px;box-sizing:border-box;margin-top:4px;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--t3);font-family:Source Code Pro,monospace;">SUPPORT CALLS</label>
+        <input id="b-calls" type="number" value="5" min="0" max="20" style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--t1);font-size:13px;box-sizing:border-box;margin-top:4px;outline:none;">
+      </div>
+      <div style="grid-column:1/-1;">
+        <label style="font-size:11px;color:var(--t3);font-family:Source Code Pro,monospace;">DAYS SINCE LAST LOGIN</label>
+        <input id="b-login" type="number" value="28" min="0" max="365" style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--t1);font-size:13px;box-sizing:border-box;margin-top:4px;outline:none;">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <button onclick="runChurn()" style="padding:8px 20px;border-radius:6px;border:none;background:var(--blue);color:white;font-size:13px;font-family:Outfit,sans-serif;font-weight:600;cursor:pointer;">&#x23F0; Score Customer</button>
+      <button onclick="setPreset(3,90,1,5,28)" style="padding:8px 12px;border-radius:6px;border:1px solid var(--red);background:transparent;color:var(--red);font-size:11px;font-family:Outfit,sans-serif;cursor:pointer;">High Risk</button>
+      <button onclick="setPreset(48,32,4,0,1)" style="padding:8px 12px;border-radius:6px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-size:11px;font-family:Outfit,sans-serif;cursor:pointer;">Low Risk</button>
+      <button onclick="setPreset(12,67,2,2,10)" style="padding:8px 12px;border-radius:6px;border:1px solid var(--yellow);background:transparent;color:var(--yellow);font-size:11px;font-family:Outfit,sans-serif;cursor:pointer;">Medium Risk</button>
+    </div>
+    <div id="churn-result" style="display:none;margin-top:12px;padding:12px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);">
+      <div style="font-size:11px;color:var(--t3);font-family:Source Code Pro,monospace;letter-spacing:1px;margin-bottom:8px;">BATCH SCORE OUTPUT</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div id="churn-label" style="font-size:18px;font-weight:800;font-family:Nunito,sans-serif;"></div>
+        <div id="churn-bar-wrap" style="flex:1;min-width:120px;background:var(--surface3);border-radius:4px;height:8px;">
+          <div id="churn-bar" style="height:8px;border-radius:4px;transition:width 0.4s;"></div>
+        </div>
+        <div id="churn-score-val" style="font-size:12px;font-family:Source Code Pro,monospace;color:var(--t2);"></div>
+      </div>
+      <div id="churn-csv" style="margin-top:10px;font-size:11px;font-family:Source Code Pro,monospace;color:var(--t3);background:var(--surface3);padding:8px 10px;border-radius:6px;"></div>
+    </div>
+  </div>
+  <script>
+  function setPreset(t,c,p,s,l){
+    document.getElementById("b-tenure").value=t;
+    document.getElementById("b-charges").value=c;
+    document.getElementById("b-products").value=p;
+    document.getElementById("b-calls").value=s;
+    document.getElementById("b-login").value=l;
+    runChurn();
+  }
+  function runChurn(){
+    var tenure   = +document.getElementById("b-tenure").value;
+    var charges  = +document.getElementById("b-charges").value;
+    var products = +document.getElementById("b-products").value;
+    var calls    = +document.getElementById("b-calls").value;
+    var login    = +document.getElementById("b-login").value;
+    var score = 0;
+    score += tenure   < 6  ? 0.25 : tenure  < 12 ? 0.10 : -0.10;
+    score += charges  > 80 ? 0.20 : charges > 60  ? 0.08 : -0.05;
+    score += products === 1 ? 0.15 : products === 2 ? 0.05 : -0.15;
+    score += calls    > 4  ? 0.20 : calls   > 1   ? 0.08 : -0.10;
+    score += login    > 30 ? 0.20 : login   > 14  ? 0.08 : -0.08;
+    score = Math.max(0.02, Math.min(0.97, 0.5 + score));
+    var label, color, risk;
+    if(score > 0.7){ label="&#x1F534; High Risk"; color="var(--red)"; risk="High"; }
+    else if(score > 0.4){ label="&#x1F7E1; Medium Risk"; color="var(--yellow)"; risk="Medium"; }
+    else { label="&#x1F7E2; Low Risk"; color="var(--accent)"; risk="Low"; }
+    var r = document.getElementById("churn-result");
+    r.style.display="block"; r.style.borderColor=color;
+    document.getElementById("churn-label").innerHTML=label;
+    document.getElementById("churn-label").style.color=color;
+    document.getElementById("churn-bar").style.width=(score*100)+"%";
+    document.getElementById("churn-bar").style.background=color;
+    document.getElementById("churn-score-val").textContent="churn_score: "+score.toFixed(2);
+    var today = new Date().toISOString().slice(0,10);
+    document.getElementById("churn-csv").textContent=
+      "customer_id  churn_score  risk_label  scored_date\n" +
+      "C_NEW        "+score.toFixed(2)+"         "+risk+"        "+today;
+  }
+  </script>
+
+  <div class="card mt">
+    <div class="card-title" style="color:var(--violet)">&#x1F4AC; Real-Time Example &mdash; Sentiment Analysis</div>
+    <p>A user types a product review. The model classifies it as <strong>Positive</strong>, <strong>Negative</strong>, or <strong>Neutral</strong> instantly &mdash; no waiting, no batch job.</p>
+    <h5>How It Works</h5>
+    <div class="flow mt">
+      <div class="frow">
+        <div class="fbox" style="border-color:var(--blue)">User types review</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--orange)">Vectorize text<br><span style="font-size:10px;color:var(--t3)">TF-IDF / tokenizer</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--violet)">Model predicts<br><span style="font-size:10px;color:var(--t3)">Logistic / BERT</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--accent);color:var(--accent);font-weight:600">Return label + score</div>
+      </div>
+    </div>
+    <h5>Training the Model</h5>
+    <div class="code-wrap"><div class="code"><span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> TfidfVectorizer
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LogisticRegression
+<span class="kw">import</span> joblib
+
+<span class="cm"># Training data</span>
+texts  = [<span class="str">"great product love it"</span>, <span class="str">"terrible waste of money"</span>,
+          <span class="str">"it is okay nothing special"</span>, <span class="str">"absolutely amazing quality"</span>,
+          <span class="str">"broke after one day very bad"</span>]
+labels = [<span class="str">"positive"</span>, <span class="str">"negative"</span>, <span class="str">"neutral"</span>, <span class="str">"positive"</span>, <span class="str">"negative"</span>]
+
+pipe = Pipeline([
+    (<span class="str">"tfidf"</span>, TfidfVectorizer(ngram_range=(<span class="num">1</span>,<span class="num">2</span>))),
+    (<span class="str">"clf"</span>,   LogisticRegression(max_iter=<span class="num">200</span>))
+])
+pipe.<span class="fn">fit</span>(texts, labels)
+joblib.<span class="fn">dump</span>(pipe, <span class="str">"sentiment_model.pkl"</span>)  <span class="cm"># save once</span></div></div>
+    <h5>Serving via FastAPI</h5>
+    <div class="code-wrap"><div class="code"><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI
+<span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel
+<span class="kw">import</span> joblib
+
+app   = <span class="fn">FastAPI</span>()
+model = joblib.<span class="fn">load</span>(<span class="str">"sentiment_model.pkl"</span>)
+
+<span class="kw">class</span> <span class="fn">Review</span>(BaseModel):
+    text: str
+
+<span class="kw">@app</span>.post(<span class="str">"/sentiment"</span>)
+<span class="kw">def</span> <span class="fn">predict</span>(review: Review):
+    label = model.<span class="fn">predict</span>([review.text])[<span class="num">0</span>]
+    proba = model.<span class="fn">predict_proba</span>([review.text]).<span class="fn">max</span>()
+    <span class="kw">return</span> {<span class="str">"label"</span>: label, <span class="str">"confidence"</span>: <span class="fn">round</span>(<span class="fn">float</span>(proba), <span class="num">3</span>)}</div></div>
+    <h5>Sample Response</h5>
+    <div class="code-wrap"><div class="code"><span class="cm"># POST /sentiment</span>
+<span class="cm"># Body: {"text": "This product is absolutely fantastic!"}</span>
+
+<span class="cm"># Response (< 50ms):</span>
+{<span class="str">"label"</span>: <span class="str">"positive"</span>, <span class="str">"confidence"</span>: <span class="num">0.94</span>}</div></div>
+    <div class="note violet mt">&#x1F4A1; In production, swap <strong>TF-IDF + Logistic Regression</strong> with a fine-tuned <strong>BERT</strong> model via HuggingFace <code>transformers</code> for much higher accuracy on complex reviews.</div>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title" style="color:var(--violet)">&#x1F9EA; Try It &mdash; Sentiment Classifier</div>
+    <p style="font-size:13px;color:var(--t2)">Type a product review below and see the model classify it instantly.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <textarea id="sent-input" rows="3" placeholder="e.g. This product is absolutely amazing!" style="flex:1;min-width:200px;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--t1);font-size:13px;font-family:Outfit,sans-serif;resize:vertical;outline:none;"></textarea>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+      <button onclick="runSentiment()" style="padding:8px 20px;border-radius:6px;border:none;background:var(--violet);color:white;font-size:13px;font-family:Outfit,sans-serif;font-weight:600;cursor:pointer;">&#x26A1; Classify</button>
+      <button onclick="document.getElementById('sent-input').value='';document.getElementById('sent-result').style.display='none'" style="padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--t3);font-size:13px;font-family:Outfit,sans-serif;cursor:pointer;">Clear</button>
+    </div>
+    <div id="sent-result" style="display:none;margin-top:12px;padding:12px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);">
+      <div style="font-size:11px;color:var(--t3);font-family:Source Code Pro,monospace;letter-spacing:1px;margin-bottom:6px;">RESULT</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div id="sent-label" style="font-size:18px;font-weight:800;font-family:Nunito,sans-serif;"></div>
+        <div id="sent-bar-wrap" style="flex:1;min-width:120px;background:var(--surface3);border-radius:4px;height:8px;">
+          <div id="sent-bar" style="height:8px;border-radius:4px;transition:width 0.4s;"></div>
+        </div>
+        <div id="sent-conf" style="font-size:12px;font-family:Source Code Pro,monospace;color:var(--t2);"></div>
+      </div>
+    </div>
+    <h5 style="margin-top:14px;">Sample Inputs to Try</h5>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span onclick="setSent(this)" style="cursor:pointer;padding:4px 10px;border-radius:12px;border:1px solid var(--accent);font-size:11px;color:var(--accent);">Great product, love it!</span>
+      <span onclick="setSent(this)" style="cursor:pointer;padding:4px 10px;border-radius:12px;border:1px solid var(--red);font-size:11px;color:var(--red);">Terrible, broke after one day.</span>
+      <span onclick="setSent(this)" style="cursor:pointer;padding:4px 10px;border-radius:12px;border:1px solid var(--t3);font-size:11px;color:var(--t3);">It is okay, nothing special.</span>
+      <span onclick="setSent(this)" style="cursor:pointer;padding:4px 10px;border-radius:12px;border:1px solid var(--blue);font-size:11px;color:var(--blue);">Absolutely amazing quality!</span>
+      <span onclick="setSent(this)" style="cursor:pointer;padding:4px 10px;border-radius:12px;border:1px solid var(--orange);font-size:11px;color:var(--orange);">Waste of money, very bad.</span>
+    </div>
+  </div>
+  <script>
+  function setSent(el){ document.getElementById("sent-input").value = el.textContent; runSentiment(); }
+  function runSentiment(){
+    var text = document.getElementById("sent-input").value.trim().toLowerCase();
+    if(!text){ return; }
+    var pos = ["great","amazing","love","fantastic","excellent","awesome","perfect","best","wonderful","superb","happy","good","nice"];
+    var neg = ["terrible","bad","broke","worst","awful","horrible","waste","poor","useless","disappointing","hate","cheap","broken"];
+    var ps=0, ns=0;
+    pos.forEach(function(w){ if(text.indexOf(w)>-1) ps++; });
+    neg.forEach(function(w){ if(text.indexOf(w)>-1) ns++; });
+    var label, color, conf;
+    if(ps>ns){ label="&#x1F7E2; Positive"; color="var(--accent)"; conf=Math.min(0.99, 0.65+ps*0.08); }
+    else if(ns>ps){ label="&#x1F534; Negative"; color="var(--red)"; conf=Math.min(0.99, 0.65+ns*0.08); }
+    else { label="&#x1F7E1; Neutral"; color="var(--yellow)"; conf=0.61; }
+    var r=document.getElementById("sent-result");
+    r.style.display="block";
+    r.style.borderColor=color;
+    document.getElementById("sent-label").innerHTML=label;
+    document.getElementById("sent-label").style.color=color;
+    document.getElementById("sent-bar").style.width=(conf*100)+"%";
+    document.getElementById("sent-bar").style.background=color;
+    document.getElementById("sent-conf").textContent="Confidence: "+(conf*100).toFixed(0)+"%";
+  }
+  </script>
+
+  <div class="card mt">
+    <div class="card-title">Batch vs Real-Time â€” Quick Comparison</div>
+    <table class="tbl mt">
+      <tr><th>Factor</th><th>Batch</th><th>Real-Time</th></tr>
+      <tr><td>Latency</td><td><span class="tag tb">Minutes to Hours</span></td><td><span class="tag tg">&lt; 100ms</span></td></tr>
+      <tr><td>Throughput</td><td><span class="tag tg">Very High</span></td><td><span class="tag ty">Request by Request</span></td></tr>
+      <tr><td>Infrastructure</td><td><span class="tag tg">Simple (cron + script)</span></td><td><span class="tag tv">API server + scaling</span></td></tr>
+      <tr><td>Cost</td><td><span class="tag tg">Low</span></td><td><span class="tag ty">Higher</span></td></tr>
+      <tr><td>Freshness</td><td><span class="tag tr">Stale (scheduled)</span></td><td><span class="tag tg">Always fresh</span></td></tr>
+      <tr><td>Use Case Fit</td><td>Reporting, campaigns, scoring</td><td>Fraud, search, personalisation</td></tr>
+    </table>
+  </div>
+
+  <div class="note green mt">&#x26A1; <strong>Rule of thumb:</strong> if the user or system is <strong>waiting</strong> for the answer â€” use real-time. If the answer can be <strong>pre-computed</strong> â€” use batch. Many production systems use <strong>both</strong>: batch for baseline scores, real-time for overrides.</div>
+
+</section>
+
+
+<!-- S-NN: NEURAL NETWORKS -->
+<section class="section" id="s-nn">
+  <div class="sec-header"><span class="sec-title">Neural Networks</span></div>
+
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is it?</div><p>A Neural Network is a <strong>series of layers of nodes (neurons)</strong> that learn to map inputs to outputs by adjusting weights through training. Inspired by the human brain.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why use it?</div><p>Neural networks can learn <strong>complex non-linear patterns</strong> that traditional ML models cannot. They power image recognition, NLP, speech, and more.</p></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Anatomy of a Neural Network</div>
+    <div class="g3 mt">
+      <div class="card" style="border-color:var(--blue)"><div class="card-title" style="color:var(--blue)">&#x1F7E6; Input Layer</div><p>Receives raw features. One neuron per feature. No computation &mdash; just passes data forward.</p><div class="note blue">e.g. 5 features = 5 input neurons</div></div>
+      <div class="card" style="border-color:var(--violet)"><div class="card-title" style="color:var(--violet)">&#x1F7EA; Hidden Layers</div><p>Where learning happens. Each neuron applies a <strong>weighted sum + activation function</strong>. More layers = deeper network.</p><div class="note violet">Can have 1 to hundreds of hidden layers</div></div>
+      <div class="card" style="border-color:var(--accent)"><div class="card-title" style="color:var(--accent)">&#x1F7E2; Output Layer</div><p>Produces the final prediction. Size depends on task &mdash; 1 neuron for regression, N neurons for N classes.</p><div class="note green">Binary: 1 neuron &mdash; Multi-class: N neurons</div></div>
+    </div>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title">How a Neuron Works</div>
+    <p>Each neuron takes inputs, multiplies by weights, adds a bias, then passes through an <strong>activation function</strong>:</p>
+    <div class="formula">output = activation( w&#x2081;x&#x2081; + w&#x2082;x&#x2082; + ... + w&#x2099;x&#x2099; + b )</div>
+    <h5>Common Activation Functions</h5>
+    <table class="tbl mt">
+      <tr><th>Function</th><th>Formula</th><th>Use Case</th><th>Problem</th></tr>
+      <tr><td><span class="tag tv">ReLU</span></td><td>max(0, x)</td><td>Hidden layers &mdash; most common</td><td>Dying ReLU for negative inputs</td></tr>
+      <tr><td><span class="tag tg">Sigmoid</span></td><td>1 / (1 + e&#x207B;&#x2078;)</td><td>Binary output layer</td><td>Vanishing gradient</td></tr>
+      <tr><td><span class="tag tb">Softmax</span></td><td>e&#x2078;&#x2071; / &sum;e&#x2078;&#x2071;</td><td>Multi-class output layer</td><td>Computationally expensive</td></tr>
+      <tr><td><span class="tag ty">Tanh</span></td><td>(e&#x2078;-e&#x207B;&#x2078;)/(e&#x2078;+e&#x207B;&#x2078;)</td><td>Hidden layers, RNNs</td><td>Vanishing gradient</td></tr>
+      <tr><td><span class="tag to">Leaky ReLU</span></td><td>max(0.01x, x)</td><td>Fix for dying ReLU</td><td>Extra hyperparameter</td></tr>
+    </table>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title">How Training Works &mdash; Backpropagation</div>
+    <div class="flow mt">
+      <div class="frow">
+        <div class="fbox" style="border-color:var(--blue)">Forward Pass<br><span style="font-size:10px;color:var(--t3)">compute predictions</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--red)">Compute Loss<br><span style="font-size:10px;color:var(--t3)">how wrong are we?</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--orange)">Backward Pass<br><span style="font-size:10px;color:var(--t3)">compute gradients</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--accent)">Update Weights<br><span style="font-size:10px;color:var(--t3)">gradient descent</span></div>
+      </div>
+    </div>
+    <h5>Key Terms</h5>
+    <table class="tbl mt">
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td><strong>Epoch</strong></td><td>One full pass through the entire training dataset</td></tr>
+      <tr><td><strong>Batch Size</strong></td><td>Number of samples processed before weights are updated</td></tr>
+      <tr><td><strong>Learning Rate</strong></td><td>How big a step when updating weights &mdash; too high = overshoot, too low = slow</td></tr>
+      <tr><td><strong>Loss Function</strong></td><td>Measures how wrong predictions are (MSE for regression, CrossEntropy for classification)</td></tr>
+      <tr><td><strong>Optimizer</strong></td><td>Algorithm to update weights &mdash; Adam, SGD, RMSProp</td></tr>
+    </table>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title">Build a Neural Network with Keras</div>
+    <div class="code-wrap"><div class="code"><span class="kw">from</span> tensorflow <span class="kw">import</span> keras
+<span class="kw">from</span> tensorflow.keras <span class="kw">import</span> layers
+
+model = keras.<span class="fn">Sequential</span>([
+    layers.<span class="fn">Dense</span>(<span class="num">64</span>,  activation=<span class="str">"relu"</span>,    input_shape=(<span class="num">10</span>,)),  <span class="cm"># hidden layer 1</span>
+    layers.<span class="fn">Dense</span>(<span class="num">32</span>,  activation=<span class="str">"relu"</span>),                   <span class="cm"># hidden layer 2</span>
+    layers.<span class="fn">Dense</span>(<span class="num">1</span>,   activation=<span class="str">"sigmoid"</span>)                <span class="cm"># output: binary</span>
+])
+
+model.<span class="fn">compile</span>(optimizer=<span class="str">"adam"</span>, loss=<span class="str">"binary_crossentropy"</span>, metrics=[<span class="str">"accuracy"</span>])
+model.<span class="fn">fit</span>(X_train, y_train, epochs=<span class="num">20</span>, batch_size=<span class="num">32</span>, validation_split=<span class="num">0.2</span>)
+model.<span class="fn">evaluate</span>(X_test, y_test)</div></div>
+  </div>
+
+  <div class="g2 mt">
+    <div class="card">
+      <div class="card-title" style="color:var(--orange)">&#x26A0;&#xFE0F; Common Problems</div>
+      <table class="tbl">
+        <tr><th>Problem</th><th>Fix</th></tr>
+        <tr><td>Overfitting</td><td>Dropout, L2 regularization, fewer layers</td></tr>
+        <tr><td>Vanishing Gradient</td><td>Use ReLU, Batch Normalization</td></tr>
+        <tr><td>Slow training</td><td>Increase learning rate, use Adam</td></tr>
+        <tr><td>Not converging</td><td>Decrease learning rate, normalize inputs</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--blue)">&#x1F4CA; When to Use Neural Networks</div>
+      <table class="tbl">
+        <tr><th>Use NN</th><th>Skip NN</th></tr>
+        <tr><td>Images, audio, text</td><td>Small tabular datasets</td></tr>
+        <tr><td>Complex non-linear patterns</td><td>Need interpretability</td></tr>
+        <tr><td>Large data (&gt;10k rows)</td><td>Limited compute</td></tr>
+        <tr><td>State-of-the-art accuracy needed</td><td>Quick baseline needed</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="note green mt">&#x1F9E0; <strong>Rule of thumb:</strong> For structured/tabular data, <strong>XGBoost beats Neural Networks</strong> most of the time. Use NNs when data is unstructured (images, text, audio) or when you have very large datasets.</div>
+
+</section>
+
+
+<!-- S-NLP: NLP FUNDAMENTALS -->
+<section class="section" id="s-nlp">
+  <div class="sec-header"><span class="sec-title">NLP Fundamentals</span></div>
+
+  <div class="what-why">
+    <div class="ww-box"><div class="ww-label what">What is NLP?</div><p><strong>Natural Language Processing</strong> is the field of teaching machines to understand, interpret, and generate human language &mdash; text and speech.</p></div>
+    <div class="ww-box"><div class="ww-label why">Why learn it?</div><p>Text is everywhere &mdash; reviews, emails, tweets, documents. NLP lets you build <strong>sentiment classifiers, chatbots, search engines, and summarizers</strong> from raw text.</p></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">NLP Pipeline</div>
+    <div class="flow mt">
+      <div class="frow">
+        <div class="fbox" style="border-color:var(--blue)">Raw Text</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--orange)">Clean &amp; Tokenize</div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--violet)">Vectorize<br><span style="font-size:10px;color:var(--t3)">numbers the model reads</span></div>
+        <div class="flow-arr" style="color:var(--accent);font-size:18px;padding:0 6px">&#x2192;</div>
+        <div class="fbox" style="border-color:var(--accent);color:var(--accent);font-weight:600">Model &amp; Predict</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title" style="color:var(--orange)">Step 1 &mdash; Tokenization &amp; Text Cleaning</div>
+    <p>Break raw text into individual tokens (words/subwords), then clean noise.</p>
+    <h5>Common Cleaning Steps</h5>
+    <table class="tbl">
+      <tr><th>Step</th><th>Example</th><th>Why</th></tr>
+      <tr><td>Lowercase</td><td>&quot;Hello&quot; &rarr; &quot;hello&quot;</td><td>Treat same words equally</td></tr>
+      <tr><td>Remove punctuation</td><td>&quot;great!&quot; &rarr; &quot;great&quot;</td><td>Reduce noise</td></tr>
+      <tr><td>Remove stopwords</td><td>&quot;the&quot;, &quot;is&quot; &rarr; removed</td><td>Focus on meaningful words</td></tr>
+      <tr><td>Stemming</td><td>&quot;running&quot; &rarr; &quot;run&quot;</td><td>Root form, fast but rough</td></tr>
+      <tr><td>Lemmatization</td><td>&quot;better&quot; &rarr; &quot;good&quot;</td><td>Proper root form, slower but accurate</td></tr>
+    </table>
+    <div class="code-wrap mt"><div class="code"><span class="kw">import</span> re
+<span class="kw">from</span> nltk.corpus <span class="kw">import</span> stopwords
+<span class="kw">from</span> nltk.stem <span class="kw">import</span> WordNetLemmatizer
+
+stop  = set(stopwords.<span class="fn">words</span>(<span class="str">"english"</span>))
+lemma = <span class="fn">WordNetLemmatizer</span>()
+
+<span class="kw">def</span> <span class="fn">clean</span>(text):
+    text   = text.<span class="fn">lower</span>()
+    text   = re.<span class="fn">sub</span>(<span class="str">r"[^a-z\s]"</span>, <span class="str">""</span>, text)
+    tokens = [lemma.<span class="fn">lemmatize</span>(w) <span class="kw">for</span> w <span class="kw">in</span> text.<span class="fn">split</span>() <span class="kw">if</span> w <span class="kw">not in</span> stop]
+    <span class="kw">return</span> <span class="str">" "</span>.<span class="fn">join</span>(tokens)
+
+<span class="fn">clean</span>(<span class="str">"The product was absolutely Amazing!!"</span>)
+<span class="cm"># output: "product absolutely amazing"</span></div></div>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title" style="color:var(--violet)">Step 2 &mdash; TF-IDF Vectorization</div>
+    <p>Converts text to numbers. <strong>TF-IDF</strong> scores each word by how often it appears in a document vs how rare it is across all documents.</p>
+    <div class="g2 mt">
+      <div class="card" style="border-color:var(--blue)">
+        <div class="card-title" style="color:var(--blue)">TF &mdash; Term Frequency</div>
+        <p style="font-size:13px">How often a word appears in <strong>this document</strong>.</p>
+        <div class="formula">TF = count(word in doc) / total words in doc</div>
+        <p style="font-size:12px;color:var(--t3);margin-top:6px;">&#x26A0;&#xFE0F; <strong>Problem if used alone:</strong> &quot;the&quot; appears 50 times in every review &mdash; very high TF, but completely useless for understanding what the review is about.</p>
+      </div>
+      <div class="card" style="border-color:var(--violet)">
+        <div class="card-title" style="color:var(--violet)">IDF &mdash; Inverse Document Frequency</div>
+        <p style="font-size:13px">How <strong>rare</strong> a word is across all documents.</p>
+        <div class="formula">IDF = log( N / df(word) )</div>
+        <p style="font-size:12px;color:var(--t3);margin-top:6px;">&#x26A0;&#xFE0F; <strong>Problem if used alone:</strong> &quot;shattered&quot; is rare across all docs &mdash; high IDF, but what if it only appears once by accident in this doc? Still not meaningful.</p>
+      </div>
+    </div>
+    <div class="note violet mt">&#x1F4A1; <strong>Why combine them? TF-IDF = TF &times; IDF</strong> &mdash; a word scores high <em>only when</em> it is frequent in this doc <strong>AND</strong> rare across all docs. That makes it the true signature word &mdash; not noise like &quot;the&quot;, not a fluke like a one-off rare word.</div>
+
+    <h5 style="margin-top:14px;">What You Get After TF-IDF</h5>
+    <p style="font-size:13px;">You get a <strong>number matrix</strong> &mdash; one row per document, one column per unique word. Each cell is the TF-IDF score of that word in that document. <strong>This is what the model reads.</strong></p>
+    <div style="overflow-x:auto;margin-top:8px;">
+      <table class="tbl">
+        <tr><th>Document</th><th>amazing</th><th>product</th><th>terrible</th><th>waste</th><th>okay</th><th>the</th></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Review 1: &quot;amazing product&quot;</td><td style="color:var(--accent)">0.82</td><td style="color:var(--accent)">0.57</td><td>0.00</td><td>0.00</td><td>0.00</td><td style="color:var(--t3)">0.00</td></tr>
+        <tr><td style="color:var(--red);font-weight:600">Review 2: &quot;terrible waste&quot;</td><td>0.00</td><td>0.00</td><td style="color:var(--red)">0.82</td><td style="color:var(--red)">0.57</td><td>0.00</td><td style="color:var(--t3)">0.00</td></tr>
+        <tr><td style="color:var(--yellow);font-weight:600">Review 3: &quot;okay product&quot;</td><td>0.00</td><td style="color:var(--yellow)">0.57</td><td>0.00</td><td>0.00</td><td style="color:var(--yellow)">0.82</td><td style="color:var(--t3)">0.00</td></tr>
+      </table>
+    </div>
+    <div class="note blue mt">
+      &#x1F4CC; <strong>Key observations:</strong>
+      <ul style="margin:6px 0 0;font-size:13px;">
+        <li>&quot;the&quot; scores <strong>0.00</strong> everywhere &mdash; it appears in all docs so IDF kills it</li>
+        <li>&quot;amazing&quot; scores <strong>0.82</strong> only in Review 1 &mdash; frequent there, rare elsewhere</li>
+        <li>Each review is now a <strong>row of numbers</strong> the model can learn from</li>
+        <li>Reviews with similar words will have <strong>similar rows</strong> &mdash; the model groups them together</li>
+      </ul>
+    </div>
+    <div class="code-wrap mt"><div class="code"><span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> TfidfVectorizer
+
+docs  = [<span class="str">"product absolutely amazing"</span>,
+         <span class="str">"terrible waste money"</span>,
+         <span class="str">"product okay nothing special"</span>]
+
+tfidf = <span class="fn">TfidfVectorizer</span>(ngram_range=(<span class="num">1</span>,<span class="num">2</span>))  <span class="cm"># unigrams + bigrams</span>
+X     = tfidf.<span class="fn">fit_transform</span>(docs)
+<span class="fn">print</span>(X.<span class="fn">shape</span>)           <span class="cm"># (3 docs, N features)</span>
+<span class="fn">print</span>(tfidf.vocabulary_) <span class="cm"># word: column index</span></div></div>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title" style="color:var(--accent)">Step 3 &mdash; Word Embeddings</div>
+    <p>TF-IDF gives every word a number based on <em>how often it appears</em>. But it has no idea that <strong>&quot;happy&quot; and &quot;joyful&quot; mean the same thing</strong>. Word Embeddings fix this by representing every word as a <strong>list of numbers (a vector)</strong> where words with similar meanings end up with similar vectors.</p>
+
+    <div class="note blue mt">&#x1F4A1; <strong>Simple analogy:</strong> Imagine placing every word on a map. Words with similar meanings are placed <strong>close together</strong> on that map. &quot;Dog&quot; and &quot;Cat&quot; are nearby. &quot;Dog&quot; and &quot;Rocket&quot; are far apart. That map is what an embedding does &mdash; in 100s of dimensions instead of 2.</div>
+
+    <h5>The 3 Main Types</h5>
+    <div class="g3 mt">
+      <div class="card" style="border-color:var(--accent)">
+        <div class="card-title" style="color:var(--accent);font-size:13px">&#x1F7E2; Word2Vec</div>
+        <p style="font-size:12px"><strong>Idea:</strong> Words that appear in similar sentences have similar meanings.</p>
+        <p style="font-size:12px">Trained on a simple task &mdash; <em>&quot;predict the next word&quot;</em>. In doing so it learns word meaning as a side effect.</p>
+        <p style="font-size:12px">Result: each word becomes a list of ~100-300 numbers that captures its meaning.</p>
+        <span class="tag tg">Fast to train</span> <span class="tag tg">Good baseline</span>
+      </div>
+      <div class="card" style="border-color:var(--blue)">
+        <div class="card-title" style="color:var(--blue);font-size:13px">&#x1F7E6; GloVe</div>
+        <p style="font-size:12px"><strong>Idea:</strong> Look at how often words appear <em>together</em> across millions of documents (Wikipedia, news).</p>
+        <p style="font-size:12px">Someone already trained it on huge data &mdash; you just <strong>download and use</strong> the pre-built vectors. No training needed.</p>
+        <p style="font-size:12px">Good when you have small data and can&apos;t train your own embeddings.</p>
+        <span class="tag tb">Pre-trained</span> <span class="tag tb">Easy to use</span>
+      </div>
+      <div class="card" style="border-color:var(--violet)">
+        <div class="card-title" style="color:var(--violet);font-size:13px">&#x1F7EA; BERT</div>
+        <p style="font-size:12px"><strong>Idea:</strong> The same word can mean different things in different sentences.</p>
+        <p style="font-size:12px">&quot;I went to the <strong>bank</strong> to fish&quot; vs &quot;I went to the <strong>bank</strong> to deposit money&quot; &mdash; BERT gives <em>bank</em> a different vector in each sentence.</p>
+        <p style="font-size:12px">Most powerful but slowest. Used in production NLP.</p>
+        <span class="tag tv">Best accuracy</span> <span class="tag tv">Context-aware</span>
+      </div>
+    </div>
+
+    <h5>TF-IDF vs Word Embeddings &mdash; When to Use Which</h5>
+    <table class="tbl mt">
+      <tr><th>Factor</th><th>TF-IDF</th><th>Word Embeddings</th></tr>
+      <tr><td>Understands synonyms</td><td><span class="tag tr">&#x274C; No &mdash; &quot;happy&quot; &ne; &quot;joyful&quot;</span></td><td><span class="tag tg">&#x2705; Yes &mdash; placed close together</span></td></tr>
+      <tr><td>Speed</td><td><span class="tag tg">&#x2705; Very fast</span></td><td><span class="tag ty">Slower, especially BERT</span></td></tr>
+      <tr><td>Small dataset (&lt;1k docs)</td><td><span class="tag tg">&#x2705; Works great</span></td><td><span class="tag tr">&#x274C; Needs more data</span></td></tr>
+      <tr><td>Captures word order / context</td><td><span class="tag tr">&#x274C; No</span></td><td><span class="tag tg">&#x2705; Yes (BERT)</span></td></tr>
+      <tr><td>Best starting point</td><td><span class="tag tg">&#x2705; Always start here</span></td><td>Upgrade when TF-IDF is not enough</td></tr>
+    </table>
+  </div>
+
+  <div class="card mt">
+    <div class="card-title">Full NLP Classification Pipeline</div>
+    <div class="code-wrap"><div class="code"><span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> TfidfVectorizer
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LogisticRegression
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> classification_report
+
+texts  = [<span class="str">"great product love it"</span>, <span class="str">"terrible waste of money"</span>,
+          <span class="str">"okay nothing special"</span>, <span class="str">"absolutely amazing quality"</span>,
+          <span class="str">"broke after one day"</span>, <span class="str">"best purchase ever"</span>]
+labels = [<span class="str">"pos"</span>, <span class="str">"neg"</span>, <span class="str">"neu"</span>, <span class="str">"pos"</span>, <span class="str">"neg"</span>, <span class="str">"pos"</span>]
+
+X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=<span class="num">0.2</span>)
+
+pipe = Pipeline([
+    (<span class="str">"tfidf"</span>, TfidfVectorizer(ngram_range=(<span class="num">1</span>,<span class="num">2</span>), max_features=<span class="num">5000</span>)),
+    (<span class="str">"clf"</span>,   LogisticRegression(max_iter=<span class="num">200</span>))
+])
+pipe.<span class="fn">fit</span>(X_train, y_train)
+<span class="fn">print</span>(<span class="fn">classification_report</span>(y_test, pipe.<span class="fn">predict</span>(X_test)))</div></div>
+  </div>
+
+  <div class="note green mt">&#x1F4AC; <strong>Start with TF-IDF + Logistic Regression</strong> as your NLP baseline &mdash; fast, interpretable, and surprisingly strong. Only move to BERT when you need higher accuracy and have enough data.</div>
+
+</section>
 </div></div>
 
 <footer>
@@ -2264,7 +4127,15 @@ const labelMap = {
   's-catnum':'Cat vs Numerical','s-catcat':'Cat vs Cat',
   's-transform':'Log / Box-Cox','s-pca':'PCA','s-smote':'SMOTE',
   's-reg':'Overfitting & Regularization','s-models':'Model Types',
-  's-split':'Train / Test Split','s-eval':'Evaluation Metrics','s-bestpractices':'Best Practices'
+  's-ensemble':'Ensemble Methods',
+  's-clustering':'Clustering (K-Means / DBSCAN)',
+  's-split':'Train / Test Split','s-eval':'Evaluation Metrics',
+  's-cv':'Cross-Validation',
+  's-learning-curves':'Learning Curves',
+  's-data-leakage':'Data Leakage',
+  's-explain':'Model Explainability (SHAP/LIME)',
+  's-hyperparam':'Hyperparameter Tuning','s-pipeline':'sklearn Pipeline',
+  's-bestpractices':'Best Practices','s-mlops':'MLOps & Deployment','s-inference':'Model Inference','s-nn':'Neural Networks','s-nlp':'NLP Fundamentals'
 };
 const sbItems = document.querySelectorAll('.sb-item');
 
@@ -2352,7 +4223,7 @@ function countUp(el, target, suffix, duration) {
   }, 30);
 }
 const statEls = document.querySelectorAll('.hero-stat-n');
-const statTargets = [[22,'+'],[70,'+'],[25,'+'],null];
+const statTargets = [[34,'+'],[100,'+'],[80,'+'],null];
 const statObserver = new IntersectionObserver((entries) => {
   entries.forEach((e,i) => {
     if (e.isIntersecting) {
@@ -2412,9 +4283,11 @@ window.addEventListener('scroll', () => {
   const btn = document.getElementById('back-top');
   btn.classList.toggle('show', window.scrollY > 400);
   let cur = '';
-  Object.keys(labelMap).forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 160) cur = id;
+  // Get all sections dynamically instead of using labelMap
+  const allSections = document.querySelectorAll('.section[id^="s-"]');
+  allSections.forEach(section => {
+    const el = document.getElementById(section.id);
+    if (el && window.scrollY >= el.offsetTop - 160) cur = section.id;
   });
   sbItems.forEach(b => {
     b.classList.remove('active');
@@ -2425,5 +4298,117 @@ window.addEventListener('scroll', () => {
 }, { passive:true });
 
 </script>
-</body>
+<script>
+// ===== STICKY SECTION TITLE =====
+(function(){
+  var bar=document.getElementById('sticky-title');
+  var icon={textContent:''};
+  var label=document.getElementById('st-label');
+  var meta=[
+    {id:'s-ai',icon:'ðŸ¤–',label:'AI / ML / DL'},
+    {id:'s-types',icon:'ðŸŽ“',label:'Types of ML'},
+    {id:'s-data',icon:'ðŸ“‹',label:'Data Types'},
+    {id:'s-pandas',icon:'ðŸ¼',label:'Pandas'},
+    {id:'s-nulldup',icon:'ðŸ§¹',label:'Null & Duplicate Treatment'},
+    {id:'s-eda',icon:'ðŸ”¬',label:'EDA'},
+    {id:'s-univariate',icon:'ðŸ“Š',label:'Univariate Analysis'},
+    {id:'s-stats',icon:'ðŸ“',label:'IQR & Variance'},
+    {id:'s-outlier',icon:'âš ï¸',label:'Outlier Detection'},
+    {id:'s-bivariate',icon:'ðŸ”—',label:'Bivariate Analysis'},
+    {id:'s-catnum',icon:'ðŸ“Š',label:'Cat vs Numerical'},
+    {id:'s-catcat',icon:'Ï‡Â²',label:'Cat vs Cat'},
+    {id:'s-multi',icon:'ðŸŒ',label:'Multivariate Analysis'},
+    {id:'s-transform',icon:'ðŸ“ˆ',label:'Log & Box-Cox'},
+    {id:'s-pca',icon:'ðŸ”»',label:'PCA'},
+    {id:'s-smote',icon:'âš–ï¸',label:'SMOTE'},
+    {id:'s-models',icon:'ðŸ§®',label:'Model Types'},
+    {id:'s-ensemble',icon:'ðŸŒ³',label:'Ensemble Methods'},
+    {id:'s-clustering',icon:'ðŸ”µ',label:'Clustering'},
+    {id:'s-split',icon:'âœ‚ï¸',label:'Train / Test Split'},
+    {id:'s-reg',icon:'ðŸ“‰',label:'Overfitting & Regularization'},
+    {id:'s-eval',icon:'ðŸ“',label:'Evaluation Metrics'},
+    {id:'s-cv',icon:'ðŸ”',label:'Cross-Validation'},
+    {id:'s-learning-curves',icon:'ðŸ“‰',label:'Learning Curves'},
+    {id:'s-data-leakage',icon:'ðŸš¨',label:'Data Leakage'},
+    {id:'s-explain',icon:'ðŸ”Ž',label:'SHAP / LIME'},
+    {id:'s-hyperparam',icon:'ðŸŽ›ï¸',label:'Hyperparameter Tuning'},
+    {id:'s-pipeline',icon:'ðŸ”—',label:'sklearn Pipeline'},
+    {id:'s-bestpractices',icon:'ðŸ†',label:'Best Practices'},
+    {id:'s-mlops',icon:'ðŸš€',label:'MLOps & Deployment'},
+    {id:'s-inference',icon:'âš¡',label:'Model Inference'},
+    {id:'s-nn',icon:'ðŸ§ ',label:'Neural Networks'},
+    {id:'s-nlp',icon:'ðŸ’¬',label:'NLP Fundamentals'}
+  ];
+  var els=meta.map(function(m){return{el:document.getElementById(m.id),icon:m.icon,label:m.label};}).filter(function(m){return m.el;});
+  var current=null;
+  var hero=document.querySelector('.hero');
+  window.addEventListener('scroll',function(){
+    var sy=window.scrollY;
+    var hb=hero.getBoundingClientRect().bottom+sy;
+    if(sy<hb-60){bar.classList.remove('visible');current=null;return;}
+    var active=null;
+    for(var i=0;i<els.length;i++){if(sy>=els[i].el.getBoundingClientRect().top+sy-60)active=els[i];}
+    if(active&&active!==current){icon.textContent=active.icon;label.textContent=active.label;current=active;}
+    if(active)bar.classList.add('visible');else bar.classList.remove('visible');
+  },{passive:true});
+})();
+
+// ===== SECTION PREV/NEXT NAV =====
+(function(){
+  var order = [
+    's-ai','s-types','s-data','s-pandas',
+    's-nulldup',
+    's-eda','s-univariate','s-stats','s-outlier',
+    's-bivariate','s-catnum','s-catcat','s-multi',
+    's-transform','s-pca','s-smote',
+    's-models','s-ensemble','s-clustering',
+    's-split','s-reg','s-eval','s-cv','s-learning-curves','s-data-leakage',
+    's-explain','s-hyperparam','s-pipeline',
+    's-bestpractices','s-mlops','s-inference',
+    's-nn','s-nlp'
+  ];
+  var labels = {
+    's-ai':'AI / ML / DL','s-types':'Types of ML','s-data':'Data Types','s-pandas':'Pandas',
+    's-nulldup':'Null & Duplicate','s-eda':'EDA','s-univariate':'Univariate Analysis',
+    's-stats':'IQR & Variance','s-outlier':'Outlier Detection',
+    's-bivariate':'Bivariate Analysis','s-catnum':'Cat vs Numerical',
+    's-catcat':'Cat vs Cat','s-multi':'Multivariate Analysis',
+    's-transform':'Log & Box-Cox','s-pca':'PCA','s-smote':'SMOTE',
+    's-models':'Model Types','s-ensemble':'Ensemble Methods','s-clustering':'Clustering',
+    's-split':'Train/Test Split','s-reg':'Overfitting & Regularization',
+    's-eval':'Evaluation Metrics','s-cv':'Cross-Validation',
+    's-learning-curves':'Learning Curves','s-data-leakage':'Data Leakage',
+    's-explain':'SHAP & LIME','s-hyperparam':'Hyperparameter Tuning',
+    's-pipeline':'sklearn Pipeline','s-bestpractices':'Best Practices',
+    's-mlops':'MLOps & Deployment','s-inference':'Model Inference',
+    's-nn':'Neural Networks','s-nlp':'NLP Fundamentals'
+  };
+  order.forEach(function(id, i){
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    var nav = document.createElement('div');
+    nav.className = 'sec-nav';
+    var prev = order[i-1], next = order[i+1];
+    if(prev){
+      var pb = document.createElement('button');
+      pb.className = 'sec-nav-btn';
+      pb.innerHTML = '&#x2190; ' + labels[prev];
+      pb.onclick = function(){ goTo(prev); };
+      nav.appendChild(pb);
+    } else {
+      var sp = document.createElement('div');
+      sp.className = 'sec-nav-spacer';
+      nav.appendChild(sp);
+    }
+    if(next){
+      var nb = document.createElement('button');
+      nb.className = 'sec-nav-btn next';
+      nb.innerHTML = labels[next] + ' &#x2192;';
+      nb.onclick = function(){ goTo(next); };
+      nav.appendChild(nb);
+    }
+    sec.appendChild(nav);
+  });
+})();
+</script></body>
 </html>
