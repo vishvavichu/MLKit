@@ -1,0 +1,2757 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>EDA &amp; Baseline Model – MLKit</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&family=Nunito:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{
+  --bg:#0f1117;--bg2:#161b22;--surface:#1c2128;--surface2:#21262d;--surface3:#30363d;
+  --border:#30363d;--border2:#484f58;
+  --t1:#e6edf3;--t2:#8b949e;--t3:#6e7681;
+  --accent:#2ea043;--accent-light:rgba(46,160,67,0.15);--accent-border:rgba(46,160,67,0.4);
+  --blue:#388bfd;--blue-light:rgba(56,139,253,0.15);
+  --orange:#f0883e;--orange-light:rgba(240,136,62,0.15);
+  --red:#f85149;--red-light:rgba(248,81,73,0.15);
+  --violet:#a371f7;--violet-light:rgba(163,113,247,0.15);
+  --yellow:#e3b341;--yellow-light:rgba(227,179,65,0.15);
+  --code-bg:#161b22;--shadow:0 1px 3px rgba(0,0,0,0.4);
+  --sidebar-bg:#161b22;
+  --gh:#2ea043;--gh2:#1a7f37;
+  --row-hover:rgba(46,160,67,0.08);
+  --null-bg:rgba(248,81,73,0.12);--null-fg:#f85149;
+  --white:#1c2128;
+}
+[data-theme="light"]{
+  --bg:#f6f8fa;--bg2:#ffffff;--surface:#ffffff;--surface2:#f6f8fa;--surface3:#eaeef2;
+  --border:#d0d7de;--border2:#b1bac4;
+  --t1:#1f2328;--t2:#57606a;--t3:#818b98;
+  --accent:#1a7f37;--accent-light:rgba(26,127,55,0.1);--accent-border:rgba(26,127,55,0.3);
+  --blue:#0969da;--blue-light:rgba(9,105,218,0.1);
+  --orange:#bc4c00;--orange-light:rgba(188,76,0,0.1);
+  --red:#cf222e;--red-light:rgba(207,34,46,0.1);
+  --violet:#8250df;--violet-light:rgba(130,80,223,0.1);
+  --yellow:#9a6700;--yellow-light:rgba(154,103,0,0.1);
+  --code-bg:#f6f8fa;--shadow:0 1px 3px rgba(31,35,40,0.12);
+  --sidebar-bg:#f6f8fa;
+  --gh:#1a7f37;--gh2:#155235;
+  --row-hover:rgba(26,127,55,0.06);
+  --null-bg:#fdecea;--null-fg:#cf222e;
+  --white:#ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);font-size:15px;line-height:1.6;overflow-x:hidden;transition:background 0.3s,color 0.3s}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
+
+/* SIDEBAR */
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);border-right:1px solid var(--border);z-index:200;display:flex;flex-direction:column;transition:transform 0.3s,background 0.3s}
+#sidebar-scroll{overflow-y:auto;flex:1;padding-bottom:40px;scrollbar-width:thin}
+.sb-header{padding:16px 16px 14px;border-bottom:1px solid var(--border);background:var(--sidebar-bg);position:sticky;top:0;z-index:10}
+.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sb-brand-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sb-brand-text{font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:var(--t1)}
+.sb-brand-sub{font-size:10px;color:var(--t3);font-family:'Source Code Pro',monospace;margin-top:1px}
+.theme-toggle{display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;color:var(--t2);font-weight:600;transition:all 0.2s}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.toggle-track{width:34px;height:18px;background:var(--surface3);border-radius:9px;position:relative;transition:background 0.3s}
+[data-theme="light"] .toggle-track{background:var(--accent)}
+.toggle-thumb{width:12px;height:12px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform 0.3s;box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+[data-theme="light"] .toggle-thumb{transform:translateX(16px)}
+.sb-section{padding:12px 12px 2px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);font-family:'Source Code Pro',monospace;font-weight:600}
+.sb-item{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:1px 8px;padding:7px 10px;border-radius:6px;border:none;background:none;color:var(--t2);font-size:13px;font-family:'Outfit',sans-serif;cursor:pointer;text-align:left;transition:all 0.15s;text-decoration:none}
+.sb-item:hover{background:var(--surface2);color:var(--t1)}
+.sb-item.active{background:var(--accent-light);color:var(--accent);font-weight:600}
+.sb-item .ic{font-size:13px;flex-shrink:0;opacity:0.8}
+#menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:300;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;cursor:pointer;color:var(--t1);font-size:16px;line-height:1;box-shadow:var(--shadow);transition:transform 0.3s ease, opacity 0.3s ease;transform:translateY(0);opacity:1}
+#menu-btn.hide{transform:translateY(-70px);opacity:0;pointer-events:none}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150}
+#overlay.show{display:block}
+
+/* MAIN */
+#main{margin-left:260px;min-width:0}
+.page{max-width:1320px;margin:0 auto;padding:32px 40px 16px;min-width:0;overflow-x:hidden}
+
+/* ensure main content never goes under sidebar */
+#main{display:block}
+
+/* PROGRESS BAR */
+#progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--accent),#34d399,var(--blue));z-index:9999;transition:width 0.1s linear;box-shadow:0 0 8px rgba(46,160,67,0.6)}
+
+/* FAST SCROLL */
+#fast-scroll{position:fixed;right:0;top:0;width:6px;height:100vh;background:var(--surface2);z-index:190;cursor:pointer}
+#fs-thumb{width:100%;background:var(--accent);border-radius:3px;position:absolute;left:0;top:0;min-height:30px;opacity:0.7;transition:opacity 0.2s}
+#fast-scroll:hover #fs-thumb{opacity:1}
+
+/* BACK TO TOP */
+#back-top{position:fixed;bottom:24px;right:24px;z-index:100;background:var(--accent);color:white;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;font-size:18px;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(46,160,67,0.4);transition:all 0.2s}
+#back-top.show{display:flex}
+#back-top:hover{transform:translateY(-2px)}
+
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--border);border-radius:12px;padding:28px 32px 24px;margin-bottom:28px;min-width:0;overflow:hidden}
+.page-hero h1{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:800;color:var(--t1);margin-bottom:6px}
+.page-hero p{color:var(--t2);font-size:0.9rem}
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.pill{font-family:'Source Code Pro',monospace;font-size:.67rem;background:var(--accent-light);border:1px solid var(--accent-border);color:var(--accent);border-radius:20px;padding:3px 10px;font-weight:600}
+
+
+@media(max-width:1200px){
+  .twocol{grid-template-columns:1fr}
+}
+
+/* STICKY TITLE BAR */
+#sticky-title{position:fixed;top:0;left:260px;right:6px;z-index:180;height:36px;display:flex;align-items:center;gap:10px;padding:0 18px;background:var(--bg2);border-bottom:1px solid var(--border);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--t2);transform:translateY(-100%);transition:transform 0.25s ease,background 0.3s;pointer-events:none}
+#sticky-title.visible{transform:translateY(0)}
+#sticky-title .st-icon{font-size:14px}
+#sticky-title .st-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--t1)}
+
+@media(max-width:768px){
+  #sticky-title{left:0;padding:0 12px 0 48px;font-size:12px}
+  
+  #sidebar{transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #menu-btn{display:block}
+  #main{margin-left:0}
+  .page{padding:56px 12px 24px}
+  #fast-scroll{display:none}
+  .guide-row{grid-template-columns:1fr}
+  .twocol{grid-template-columns:1fr}
+  .ms-checklist{grid-template-columns:1fr}
+  .chart-row{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:1fr}
+  [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  
+  /* Fix data preview table scrolling - make it cleaner and more scrollable */
+  .xl-wrap{overflow:visible;max-width:100%;min-width:0;border:none;box-shadow:none;border-radius:0;background:transparent;margin-bottom:16px}
+  .xl-toolbar{background:var(--surface2);border:1px solid var(--border);border-radius:6px 6px 0 0;padding:6px 10px;position:sticky;top:36px;z-index:10;font-size:.62rem}
+  .xl-toolbar .tl{font-size:.62rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .xl-toolbar .rc{font-size:.6rem;padding:2px 6px;white-space:nowrap;flex-shrink:0}
+  .xl-scroll{overflow-x:auto;overflow-y:visible;max-height:none;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;background:var(--white)}
+  .xl-scroll::-webkit-scrollbar{height:6px}
+  .xl-scroll::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  .xl-scroll::-webkit-scrollbar-track{background:var(--surface2)}
+  
+  /* Make table more compact on mobile */
+  table.xl{font-size:.62rem;min-width:800px}
+  table.xl thead th{padding:5px 6px;font-size:.56rem;position:sticky;top:0;z-index:5;white-space:nowrap}
+  table.xl tbody td{padding:4px 6px;font-size:.62rem;white-space:nowrap}
+  table.xl tbody td.rn{padding:4px 4px;font-size:.58rem;width:30px;min-width:30px}
+  
+  /* Fix KPI row - make it horizontally scrollable instead of wrapping */
+  .kpi-row{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    gap:8px !important;
+    padding:4px 0 !important;
+    margin-bottom:14px !important;
+    scrollbar-width:thin !important;
+    max-width:100% !important;
+  }
+  .kpi-row::-webkit-scrollbar{height:6px}
+  .kpi-row::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  .kpi-row::-webkit-scrollbar-track{background:var(--surface2)}
+  .kpi-cell{
+    min-width:140px !important;
+    flex:0 0 auto !important;
+    padding:10px 12px !important;
+    box-sizing:border-box !important;
+  }
+  
+  /* Fix categorical charts - ensure full visibility */
+  .cat-card{min-width:0;overflow:visible;margin-bottom:16px}
+  .cat-card canvas{width:100%!important;height:auto!important;max-height:220px!important}
+  .cat-tbl{font-size:.7rem;width:100%;min-width:500px}
+  .cat-tbl td,.cat-tbl th{padding:4px 8px;font-size:.68rem;white-space:nowrap}
+  
+  /* Add scroll wrapper for categorical analysis */
+  .cat-grid{overflow-x:visible}
+  
+  /* Fix model recommendation content overflow - make badge VERY compact */
+  .fp-wrap{display:flex;flex-direction:column;overflow:hidden;max-width:100%}
+  .fp-badge{width:100%;padding:6px 10px;flex-direction:row;gap:6px;justify-content:flex-start;align-items:center;box-sizing:border-box;min-width:auto}
+  .fp-badge .fp-icon{font-size:1rem;flex-shrink:0;line-height:1}
+  .fp-badge .fp-name{font-size:.65rem;text-align:left;line-height:1.1;font-weight:700}
+  .fp-badge .fp-task{display:none}
+  .fp-body{padding:10px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fp-row{flex-direction:column;align-items:flex-start;gap:2px;word-wrap:break-word;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.1)}
+  .fp-row:last-child{border-bottom:none}
+  .fp-label{min-width:auto;font-size:.62rem;word-wrap:break-word;font-weight:700;color:var(--orange);margin-bottom:2px}
+  .fp-val{font-size:.66rem;word-wrap:break-word;overflow-wrap:break-word;max-width:100%;line-height:1.3}
+  .fp-val .tag{display:inline-block;margin:1px;font-size:.54rem;padding:1px 4px}
+  .fp-title{font-size:.62rem!important;margin-bottom:4px!important;font-weight:700!important}
+  
+  /* Fix model comparison table */
+  .ms-tbl,.fe-tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  .ms-tbl thead,.ms-tbl tbody,.fe-tbl thead,.fe-tbl tbody{display:table;width:100%;min-width:600px}
+  .ms-tbl tr,.fe-tbl tr{display:table-row}
+  .ms-tbl td,.ms-tbl th,.fe-tbl td,.fe-tbl th{display:table-cell;white-space:normal;word-wrap:break-word}
+  
+  /* Fix feature engineering tabs scrolling */
+  .fe-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px}
+  .fe-tabs::-webkit-scrollbar{height:4px}
+  .fe-tabs::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+  .fe-tab{flex-shrink:0;font-size:.65rem;padding:7px 12px;min-width:fit-content}
+  
+  /* Fix model selection tabs */
+  .ms-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .ms-tab{flex-shrink:0;font-size:.65rem;padding:7px 12px}
+  
+  /* Fix bivariate tabs */
+  .biv-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .biv-tab{flex-shrink:0;font-size:.65rem;padding:7px 12px}
+  
+  /* Fix numerical tabs */
+  .tab-bar{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .tab-btn{flex-shrink:0;font-size:.65rem;padding:7px 12px}
+  
+  /* Fix tables - cleaner scrollable view */
+  .info-wrap,.hm-wrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:6px;background:var(--white)}
+  .info-wrap::-webkit-scrollbar,.hm-wrap::-webkit-scrollbar{height:6px}
+  .info-wrap::-webkit-scrollbar-thumb,.hm-wrap::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  table{max-width:100%;font-size:.64rem}
+  table th,table td{padding:5px 7px;font-size:.62rem}
+  
+  /* Fix hero card grid */
+  .page-hero [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  .page-hero{padding:20px 16px}
+  .page-hero h1{font-size:1.3rem}
+  
+  /* Fix hero buttons/inputs */
+  .page-hero label{font-size:.75rem!important;padding:7px 14px!important;white-space:nowrap}
+  .page-hero select{font-size:.72rem!important;padding:4px 8px!important}
+  
+  /* Fix chart boxes */
+  .chart-box{min-width:0;overflow:hidden;padding:10px}
+  .chart-box canvas{max-width:100%!important;width:100%!important;height:auto!important;max-height:200px!important}
+  .chart-box h4{font-size:.65rem}
+  
+  /* Fix reason boxes */
+  .fe-reason,.ms-reason{padding:10px 12px;font-size:.7rem}
+  .fe-reason .fr-row,.ms-reason .mr-row{flex-direction:column;gap:4px;font-size:.7rem}
+  .fe-reason .fr-col,.ms-reason .mr-label{min-width:auto;font-size:.68rem}
+  
+  /* Fix stat tables */
+  .stat-tbl{font-size:.68rem}
+  .stat-tbl td{padding:5px 8px;font-size:.66rem}
+  
+  /* Fix implementation notes grid */
+  #implNotesContent [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  
+  /* Ensure all inline-styled divs don't overflow */
+  .page-hero>div,.card>div,.xl-wrap>div{max-width:100%;overflow-x:auto}
+}
+
+/* FEATURE ENG TABS */
+.fe-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:14px}
+.fe-tab{padding:8px 18px;border:none;background:none;cursor:pointer;font-size:.72rem;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--t3);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.fe-tab:hover{color:var(--t1);background:var(--surface)}
+.fe-tab.active{color:var(--gh);border-bottom-color:var(--gh);background:var(--accent-light)}
+.fe-pane{display:none}.fe-pane.active{display:block}
+table.fe-tbl{width:100%;border-collapse:collapse;font-size:.76rem}
+table.fe-tbl thead th{background:var(--surface3);color:var(--t3);padding:7px 11px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.06em;font-weight:600;border-right:1px solid var(--border);white-space:nowrap}
+table.fe-tbl tbody tr{border-bottom:1px solid var(--border)}
+table.fe-tbl tbody tr:hover td{background:var(--row-hover)}
+table.fe-tbl tbody td{padding:6px 11px;border-right:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--t2);white-space:nowrap}
+table.fe-tbl td.fe-col{font-weight:700;color:var(--t1)}
+table.fe-tbl td.fe-new{color:var(--gh);font-weight:700}
+table.fe-tbl td.fe-val{text-align:right}
+table.fe-tbl td.fe-note{color:var(--t2);font-size:.7rem;font-style:italic;white-space:normal;max-width:220px}
+.fe-badge{display:inline-block;padding:2px 7px;border-radius:2px;font-size:.63rem;font-family:'IBM Plex Mono',monospace;font-weight:700}
+.fe-b-enc{background:var(--blue-light);color:var(--blue);border:1px solid var(--blue)}
+.fe-b-log{background:var(--violet-light);color:var(--violet);border:1px solid var(--violet)}
+.fe-b-new{background:var(--accent-light);color:var(--gh);border:1px solid var(--accent-border)}
+.fe-b-scl{background:var(--orange-light);color:var(--orange);border:1px solid var(--orange)}
+.guide-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:680px){.guide-row{grid-template-columns:1fr}}
+.guide-box{background:var(--white);border:1px solid var(--border2);border-radius:3px;overflow:hidden}
+.guide-box .gb-head{background:var(--surface3);padding:7px 12px;font-family:'IBM Plex Mono',monospace;font-size:.67rem;color:var(--t3);font-weight:600;letter-spacing:.04em}
+.guide-box .gb-body{padding:12px 14px}
+.guide-row-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)}
+.guide-row-item:last-child{border-bottom:none}
+.guide-swatch{width:36px;height:22px;border-radius:2px;flex-shrink:0;margin-top:1px}
+.guide-label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;color:var(--t1);white-space:nowrap}
+.guide-desc{font-size:.72rem;color:var(--t2);margin-top:2px}
+.fs-step{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.fs-step:last-child{border-bottom:none}
+.fs-num{width:20px;height:20px;border-radius:2px;background:var(--gh);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.fs-text{font-size:.75rem;color:var(--t2);line-height:1.5}
+.fs-text b{color:var(--t1)}
+
+/* MODEL SELECTION */
+.ms-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:14px}
+.ms-tab{padding:8px 18px;border:none;background:none;cursor:pointer;font-size:.72rem;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--t3);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.ms-tab:hover{color:var(--t1);background:var(--surface)}
+.ms-tab.active{color:var(--orange);border-bottom-color:var(--orange);background:var(--orange-light)}
+.ms-pane{display:none}.ms-pane.active{display:block}
+table.ms-tbl{width:100%;border-collapse:collapse;font-size:.76rem}
+table.ms-tbl thead th{background:var(--surface3);color:var(--t3);padding:7px 11px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.06em;font-weight:600;border-right:1px solid var(--border);white-space:nowrap}
+table.ms-tbl tbody tr{border-bottom:1px solid var(--border)}
+table.ms-tbl tbody tr:hover td{background:var(--row-hover)}
+table.ms-tbl tbody td{padding:7px 11px;border-right:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--t2);white-space:nowrap}
+table.ms-tbl td.ms-model{font-weight:700;color:var(--t1)}
+table.ms-tbl td.ms-why{white-space:normal;max-width:280px;font-size:.72rem;line-height:1.5}
+table.ms-tbl td.ms-note{white-space:normal;max-width:200px;font-size:.7rem;color:var(--t2);font-style:italic}
+.ms-rec{background:var(--orange-light);color:var(--orange);font-weight:700}
+.ms-good{background:var(--accent-light);color:var(--gh);font-weight:700}
+.ms-base{background:var(--blue-light);color:var(--blue);font-weight:700}
+.ms-skip{background:var(--surface2);color:var(--t3)}
+.ms-reason{background:var(--orange-light);border:1px solid var(--orange);border-left:4px solid var(--orange);border-radius:3px;padding:12px 16px;margin-bottom:14px}
+.ms-reason .mr-title{font-family:'IBM Plex Mono',monospace;font-size:.67rem;font-weight:700;color:var(--orange);letter-spacing:.05em;margin-bottom:8px}
+.ms-reason .mr-row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;border-bottom:1px solid rgba(240,136,62,0.25);font-size:.75rem}
+.ms-reason .mr-row:last-child{border-bottom:none}
+.ms-reason .mr-label{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--t1);min-width:130px;flex-shrink:0}
+.ms-reason .mr-text{color:var(--t2);line-height:1.5}
+.ms-reason .mr-text b{color:var(--t1)}
+.ms-checklist{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.ms-checklist{grid-template-columns:1fr}}
+.ms-check-box{background:var(--white);border:1px solid var(--border2);border-radius:3px;overflow:hidden}
+.ms-check-box .mc-head{background:var(--surface3);padding:7px 12px;font-family:'IBM Plex Mono',monospace;font-size:.67rem;color:var(--t3);font-weight:600}
+.ms-check-box .mc-body{padding:10px 14px}
+.mc-row{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:.74rem}
+.mc-row:last-child{border-bottom:none}
+.mc-tick{font-size:.8rem;flex-shrink:0;margin-top:1px}
+.mc-text{color:var(--t2);line-height:1.4}
+.mc-text b{color:var(--t1);font-family:'IBM Plex Mono',monospace}
+/* FINAL PICK */
+.fp-wrap{display:grid;grid-template-columns:auto 1fr;gap:0;border:2px solid var(--orange);border-radius:3px;overflow:hidden}
+.fp-badge{background:var(--orange);color:#fff;padding:20px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:160px}
+.fp-badge .fp-icon{font-size:2rem}
+.fp-badge .fp-name{font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:700;text-align:center;line-height:1.4}
+.fp-badge .fp-task{font-size:.65rem;opacity:.85;text-align:center;font-family:'IBM Plex Mono',monospace}
+.fp-body{padding:16px 20px;background:var(--white)}
+.fp-body .fp-title{font-family:'IBM Plex Mono',monospace;font-size:.67rem;font-weight:700;color:var(--orange);letter-spacing:.05em;margin-bottom:10px}
+.fp-row{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.75rem}
+.fp-row:last-child{border-bottom:none}
+.fp-label{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--t1);min-width:140px;flex-shrink:0}
+.fp-val{color:var(--t2);line-height:1.5}
+.fp-val b{color:var(--t1)}
+.fp-val .tag{display:inline-block;padding:1px 7px;border-radius:2px;font-size:.63rem;font-family:'IBM Plex Mono',monospace;font-weight:700;margin:1px 2px}
+.fp-val .tg{background:var(--accent-light);color:var(--gh);border:1px solid var(--accent-border)}
+.fp-val .to{background:var(--orange-light);color:var(--orange);border:1px solid var(--orange)}
+.fp-val .tr{background:var(--red-light);color:var(--red);border:1px solid var(--red)}
+.fe-reason{background:var(--blue-light);border:1px solid var(--blue);border-left:4px solid var(--blue);border-radius:3px;padding:12px 16px;margin-bottom:14px}
+.fe-reason .fr-title{font-family:'IBM Plex Mono',monospace;font-size:.67rem;font-weight:700;color:var(--blue);letter-spacing:.05em;margin-bottom:8px}
+.fe-reason .fr-row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;border-bottom:1px solid rgba(56,139,253,0.2);font-size:.76rem}
+.fe-reason .fr-row:last-child{border-bottom:none;padding-bottom:0}
+.fe-reason .fr-col{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--t1);min-width:120px;flex-shrink:0}
+.fe-reason .fr-why{color:var(--t2);line-height:1.5}
+.fe-reason .fr-why b{color:var(--t1)}
+.hm-wrap{overflow-x:auto}
+table.hm-tbl{border-collapse:collapse;font-family:'IBM Plex Mono',monospace}
+table.hm-tbl th{background:var(--surface3);color:var(--t3);padding:8px 10px;font-size:.63rem;letter-spacing:.05em;font-weight:600;white-space:nowrap;text-align:center}
+table.hm-tbl th.row-lbl{text-align:right;padding-right:12px;min-width:80px}
+table.hm-tbl td.hm-cell{width:72px;height:52px;text-align:center;font-size:.72rem;font-weight:700;cursor:default;transition:opacity .15s;border:2px solid var(--white)}
+table.hm-tbl td.hm-cell:hover{opacity:.8;border-color:var(--t1)}
+table.hm-tbl td.row-lbl{background:var(--surface);color:var(--t1);font-size:.7rem;font-weight:700;padding:6px 12px 6px 8px;text-align:right;white-space:nowrap;border-right:2px solid var(--border2)}
+.hm-legend{display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--border);font-size:.68rem;font-family:'IBM Plex Mono',monospace;color:var(--t3)}
+.hm-legend-bar{height:12px;flex:1;border-radius:2px;background:linear-gradient(to right,#1558a8,#6baed6,#f7f7f7,#fc8d59,#c0392b)}
+.hm-flag-tbl{width:100%;border-collapse:collapse;font-size:.76rem;margin-top:14px}
+.hm-flag-tbl thead th{background:var(--surface3);color:var(--t3);padding:7px 11px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.06em;font-weight:600;border-right:1px solid var(--border);text-align:left}
+.hm-flag-tbl tbody tr{border-bottom:1px solid var(--border)}
+.hm-flag-tbl tbody tr:hover td{background:var(--row-hover)}
+.hm-flag-tbl tbody td{padding:6px 11px;border-right:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--t2)}
+.dec-keep{background:var(--accent-light);color:var(--gh);font-weight:700}
+.dec-drop{background:var(--red-light);color:var(--red);font-weight:700}
+.dec-comb{background:var(--orange-light);color:var(--orange);font-weight:700}
+.dec-eng{background:var(--violet-light);color:var(--violet);font-weight:700}
+
+/* BIVARIATE */
+.biv-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:14px}
+.biv-tab{padding:8px 18px;border:none;background:none;cursor:pointer;font-size:.72rem;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--t3);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.biv-tab:hover{color:var(--t1);background:var(--surface)}
+.biv-tab.active{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-light)}
+.biv-pane{display:none}.biv-pane.active{display:block}
+table.biv-tbl{width:100%;border-collapse:collapse;font-size:.76rem}
+table.biv-tbl thead th{background:var(--surface3);color:var(--t3);padding:7px 11px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.06em;font-weight:600;border-right:1px solid var(--border);white-space:nowrap;position:sticky;top:0}
+table.biv-tbl tbody tr{border-bottom:1px solid var(--border)}
+table.biv-tbl tbody tr:hover td{background:var(--row-hover)}
+table.biv-tbl tbody td{padding:6px 11px;border-right:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--t2);white-space:nowrap}
+table.biv-tbl td.pair{font-weight:700;color:var(--t1)}
+table.biv-tbl td.str-sp{color:#16a34a;font-weight:700}
+table.biv-tbl td.str-mp{color:#d97706;font-weight:700}
+table.biv-tbl td.str-wp{color:#7a8299}
+table.biv-tbl td.str-sn{color:#dc2626;font-weight:700}
+table.biv-tbl td.str-mn{color:#2563eb;font-weight:700}
+table.biv-tbl td.str-vs{color:#dc2626;font-weight:700}
+table.biv-tbl td.str-ms{color:#d97706;font-weight:700}
+table.biv-tbl td.str-wm{color:#2563eb;font-weight:700}
+table.biv-tbl td.str-ng{color:#7a8299}
+table.biv-tbl td.keep{background:var(--accent-light);color:var(--gh);font-weight:700}
+table.biv-tbl td.drop{background:var(--red-light);color:var(--red);font-weight:700}
+table.biv-tbl td.r{text-align:right}
+
+/* PAGE HERO */
+
+.page-hero h1{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:800;color:var(--t1);margin-bottom:6px}
+.page-hero p{color:var(--t2);font-size:0.9rem}
+
+/* SECTION */
+.section{margin-bottom:36px;min-width:0}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid var(--border)}
+.sec-head .sn{font-family:'IBM Plex Mono',monospace;font-size:.63rem;font-weight:700;background:var(--gh);color:#fff;padding:3px 8px;border-radius:2px}
+.sec-head h2{font-size:.85rem;font-weight:700;color:var(--t1);letter-spacing:.03em}
+
+/* KPI ROW */
+.kpi-row{display:flex;gap:0;background:var(--border);border:1px solid var(--border);border-radius:3px;overflow:hidden;margin-bottom:14px}
+.kpi-cell{flex:1;background:var(--white);padding:11px 14px;min-width:90px;border-right:1px solid var(--border)}
+.kpi-cell:last-child{border-right:none}
+.kpi-cell .kl{font-size:.62rem;font-family:'IBM Plex Mono',monospace;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.kpi-cell .kv{font-family:'IBM Plex Mono',monospace;font-size:1.25rem;font-weight:600;color:var(--t1)}
+.kpi-cell .ks{font-size:.68rem;color:var(--t2);margin-top:2px}
+.kpi-cell.green .kv{color:var(--gh)}
+.kpi-cell.red .kv{color:var(--red)}
+.kpi-cell.blue .kv{color:var(--blue)}
+
+/* EXCEL WRAPPER */
+.xl-wrap{background:var(--white);border:1px solid var(--border2);border-radius:3px;overflow:visible;box-shadow:0 1px 3px rgba(0,0,0,.07);min-width:0}
+.xl-toolbar{background:var(--surface2);border-bottom:1px solid var(--border);padding:5px 10px;display:flex;align-items:center;gap:10px}
+.xl-toolbar .tl{font-family:'IBM Plex Mono',monospace;font-size:.67rem;color:var(--t2);flex:1}
+.xl-toolbar .rc{font-family:'IBM Plex Mono',monospace;font-size:.67rem;background:var(--white);border:1px solid var(--border);padding:2px 8px;border-radius:2px;color:var(--t2)}
+
+/* EXCEL DATA TABLE */
+.xl-scroll{overflow-x:auto;overflow-y:auto;max-height:360px}
+.xl-scroll::-webkit-scrollbar{width:8px;height:8px}
+.xl-scroll::-webkit-scrollbar-track{background:var(--surface2)}
+.xl-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+table.xl{width:100%;border-collapse:collapse;font-size:.77rem}
+table.xl thead th{background:var(--gh);color:#fff;padding:7px 9px;text-align:left;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.04em;position:sticky;top:0;z-index:10;border-right:1px solid var(--gh2)}
+table.xl thead th.rncol{background:var(--gh2);width:38px;text-align:center;min-width:38px}
+table.xl thead tr.typerow th{background:#155235;font-size:.6rem;color:#9dcab0;font-weight:400;letter-spacing:.02em;padding:4px 9px}
+table.xl tbody td.rn{background:var(--surface2);border-right:2px solid var(--border);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--t3);padding:5px 5px;width:38px;position:sticky;left:0}
+table.xl tbody tr:nth-child(even) td{background:var(--surface2)}
+table.xl tbody tr:hover td{background:var(--row-hover)!important}
+table.xl tbody tr:hover td.rn{background:var(--accent-light)!important}
+table.xl tbody td{padding:5px 9px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);white-space:nowrap;color:var(--t2);font-family:'IBM Plex Mono',monospace;font-size:.75rem}
+table.xl tbody td.null-cell{background:var(--null-bg);color:var(--null-fg);font-style:italic;text-align:center;font-size:.7rem}
+table.xl tbody td.num-cell{text-align:right;color:var(--blue)}
+table.xl tbody td.date-cell{color:var(--violet)}
+
+/* INFO TABLE */
+.info-wrap{overflow-x:auto}
+table.info-tbl{width:100%;border-collapse:collapse;font-size:.79rem}
+table.info-tbl thead th{background:var(--surface3);color:var(--t3);padding:8px 11px;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.07em;font-weight:600;border-right:1px solid var(--border);white-space:nowrap;position:sticky;top:0}
+table.info-tbl tbody tr{border-bottom:1px solid var(--border)}
+table.info-tbl tbody tr:hover td{background:var(--row-hover)}
+table.info-tbl tbody td{padding:7px 11px;color:var(--t2);border-right:1px solid var(--border);vertical-align:middle}
+table.info-tbl td.rn{background:var(--surface);color:var(--t3);font-family:'IBM Plex Mono',monospace;font-size:.66rem;text-align:center;width:28px}
+table.info-tbl td.colnm{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--t1);font-size:.77rem}
+table.info-tbl td.desc{white-space:normal;max-width:230px;font-size:.76rem;line-height:1.4}
+table.info-tbl td.mono{font-family:'IBM Plex Mono',monospace;font-size:.73rem}
+table.info-tbl td.nc{color:var(--gh);font-family:'IBM Plex Mono',monospace;font-weight:600}
+table.info-tbl td.mc{color:var(--red);font-family:'IBM Plex Mono',monospace;font-weight:600}
+table.info-tbl td.mc0{color:var(--gh);font-family:'IBM Plex Mono',monospace}
+.tbadge{display:inline-flex;align-items:center;gap:3px;border-radius:2px;padding:2px 7px;font-size:.63rem;font-family:'IBM Plex Mono',monospace;font-weight:700;white-space:nowrap}
+.tb-num{background:var(--blue-light);color:var(--blue);border:1px solid var(--blue)}
+.tb-cat{background:var(--violet-light);color:var(--violet);border:1px solid var(--violet)}
+.tb-date{background:var(--orange-light);color:var(--orange);border:1px solid var(--orange)}
+.tb-id{background:var(--surface2);color:var(--t3);border:1px solid var(--border2)}
+
+/* NULL / DUP TABLES */
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.twocol>*{min-width:0;overflow:hidden}
+
+
+table.nul-tbl{width:100%;border-collapse:collapse;font-size:.77rem}
+table.nul-tbl thead th{background:var(--surface3);color:var(--t3);padding:7px 10px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.06em;border-right:1px solid var(--border);text-align:left}
+table.nul-tbl tbody tr{border-bottom:1px solid var(--border)}
+table.nul-tbl tbody tr:hover td{background:var(--row-hover)}
+table.nul-tbl tbody td{padding:6px 10px;border-right:1px solid var(--border);color:var(--t2);white-space:nowrap}
+table.nul-tbl td.colname{font-family:'IBM Plex Mono',monospace;font-size:.74rem;font-weight:600;color:var(--t1)}
+table.nul-tbl td.mono{font-family:'IBM Plex Mono',monospace;font-size:.73rem}
+table.nul-tbl td.barcell{min-width:100px}
+.btrack{height:10px;background:var(--surface3);border-radius:1px;overflow:hidden;width:100%;display:inline-block;vertical-align:middle}
+.bfill{height:100%;border-radius:1px;display:block}
+table.nul-tbl td.pc{font-family:'IBM Plex Mono',monospace;font-size:.71rem;color:var(--t3);text-align:right;white-space:nowrap}
+
+/* TABS */
+.tab-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:14px;overflow-x:auto}
+.tab-btn{padding:8px 16px;border:none;background:none;cursor:pointer;font-size:.72rem;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--t3);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{color:var(--t1);background:var(--surface)}
+.tab-btn.active{color:var(--gh);border-bottom-color:var(--gh);background:var(--accent-light)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* STAT EXCEL TABLE */
+table.stat-tbl{width:100%;border-collapse:collapse;font-size:.78rem;background:var(--white)}
+table.stat-tbl thead th{background:var(--surface3);color:var(--t3);padding:7px 11px;font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.06em;border-right:1px solid var(--border);text-align:left;white-space:nowrap}
+table.stat-tbl tbody td{padding:6px 11px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--t2)}
+table.stat-tbl tbody td:first-child{background:var(--surface);color:var(--t1);font-weight:600;width:180px}
+table.stat-tbl tbody tr:hover td{background:var(--row-hover)}
+table.stat-tbl td.hl{background:var(--orange-light);color:var(--orange);font-weight:700}
+table.stat-tbl td.danger{background:var(--red-light);color:var(--red);font-weight:700}
+table.stat-tbl td.good{background:var(--accent-light);color:var(--gh);font-weight:700}
+table.stat-tbl td.note{color:var(--t2);font-size:.7rem;font-style:italic}
+
+/* OUTLIER & SKEW BANNERS */
+.out-banner{display:flex;align-items:center;gap:10px;background:var(--red-light);border:1px solid var(--red);border-radius:2px;padding:8px 13px;margin-bottom:12px;font-size:.77rem}
+.out-banner .ob-main{flex:1;color:var(--red)}
+.out-banner .ob-val{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.82rem;color:var(--red)}
+.skew-banner{display:flex;align-items:center;gap:10px;background:var(--blue-light);border:1px solid var(--blue);border-radius:2px;padding:8px 13px;margin-bottom:12px;font-size:.77rem;color:var(--blue)}
+.skew-banner .sv{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.88rem}
+
+/* CHART ROW */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:680px){.chart-row{grid-template-columns:1fr}}
+.chart-box{background:var(--white);border:1px solid var(--border);border-radius:2px;padding:13px}
+.chart-box h4{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.chart-box canvas{max-height:220px}
+
+/* CAT GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:14px}
+@media(max-width:480px){.cat-grid{grid-template-columns:1fr}}
+.cat-card{background:var(--white);border:1px solid var(--border2);border-radius:3px;overflow:hidden}
+.cat-card .cat-head{background:var(--surface3);padding:8px 12px;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--t3);display:flex;justify-content:space-between;align-items:center}
+.cat-card .cat-head .cu{color:var(--accent);font-size:.63rem}
+.cat-card canvas{max-height:180px;padding:10px 12px 0}
+table.cat-tbl{width:100%;border-collapse:collapse;font-size:.75rem}
+table.cat-tbl thead th{background:var(--surface2);color:var(--t3);padding:6px 10px;font-family:'IBM Plex Mono',monospace;font-size:.61rem;letter-spacing:.07em;border-bottom:2px solid var(--border2);text-align:left}
+table.cat-tbl thead th.r{text-align:right}
+table.cat-tbl tbody tr{border-bottom:1px solid var(--border)}
+table.cat-tbl tbody tr:hover td{background:var(--row-hover)}
+table.cat-tbl tbody td{padding:5px 10px;color:var(--t2)}
+table.cat-tbl td.val-nm{font-weight:600;color:var(--t1)}
+table.cat-tbl td.r{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:.72rem}
+table.cat-tbl td.pct-val{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:700}
+.rnk{display:inline-flex;width:17px;height:17px;border-radius:2px;align-items:center;justify-content:center;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:700;margin-right:3px}
+.fbar{display:inline-block;height:8px;border-radius:1px;vertical-align:middle}
+
+</style>
+</head>
+<body>
+
+<div id="sticky-title"><span class="st-icon">📊</span><span class="st-label" id="st-label"></span></div>
+<div id="progress-bar"></div>
+<div id="fast-scroll"><div id="fs-thumb"></div></div>
+<button id="menu-btn" onclick="toggleSB()">☰</button>
+<div id="overlay" onclick="toggleSB()"></div>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<nav id="sidebar">
+  <div class="sb-header">
+    <div class="sb-brand">
+      <div class="sb-brand-icon">📊</div>
+      <div>
+        <div class="sb-brand-text">Interactive Dataset Explorer</div>
+        <div class="sb-brand-sub">MLKit</div>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-label">🌙 Dark Mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </div>
+  <div id="sidebar-scroll">
+    <div class="sb-section">Navigation</div>
+    <a class="sb-item" href="../index.html"><span class="ic">🏠</span>MLKit Home</a>
+    <div class="sb-section">Sections</div>
+    <a class="sb-item" href="#preview"><span class="ic">📄</span>Dataset Preview</a>
+    <a class="sb-item" href="#info"><span class="ic">🗂</span>Column Info</a>
+    <a class="sb-item" href="#nulldup"><span class="ic">🕳</span>Null &amp; Duplicates</a>
+    <a class="sb-item" href="#numerical"><span class="ic">🔢</span>Numerical Analysis</a>
+    <a class="sb-item" href="#categorical"><span class="ic">📊</span>Categorical Analysis</a>
+    <a class="sb-item" href="#bivariate"><span class="ic">🔗</span>Bivariate Analysis</a>
+    <a class="sb-item" href="#multivariate"><span class="ic">🌐</span>Multivariate Analysis</a>
+    <a class="sb-item" href="#feateng"><span class="ic">⚙️</span>Feature Engineering</a>
+    <a class="sb-item" href="#modelrec"><span class="ic">🚀</span>Model Recommendation</a>
+  </div>
+</nav>
+
+<div id="main"><div class="page">
+
+<div class="page-hero">
+  <h1 id="heroTitle">E-Commerce Sales Dataset</h1>
+  <p id="heroDesc">A complete walkthrough from raw data analysis to model recommendation — covering null treatment, univariate & bivariate analysis, feature engineering, and intelligent model selection based on dataset characteristics.</p>
+
+  <div style="margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <label for="csvInput" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.8rem;font-weight:700;font-family:'Source Code Pro',monospace" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      📂 Upload CSV
+      <input type="file" id="csvInput" accept=".csv" style="display:none" onchange="handleCSV(this)">
+    </label>
+    <span id="csvStatus" style="font-size:.78rem;color:var(--t2);font-family:'Source Code Pro',monospace">Using built-in e-commerce dataset</span>
+    <label style="display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--t2);cursor:pointer">
+      Target:
+      <select id="targetSelect" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:.78rem;color:var(--t1);font-family:'Source Code Pro',monospace" onchange="updateTarget()">
+        <option value="revenue">revenue</option>
+      </select>
+    </label>
+  </div>
+
+  <div id="heroCard" style="margin-top:18px;background:var(--surface2);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 18px;">
+    <div style="font-family:'Source Code Pro',monospace;font-size:.68rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">&#127919; Problem Statement</div>
+
+    <div style="font-size:.88rem;font-weight:700;color:var(--t1);margin-bottom:6px;">What are we predicting?</div>
+    <div style="font-size:.82rem;color:var(--t2);line-height:1.7;margin-bottom:14px;">
+      Predict the <strong style="color:var(--t1);">per-order revenue</strong> for each e-commerce transaction, where
+      <code style="background:var(--surface3);padding:1px 6px;border-radius:3px;font-family:'Source Code Pro',monospace;font-size:.78rem;color:var(--accent);">revenue = price &times; quantity &times; (1 &minus; discount%)</code>.
+      The model learns how <strong style="color:var(--t1);">product category</strong> (Electronics vs Books vs Clothing etc.),
+      <strong style="color:var(--t1);">unit price</strong>, <strong style="color:var(--t1);">quantity ordered</strong>,
+      <strong style="color:var(--t1);">discount applied</strong>, <strong style="color:var(--t1);">customer segment</strong>,
+      and <strong style="color:var(--t1);">region</strong> together determine how much revenue a single order generates.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:11px 14px;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--t1);margin-bottom:6px;">&#128200; Key drivers of revenue</div>
+        <div style="font-size:.78rem;color:var(--t2);line-height:1.7;">
+          &bull; <strong style="color:var(--t1);">Category</strong> &mdash; Electronics orders average 5&times; more revenue than Books<br>
+          &bull; <strong style="color:var(--t1);">Price</strong> &mdash; strongest linear predictor (log-transformed)<br>
+          &bull; <strong style="color:var(--t1);">Quantity</strong> &mdash; each extra unit adds proportional revenue<br>
+          &bull; <strong style="color:var(--t1);">Discount</strong> &mdash; higher discount directly reduces revenue
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:11px 14px;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--t1);margin-bottom:6px;">&#128204; Why predict per-order revenue?</div>
+        <div style="font-size:.78rem;color:var(--t2);line-height:1.7;">
+          &bull; Identify which <strong style="color:var(--t1);">product + region combinations</strong> are most profitable<br>
+          &bull; Flag <strong style="color:var(--t1);">high-value orders</strong> before fulfilment for priority handling<br>
+          &bull; Optimise <strong style="color:var(--t1);">discount strategy</strong> &mdash; avoid over-discounting Electronics<br>
+          &bull; Forecast <strong style="color:var(--t1);">total revenue</strong> from incoming order pipelines
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;">
+      <div style="background:var(--accent-light);border:1px solid var(--accent-border);border-radius:6px;padding:10px 12px;min-width:220px;">
+        <div style="font-size:.63rem;font-family:'Source Code Pro',monospace;color:var(--accent);font-weight:700;margin-bottom:4px;letter-spacing:.05em;">TARGET VARIABLE</div>
+        <div id="targetVarDisplay" style="font-size:.88rem;font-weight:700;color:var(--t1);font-family:'Source Code Pro',monospace;">revenue</div>
+        <div style="font-size:.7rem;color:var(--t2);margin-top:3px;">Continuous &middot; Regression</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 01 · DATASET PREVIEW -->
+<div class="section" id="preview">
+  <div class="sec-head"><span class="sn">01</span><h2>Dataset Preview</h2></div>
+  <div class="kpi-row" id="kpiRow"></div>
+  <div class="xl-wrap">
+    <div class="xl-toolbar">
+      <span class="tl" id="previewToolbar">📄 dataset.csv — First 20 rows</span>
+      <span class="rc" id="previewRC">1 000 rows × 12 cols</span>
+    </div>
+    <div class="xl-scroll">
+      <table class="xl" id="previewTable"></table>
+    </div>
+  </div>
+</div>
+
+<!-- 02 · COLUMN INFO -->
+<div class="section" id="info">
+  <div class="sec-head"><span class="sn">02</span><h2>Column Info &amp; Data Types</h2></div>
+  <div class="xl-wrap">
+    <div class="xl-toolbar"><span class="tl">🗂 Schema — all 12 columns with descriptions and type info</span></div>
+    <div class="info-wrap">
+      <div style="overflow-x:auto"><table class="info-tbl" id="infoTable"></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 · NULL & DUPLICATE -->
+<div class="section" id="nulldup">
+  <div class="sec-head"><span class="sn">03</span><h2>Null &amp; Duplicate Analysis</h2></div>
+  <div class="twocol">
+    <div class="xl-wrap">
+      <div class="xl-toolbar"><span class="tl">🕳 Null Values — per column</span></div>
+      <div style="overflow-x:auto"><table class="nul-tbl" id="nullTable"></table></div>
+    </div>
+    <div class="xl-wrap">
+      <div class="xl-toolbar"><span class="tl">🔁 Duplicate Values — per column</span></div>
+      <div style="overflow-x:auto"><table class="nul-tbl" id="dupTable"></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 · NUMERICAL -->
+<div class="section" id="numerical">
+  <div class="sec-head"><span class="sn">04</span><h2>Numerical Univariate Analysis</h2></div>
+  <div class="tab-bar" id="numTabs"></div>
+  <div id="numPanes"></div>
+</div>
+
+<!-- 05 · CATEGORICAL -->
+<div class="section" id="categorical">
+  <div class="sec-head"><span class="sn">05</span><h2>Categorical Univariate Analysis</h2></div>
+  <div class="cat-grid" id="catGrid"></div>
+</div>
+
+<!-- 06 · BIVARIATE -->
+<div class="section" id="bivariate">
+  <div class="sec-head"><span class="sn">06</span><h2>Bivariate Analysis</h2></div>
+  <div class="biv-tabs">
+    <button class="biv-tab active" onclick="swBiv('biv-nn',this)">🔢 Num ↔ Num</button>
+    <button class="biv-tab" onclick="swBiv('biv-cn',this)">📊 Cat ↔ Num</button>
+    <button class="biv-tab" onclick="swBiv('biv-cc',this)">χ² Cat ↔ Cat</button>
+  </div>
+  <div class="biv-pane active" id="biv-nn">
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">🔢 Num ↔ Num — Pearson Correlation &amp; Covariance Summary</span></div>
+    <div style="overflow-x:auto"><table class="biv-tbl" id="nnTable"></table></div></div>
+  </div>
+  <div class="biv-pane" id="biv-cn">
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">📊 Cat ↔ Num — T-test (2 groups) &amp; ANOVA (3+ groups) · p ≤ 0.05 = Significant</span></div>
+    <div style="overflow-x:auto"><table class="biv-tbl" id="cnTable"></table></div></div>
+  </div>
+  <div class="biv-pane" id="biv-cc">
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">χ² Cat ↔ Cat — Chi-Square &amp; Cramér's V Summary</span></div>
+    <div style="overflow-x:auto"><table class="biv-tbl" id="ccTable"></table></div></div>
+  </div>
+</div>
+
+<!-- 07 · MULTIVARIATE -->
+<div class="section" id="multivariate">
+  <div class="sec-head"><span class="sn">07</span><h2>Multivariate Analysis — Correlation Heatmap</h2></div>
+
+  <div class="guide-row">
+    <!-- HOW TO READ -->
+    <div class="guide-box">
+      <div class="gb-head">👁 HOW TO READ THE HEATMAP</div>
+      <div class="gb-body">
+        <div class="guide-row-item">
+          <div class="guide-swatch" style="background:#c0392b"></div>
+          <div><div class="guide-label">Dark Red — r near +1.0</div><div class="guide-desc">Strong positive relationship. As one feature rises, the other rises too.</div></div>
+        </div>
+        <div class="guide-row-item">
+          <div class="guide-swatch" style="background:#fc8d59"></div>
+          <div><div class="guide-label">Light Red — r +0.4 to +0.7</div><div class="guide-desc">Moderate positive trend. Some shared information between the two features.</div></div>
+        </div>
+        <div class="guide-row-item">
+          <div class="guide-swatch" style="background:#f7f7f7;border:1px solid var(--border)"></div>
+          <div><div class="guide-label">White — r near 0</div><div class="guide-desc">No linear relationship. The two features move independently of each other.</div></div>
+        </div>
+        <div class="guide-row-item">
+          <div class="guide-swatch" style="background:#6baed6"></div>
+          <div><div class="guide-label">Light Blue — r −0.4 to −0.7</div><div class="guide-desc">Moderate negative trend. As one rises, the other tends to fall.</div></div>
+        </div>
+        <div class="guide-row-item">
+          <div class="guide-swatch" style="background:#1558a8"></div>
+          <div><div class="guide-label">Dark Blue — r near −1.0</div><div class="guide-desc">Strong negative relationship. Features move in exactly opposite directions.</div></div>
+        </div>
+        <div class="guide-row-item">
+          <div class="guide-swatch" style="background:#1a2332;outline:2px solid #1a2332"></div>
+          <div><div class="guide-label">Outlined diagonal — r = 1.00</div><div class="guide-desc">Every feature is perfectly correlated with itself. Ignore the diagonal.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURE SELECTION -->
+    <div class="guide-box">
+      <div class="gb-head">🎯 HOW TO USE THIS FOR FEATURE SELECTION</div>
+      <div class="gb-body">
+        <div class="fs-step"><div class="fs-num">1</div><div class="fs-text"><b>Scan for dark red / dark blue cells</b> — any cell with |r| ≥ 0.7 off the diagonal signals multicollinearity. Those two features carry nearly the same information.</div></div>
+        <div class="fs-step"><div class="fs-num">2</div><div class="fs-text"><b>Keep the feature more correlated with your target</b> — if price and revenue both correlate with each other, keep whichever has a stronger relationship to what you are predicting.</div></div>
+        <div class="fs-step"><div class="fs-num">3</div><div class="fs-text"><b>Drop or combine the redundant one</b> — dropping reduces noise. Combining (e.g. ratio or difference) can preserve information from both.</div></div>
+        <div class="fs-step"><div class="fs-num">4</div><div class="fs-text"><b>White cells = safe to keep both</b> — features near r = 0 are independent and each adds unique signal to the model.</div></div>
+        <div class="fs-step"><div class="fs-num">5</div><div class="fs-text"><b>Confirm with VIF after dropping</b> — Variance Inflation Factor catches multi-way collinearity that pairwise r can miss. Target VIF &lt; 5 for all remaining features.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="xl-wrap">
+    <div class="xl-toolbar"><span class="tl">🌡 Pearson Correlation Matrix — all numerical columns · color = r value</span></div>
+    <div class="hm-wrap" id="hmWrap"></div>
+    <div class="hm-legend">
+      <span>−1.0 (Strong −)</span>
+      <div class="hm-legend-bar"></div>
+      <span>+1.0 (Strong +)</span>
+      <span style="margin-left:16px">■ diagonal = 1.00 (self-correlation)</span>
+    </div>
+  </div>
+  <div class="xl-wrap" style="margin-top:14px">
+    <div class="xl-toolbar"><span class="tl">⚠ High Correlation Flags — |r| ≥ 0.7 (multicollinearity risk)</span></div>
+    <div style="overflow-x:auto"><table class="hm-flag-tbl" id="hmFlagTbl"></table></div>
+  </div>
+  <div class="xl-wrap" style="margin-top:14px">
+    <div class="xl-toolbar"><span class="tl">🎯 Feature Selection Decisions — what to keep, drop or combine and why</span></div>
+    <div style="overflow-x:auto"><table class="hm-flag-tbl" id="hmSelectTbl"></table></div>
+  </div>
+</div>
+
+<!-- 08 · FEATURE ENGINEERING -->
+<div class="section" id="feateng">
+  <div class="sec-head"><span class="sn">08</span><h2>Feature Engineering</h2></div>
+  <div class="fe-tabs">
+    <button class="fe-tab active" onclick="swFE('fe-null',this)">🧹 Null Treatment</button>
+    <button class="fe-tab" onclick="swFE('fe-enc',this)">🔤 Encoding</button>
+    <button class="fe-tab" onclick="swFE('fe-trn',this)">📈 Transformation</button>
+    <button class="fe-tab" onclick="swFE('fe-new',this)">✨ New Features</button>
+    <button class="fe-tab" onclick="swFE('fe-scl',this)">🔢 Scaling</button>
+  </div>
+  <div class="fe-pane active" id="fe-null">
+    <div class="fe-reason" id="feNullReason"></div>
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">🧹 Null Treatment — imputation strategy per column with before/after values</span></div>
+    <div style="overflow-x:auto"><table class="fe-tbl" id="feNullTbl"></table></div></div>
+  </div>
+  <div class="fe-pane" id="fe-enc">
+    <div class="fe-reason" id="feEncReason"></div>
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">🔤 Encoding — Label Encoding (ordinal) &amp; One-Hot Encoding (nominal)</span></div>
+    <div style="overflow-x:auto"><table class="fe-tbl" id="feEncTbl"></table></div></div>
+  </div>
+  <div class="fe-pane" id="fe-trn">
+    <div class="fe-reason" id="feTrnReason"></div>
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">📈 Transformation — Log transform for right-skewed numerical columns</span></div>
+    <div style="overflow-x:auto"><table class="fe-tbl" id="feTrnTbl"></table></div></div>
+  </div>
+  <div class="fe-pane" id="fe-new">
+    <div class="fe-reason" id="feNewReason"></div>
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">✨ New Features — engineered from existing columns</span></div>
+    <div style="overflow-x:auto"><table class="fe-tbl" id="feNewTbl"></table></div></div>
+  </div>
+  <div class="fe-pane" id="fe-scl">
+    <div class="fe-reason" id="feSclReason"></div>
+    <div class="xl-wrap"><div class="xl-toolbar"><span class="tl">🔢 Min-Max Scaling — all numerical columns scaled to [0, 1]</span></div>
+    <div style="overflow-x:auto"><table class="fe-tbl" id="feSclTbl"></table></div></div>
+  </div>
+</div>
+
+<!-- 09 · MODEL RECOMMENDATION -->
+<div class="section" id="modelrec">
+  <div class="sec-head"><span class="sn">09</span><h2>Model Recommendation</h2></div>
+
+  <!-- RECOMMENDED MODEL CARD -->
+  <div class="fp-wrap">
+    <div class="fp-badge">
+      <div class="fp-icon">🚀</div>
+      <div class="fp-name">XGBoost Regressor</div>
+      <div class="fp-task">Recommended for this dataset</div>
+    </div>
+    <div class="fp-body">
+      <div class="fp-title">📊 WHY XGBoost IS RECOMMENDED FOR THIS DATASET</div>
+      <div class="fp-row">
+        <span class="fp-label">Dataset Profile</span>
+        <span class="fp-val">1,000 rows × 12 columns, mixed numerical + categorical features, right-skewed target (revenue), multicollinearity detected</span>
+      </div>
+      <div class="fp-row">
+        <span class="fp-label">Handles Skewness</span>
+        <span class="fp-val">Tree-based splits naturally handle right-skewed price/revenue data without requiring log transforms</span>
+      </div>
+      <div class="fp-row">
+        <span class="fp-label">Mixed Feature Types</span>
+        <span class="fp-val">Works with both numerical and categorical features natively — no separate encoding/scaling needed</span>
+      </div>
+      <div class="fp-row">
+        <span class="fp-label">Robust to Issues</span>
+        <span class="fp-val">Not affected by multicollinearity between price and revenue, handles outliers better than linear models</span>
+      </div>
+      <div class="fp-row">
+        <span class="fp-label">Performance</span>
+        <span class="fp-val">Typically achieves <span class="tg">R² > 0.85</span> on similar e-commerce datasets with proper tuning</span>
+      </div>
+      <div class="fp-row">
+        <span class="fp-label">Alternatives</span>
+        <span class="fp-val">
+          <span class="to">Random Forest</span> (interpretable, no tuning needed) •
+          <span class="to">Ridge Regression</span> (fast baseline, requires scaling)
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY NOT OTHER MODELS -->
+  <div class="xl-wrap" style="margin-top:14px">
+    <div class="xl-toolbar"><span class="tl">⚖️ Why Not Other Models? — comparison based on this dataset's characteristics</span></div>
+    <div style="overflow-x:auto"><table class="fe-tbl" id="modelComparisonTbl"></table></div>
+  </div>
+
+  <!-- IMPLEMENTATION NOTES -->
+  <div class="xl-wrap" style="margin-top:14px">
+    <div class="xl-toolbar"><span class="tl" id="implNotesTitle">💡 Implementation Notes — how to train XGBoost Regressor</span></div>
+    <div id="implNotesContent" style="padding:16px 18px">
+      <div style="font-size:.82rem;color:var(--t2);line-height:1.6;margin-bottom:14px;">
+        After running this analysis, you now have a clean, processed dataset ready for modeling. Here's how to implement <strong>XGBoost Regressor</strong>:
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;">
+          <div style="font-size:.75rem;font-weight:700;color:var(--t1);margin-bottom:8px;">📋 Training Steps</div>
+          <div style="font-size:.78rem;color:var(--t2);line-height:1.5;">
+            1. <strong>Use the processed data</strong> from Feature Engineering tab<br>
+            2. <strong>Split 80/20</strong> for train/validation<br>
+            3. <strong>Target:</strong> revenue (continuous regression)<br>
+            4. <strong>Features:</strong> all except order_id, order_date<br>
+            5. <strong>Metric:</strong> RMSE or R² for evaluation
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;">
+          <div style="font-size:.75rem;font-weight:700;color:var(--t1);margin-bottom:8px;">🔧 Key Hyperparameters</div>
+          <div style="font-size:.78rem;color:var(--t2);line-height:1.5;">
+            • <strong>n_estimators:</strong> 100-500<br>
+            • <strong>max_depth:</strong> 3-6<br>
+            • <strong>learning_rate:</strong> 0.1-0.3<br>
+            • <strong>objective:</strong> 'reg:squarederror'<br>
+            • <strong>eval_metric:</strong> 'rmse'<br>
+            • <strong>early_stopping_rounds:</strong> 10
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;padding:12px;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:4px;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);margin-bottom:6px;">🎯 Expected Performance</div>
+        <div style="font-size:.78rem;color:var(--t2);">
+          With proper feature engineering (completed above), <strong>XGBoost Regressor</strong> should achieve <strong>R² > 0.80</strong> with proper tuning.
+          The strongest predictors will likely be: <strong>price → quantity → discount → category</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div></div>
+
+<footer style="text-align:center;padding:20px 28px;border-top:1px solid var(--border);color:var(--t3);font-size:11px;font-family:'Source Code Pro',monospace;">
+  <div style="margin-bottom:10px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:800;color:var(--t2);letter-spacing:0.5px;">
+    Thanks for Visiting! Hope this is a great learning journey for you.❤️ 
+  </div>
+  <div style="margin-bottom:4px;font-size:10px;color:var(--accent);font-family:'Source Code Pro',monospace;font-weight:600;letter-spacing:1.5px;">
+    Dev by &nbsp;<span style="background:var(--accent-light);border:1px solid var(--accent-border);padding:1px 8px;border-radius:10px;font-size:9.5px;">vishva_vichu_</span>
+  </div>
+</footer>
+
+<script>
+/* ── CSV UPLOAD ── */
+function handleCSV(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const text=e.target.result;
+      const parsed=parseCSV(text);
+      if(parsed.rows.length<2){alert('CSV must have at least 2 data rows.');return;}
+      applyDataset(parsed, file.name);
+    }catch(err){alert('Failed to parse CSV: '+err.message);}
+  };
+  reader.readAsText(file);
+}
+
+function parseCSV(text){
+  const lines=text.trim().split(/\r?\n/);
+  const headers=lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,''));
+  const rawRows=lines.slice(1).map(line=>{
+    const fields=[];
+    let cur='',inQ=false;
+    for(let i=0;i<line.length;i++){
+      const ch=line[i];
+      if(ch==='"'){inQ=!inQ;}
+      else if(ch===','&&!inQ){fields.push(cur.trim());cur='';}
+      else cur+=ch;
+    }
+    fields.push(cur.trim());
+    /* pad short rows with empty strings instead of dropping them */
+    while(fields.length<headers.length) fields.push('');
+    return fields.slice(0,headers.length);
+  }).filter(r=>r.some(f=>f!==''));  /* only drop completely blank lines */
+
+  const NULL_VALS=new Set(['','null','NULL','na','NA','n/a','N/A','nan','NaN','none','None','#N/A','#NA','?','-','--','---','N.A.','n.a.','NIL','nil','missing','MISSING']);
+
+  /* detect column types */
+  const colTypes={};
+  headers.forEach((h,ci)=>{
+    const sample=rawRows.slice(0,200).map(r=>r[ci]).filter(v=>!NULL_VALS.has(v));
+    if(!sample.length){colTypes[h]='cat';return;}
+    const numCount=sample.filter(v=>v!==''&&!isNaN(Number(v))).length;
+    const dateCount=sample.filter(v=>/^\d{4}-\d{2}-\d{2}/.test(v)).length;
+    if(dateCount/sample.length>0.7) colTypes[h]='date';
+    else if(numCount/sample.length>0.7) colTypes[h]='num';
+    else colTypes[h]='cat';
+    if(colTypes[h]==='cat'){
+      const uniq=new Set(sample).size;
+      if(uniq===sample.length&&sample.length>10) colTypes[h]='id';
+    }
+  });
+
+  /* build rows as objects */
+  const rows=rawRows.map(r=>{
+    const obj={};
+    headers.forEach((h,ci)=>{
+      const raw=r[ci];
+      if(NULL_VALS.has(raw)){obj[h]=null;return;}
+      if(colTypes[h]==='num'){
+        const n=Number(raw);
+        obj[h]=isNaN(n)?null:n;
+      }
+      else obj[h]=raw;
+    });
+    return obj;
+  });
+
+  /* build COL_META */
+  const meta={};
+  headers.forEach(h=>{
+    const t=colTypes[h];
+    let sub='—';
+    if(t==='num'){
+      const numVals=rows.map(r=>r[h]).filter(v=>v!=null);
+      const allInt=numVals.every(v=>Number.isInteger(v));
+      sub=allInt?'Discrete':'Continuous';
+    } else if(t==='cat'){
+      const uniq=new Set(rows.map(r=>r[h]).filter(v=>v!=null)).size;
+      sub=uniq<=6?'Ordinal':'Nominal';
+    }
+    meta[h]={desc:`${t==='num'?'Numerical':t==='cat'?'Categorical':t==='date'?'Date':'ID'} column`,type:t,sub};
+  });
+
+  return{headers,rows,meta,colTypes};
+}
+
+function applyDataset(parsed, filename){
+  /* reassign globals */
+  DS.length=0;
+  parsed.rows.forEach(r=>DS.push(r));
+  ALL_COLS.length=0;
+  parsed.headers.forEach(h=>ALL_COLS.push(h));
+  Object.keys(COL_META).forEach(k=>delete COL_META[k]);
+  Object.assign(COL_META,parsed.meta);
+  NUM_COLS.length=0;
+  CAT_COLS.length=0;
+  ALL_COLS.forEach(h=>{
+    if(parsed.colTypes[h]==='num') NUM_COLS.push(h);
+    else if(parsed.colTypes[h]==='cat') CAT_COLS.push(h);
+  });
+  N=DS.length;
+
+  /* update target selector */
+  const sel=document.getElementById('targetSelect');
+  sel.innerHTML=NUM_COLS.map(c=>`<option value="${c}">${c}</option>`).join('');
+  /* default to last num col or first */
+  TARGET_COL=NUM_COLS[NUM_COLS.length-1]||ALL_COLS[0];
+  sel.value=TARGET_COL;
+  document.getElementById('targetVarDisplay').textContent=TARGET_COL;
+
+  /* update hero */
+  document.getElementById('heroTitle').textContent=filename.replace('.csv','');
+  document.getElementById('heroDesc').textContent=`Uploaded dataset: ${N} rows × ${ALL_COLS.length} columns. ${NUM_COLS.length} numerical, ${CAT_COLS.length} categorical.`;
+  document.getElementById('heroCard').style.display='none';
+  document.getElementById('csvStatus').textContent=`✔ Loaded: ${filename} (${N} rows)`;
+  document.getElementById('previewToolbar').textContent=`📄 ${filename} — First 20 rows`;
+  document.getElementById('previewRC').textContent=`${N} rows × ${ALL_COLS.length} cols`;
+
+  renderAll();
+}
+
+function updateTarget(){
+  TARGET_COL=document.getElementById('targetSelect').value;
+  document.getElementById('targetVarDisplay').textContent=TARGET_COL;
+  /* re-render sections that depend on target */
+  renderMultivariate();
+}
+
+function renderAll(){
+  /* destroy existing charts */
+  Object.values(Chart.instances||{}).forEach(c=>c.destroy());
+  renderKPI();
+  renderPreview();
+  renderInfo();
+  renderNull();
+  renderDup();
+  renderNumerical();
+  renderCategorical();
+  renderBivariate();
+  renderMultivariate();
+  renderFE();
+  renderModelRec();
+}
+
+/* ── DATA GEN ── */
+let _s=42;
+const rand=()=>{_s=(_s*1664525+1013904223)&0xffffffff;return(_s>>>0)/4294967296};
+const randInt=(a,b)=>Math.floor(rand()*(b-a+1))+a;
+const choice=arr=>arr[randInt(0,arr.length-1)];
+const normal=(mu,sd)=>{let u=0,v=0;while(!u)u=rand();while(!v)v=rand();return mu+sd*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+const CATS=['Electronics','Clothing','Books','Home & Kitchen','Sports','Beauty','Toys'];
+const REGS=['North','South','East','West'];
+const PAYS=['Credit Card','Debit Card','UPI','Net Banking','Wallet'];
+const SHIPS=['Standard','Express','Same Day'];
+const SEGS=['New','Regular','Premium'];
+let N=1000;
+const DS=[];
+for(let i=0;i<N;i++){
+  const cat=choice(CATS);
+  const base={Electronics:4500,Clothing:800,Books:350,'Home & Kitchen':1200,Sports:950,Beauty:600,Toys:450}[cat];
+  let price=Math.max(50,Math.round(normal(base,base*0.3)));
+  const qty=randInt(1,10);
+  const disc=Math.round(rand()*40);
+  let rev=Math.round(price*qty*(1-disc/100));
+  const rating=Math.max(1,Math.min(5,Math.round(normal(3.8,0.8)*10)/10));
+  const doy=randInt(1,365);
+  const d=new Date(2023,0,doy);
+  if(rand()<0.03)price*=randInt(5,10);
+  if(rand()<0.02)rev*=randInt(4,8);
+  DS.push({
+    order_id:`ORD-${String(10000+i).slice(1)}`,
+    order_date:d.toISOString().slice(0,10),
+    category:cat,region:choice(REGS),
+    payment:rand()<0.05?null:choice(PAYS),
+    ship_mode:choice(SHIPS),
+    customer_seg:rand()<0.04?null:choice(SEGS),
+    price:rand()<0.03?null:price,
+    quantity:qty,discount:disc,
+    rating:rand()<0.06?null:rating,revenue:rev
+  });
+}
+
+let ALL_COLS=['order_id','order_date','category','region','payment','ship_mode','customer_seg','price','quantity','discount','rating','revenue'];
+let COL_META={
+  order_id:    {desc:'Unique identifier for each order (primary key)',type:'id',   sub:'—'},
+  order_date:  {desc:'Date the order was placed (YYYY-MM-DD format)',type:'date', sub:'—'},
+  category:    {desc:'Product category — 7 distinct classes',type:'cat',          sub:'Nominal'},
+  region:      {desc:'Geographic sales region of the customer',type:'cat',        sub:'Nominal'},
+  payment:     {desc:'Payment method used — 5% values missing',type:'cat',       sub:'Nominal'},
+  ship_mode:   {desc:'Shipping speed chosen at checkout',type:'cat',              sub:'Nominal'},
+  customer_seg:{desc:'Customer tier: New / Regular / Premium (4% missing)',type:'cat', sub:'Ordinal'},
+  price:       {desc:'Unit selling price in ₹ — 3% values missing',type:'num',   sub:'Continuous'},
+  quantity:    {desc:'Units purchased per order, range 1–10',type:'num',          sub:'Discrete'},
+  discount:    {desc:'Discount percentage applied, range 0–40',type:'num',        sub:'Continuous'},
+  rating:      {desc:'Customer satisfaction score out of 5 (6% missing)',type:'num', sub:'Discrete'},
+  revenue:     {desc:'Final revenue = price × qty × (1 − disc%)',type:'num',      sub:'Continuous'},
+};
+let NUM_COLS=['price','quantity','discount','rating','revenue'];
+let CAT_COLS=['category','region','payment','ship_mode','customer_seg'];
+let TARGET_COL='revenue';
+const PALETTE=['#1d6f42','#1558a8','#9d174d','#b45309','#5b21b6','#0f766e','#b91c1c'];
+const CHARTC=['#16a34a','#2563eb','#db2777','#d97706','#7c3aed','#0d9488','#dc2626'];
+
+const vals=col=>DS.map(r=>r[col]).filter(v=>v!=null&&v===v);
+const pctStr=(n,tot=N)=>(n/tot*100).toFixed(2)+'%';
+const fmt=n=>{if(n==null)return'—';const ab=Math.abs(n);if(ab>=1e6)return(n/1e6).toFixed(2)+'M';if(ab>=1000)return(n/1000).toFixed(2)+'K';return Number.isInteger(n)?String(n):Number(n).toFixed(3)};
+
+function cstats(col){
+  const v=vals(col).map(Number).sort((a,b)=>a-b);
+  const n=v.length,sum=v.reduce((a,b)=>a+b,0),mean=sum/n;
+  const med=n%2===0?(v[n/2-1]+v[n/2])/2:v[Math.floor(n/2)];
+  const vari=v.reduce((a,b)=>a+(b-mean)**2,0)/n;
+  const std=Math.sqrt(vari);
+  const q1=v[Math.floor(n*0.25)],q3=v[Math.floor(n*0.75)],iqr=q3-q1;
+  const sk=3*(mean-med)/std;
+  const outliers=v.filter(x=>Math.abs((x-mean)/std)>3);
+  return{count:n,missing:N-n,mean,median:med,std,min:v[0],max:v[n-1],q1,q3,iqr,skewness:sk,outlierCount:outliers.length,outlierPct:outliers.length/n*100};
+}
+function histogram(v,bins=14){
+  const mn=Math.min(...v),mx=Math.max(...v),w=(mx-mn)/bins;
+  const labels=[],counts=[];
+  for(let i=0;i<bins;i++){
+    const lo=mn+i*w,hi=lo+w;
+    labels.push(lo.toFixed(0));
+    counts.push(v.filter(x=>x>=lo&&(i===bins-1?x<=hi:x<hi)).length);
+  }
+  return{labels,counts};
+}
+function valueCount(col){
+  const map={};
+  DS.forEach(r=>{const v=r[col];if(v!=null)map[v]=(map[v]||0)+1});
+  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
+}
+
+/* KPIs */
+function renderKPI(){
+  const tm=DS.reduce((s,r)=>s+ALL_COLS.filter(c=>r[c]==null).length,0);
+  document.getElementById('kpiRow').innerHTML=[
+    {l:'Total Rows',v:N,s:'observations',c:'green'},
+    {l:'Total Columns',v:ALL_COLS.length,s:'features',c:''},
+    {l:'Numerical',v:NUM_COLS.length,s:'columns',c:'blue'},
+    {l:'Categorical',v:CAT_COLS.length,s:'columns',c:''},
+    {l:'Date Cols',v:ALL_COLS.filter(c=>COL_META[c]&&COL_META[c].type==='date').length,s:'column',c:''},
+  ].map(k=>`<div class="kpi-cell ${k.c}"><div class="kl">${k.l}</div><div class="kv">${k.v}</div><div class="ks">${k.s}</div></div>`).join('');
+}
+renderKPI();
+
+/* PREVIEW TABLE */
+function renderPreview(){
+  const tbl=document.getElementById('previewTable');
+  const isNum=c=>COL_META[c]&&COL_META[c].type==='num';
+  const isDate=c=>COL_META[c]&&COL_META[c].type==='date';
+  const typeRow={};
+  ALL_COLS.forEach(c=>{
+    const t=COL_META[c]?COL_META[c].type:'cat';
+    typeRow[c]={num:'FLOAT',cat:'TEXT',date:'DATE',id:'ID'}[t]||'TEXT';
+  });
+  let head=`<thead><tr class=""><th class="rncol" style="background:#155235">#</th>`;
+  ALL_COLS.forEach(c=>{head+=`<th>${c}</th>`});
+  head+=`</tr><tr class="typerow"><th class="rncol" style="background:#0f3d22"></th>`;
+  ALL_COLS.forEach(c=>{head+=`<th>${typeRow[c]}</th>`});
+  head+=`</tr></thead>`;
+  let body='<tbody>';
+  DS.slice(0,20).forEach((r,i)=>{
+    body+=`<tr><td class="rn">${i+1}</td>`;
+    ALL_COLS.forEach(c=>{
+      const v=r[c];
+      if(v==null)body+=`<td class="null-cell">NULL</td>`;
+      else if(isNum(c))body+=`<td class="num-cell">${typeof v==='number'?v.toLocaleString('en-IN'):v}</td>`;
+      else if(isDate(c))body+=`<td class="date-cell">${v}</td>`;
+      else body+=`<td>${v}</td>`;
+    });
+    body+=`</tr>`;
+  });
+  body+='</tbody>';
+  tbl.innerHTML=head+body;
+}
+renderPreview();
+
+/* INFO TABLE */
+function renderInfo(){
+  const tbl=document.getElementById('infoTable');
+  const tl={num:'Numerical',cat:'Categorical',date:'Date / Time',id:'ID / Key'};
+  const tb={num:'tb-num',cat:'tb-cat',date:'tb-date',id:'tb-id'};
+  const ti={num:'∑',cat:'Aa',date:'📅',id:'🔑'};
+  const dl={num:'float64 / int64',cat:'object (string)',date:'datetime64[ns]',id:'object (string)'};
+  const subColor={Continuous:'var(--blue)',Discrete:'var(--violet)',Nominal:'var(--orange)',Ordinal:'var(--gh)','—':'var(--t3)'};
+  let html=`<thead><tr>
+    <th>#</th><th>COLUMN NAME</th><th>DESCRIPTION</th><th>CATEGORY</th><th>SUBTYPE</th>
+    <th>DTYPE</th><th>NON-NULL</th><th>NULL COUNT</th><th>NULL %</th><th>UNIQUE VALUES</th><th>SAMPLE</th>
+  </tr></thead><tbody>`;
+  ALL_COLS.forEach((col,i)=>{
+    const m=COL_META[col]||{desc:'',type:'cat',sub:'—'};
+    const v=DS.map(r=>r[col]);
+    const nn=v.filter(x=>x!=null).length;
+    const miss=N-nn;
+    const uniq=new Set(v.filter(x=>x!=null)).size;
+    const sample=v.find(x=>x!=null);
+    html+=`<tr>
+      <td class="rn">${String(i+1).padStart(2,'0')}</td>
+      <td class="colnm">${col}</td>
+      <td class="desc">${m.desc}</td>
+      <td><span class="tbadge ${tb[m.type]||'tb-cat'}">${ti[m.type]||'Aa'} ${tl[m.type]||'Categorical'}</span></td>
+      <td><span class="tbadge" style="background:transparent;border:1px solid ${subColor[m.sub]||'var(--t3)'};color:${subColor[m.sub]||'var(--t3)'}">${m.sub}</span></td>
+      <td class="mono" style="color:var(--t3)">${dl[m.type]||'object'}</td>
+      <td class="nc">${nn}</td>
+      <td class="${miss>0?'mc':'mc0'}">${miss}</td>
+      <td class="mono" style="color:${miss>0?'var(--red)':'var(--gh)'}">${pctStr(miss)}</td>
+      <td class="mono">${uniq}</td>
+      <td class="mono" style="color:var(--t3)">${String(sample).slice(0,18)}</td>
+    </tr>`;
+  });
+  tbl.innerHTML=html+'</tbody>';
+}
+renderInfo();
+
+/* NULL TABLE */
+function renderNull(){
+  const tbl=document.getElementById('nullTable');
+  let html=`<thead><tr><th>COLUMN</th><th>NULL COUNT</th><th>NULL %</th><th style="min-width:110px">BAR</th><th>STATUS</th></tr></thead><tbody>`;
+  ALL_COLS.forEach(col=>{
+    const miss=DS.filter(r=>r[col]==null).length;
+    const p=(miss/N*100).toFixed(2);
+    html+=`<tr>
+      <td class="colname">${col}</td>
+      <td class="mono" style="color:${miss>0?'var(--red)':'var(--gh)'}">${miss}</td>
+      <td class="pc">${p}%</td>
+      <td class="barcell"><div class="btrack"><span class="bfill" style="width:${Math.max(p,0)}%;background:${miss>0?'#ef4444':'#22c55e'}"></span></div></td>
+      <td style="font-size:.7rem;font-weight:700;color:${miss>0?'var(--red)':'var(--gh)'}">${miss===0?'✔ Clean':'⚠ Has nulls'}</td>
+    </tr>`;
+  });
+  tbl.innerHTML=html+'</tbody>';
+}
+renderNull();
+
+/* DUP TABLE */
+function renderDup(){
+  const tbl=document.getElementById('dupTable');
+  const rowKeys=DS.map(r=>ALL_COLS.map(c=>r[c]).join('|'));
+  const seen={},dupRows=[];
+  rowKeys.forEach((key,i)=>{
+    if(seen[key]!==undefined){dupRows.push({idx:i,firstIdx:seen[key]});}
+    else seen[key]=i;
+  });
+  const dupCount=dupRows.length;
+  const p=(dupCount/N*100).toFixed(2);
+  let html=`<thead><tr><th>METRIC</th><th>VALUE</th><th style="min-width:110px">BAR</th><th>STATUS</th></tr></thead><tbody>`;
+  html+=`<tr>
+    <td class="colname">Total Rows</td>
+    <td class="mono">${N}</td>
+    <td class="barcell"><div class="btrack"><span class="bfill" style="width:100%;background:var(--border2)"></span></div></td>
+    <td style="font-size:.7rem;color:var(--t2)">All rows</td>
+  </tr>`;
+  html+=`<tr>
+    <td class="colname">Unique Rows</td>
+    <td class="mono" style="color:var(--gh)">${N-dupCount}</td>
+    <td class="barcell"><div class="btrack"><span class="bfill" style="width:${((N-dupCount)/N*100).toFixed(1)}%;background:#22c55e"></span></div></td>
+    <td style="font-size:.7rem;color:var(--gh)">✔ Distinct</td>
+  </tr>`;
+  html+=`<tr>
+    <td class="colname">Duplicate Rows</td>
+    <td class="mono" style="color:${dupCount>0?'var(--orange)':'var(--gh)'}">${dupCount}</td>
+    <td class="barcell"><div class="btrack"><span class="bfill" style="width:${Math.min(p,100)}%;background:#f59e0b"></span></div></td>
+    <td style="font-size:.7rem;font-weight:700;color:${dupCount>0?'var(--orange)':'var(--gh)'}">${dupCount>0?'⚠ '+p+'% duplicates':'✔ No duplicates'}</td>
+  </tr>`;
+  if(dupRows.length>0){
+    html+=`<tr><td colspan="4" style="padding:8px 10px;font-size:.7rem;color:var(--t3);font-family:'IBM Plex Mono',monospace">Sample duplicate row indices (first 5): ${dupRows.slice(0,5).map(d=>`row #${d.idx+1} = row #${d.firstIdx+1}`).join(' · ')}</td></tr>`;
+  }
+  tbl.innerHTML=html+'</tbody>';
+}
+renderDup();
+
+/* NUMERICAL TABS */
+function renderNumerical(){
+  const tabBar=document.getElementById('numTabs');
+  const panes=document.getElementById('numPanes');
+  tabBar.innerHTML='';
+  panes.innerHTML='';
+  /* destroy charts in this section */
+  NUM_COLS.forEach(col=>{
+    ['hist_','box_'].forEach(pfx=>{
+      const el=document.getElementById(pfx+col);
+      if(el&&el._chart){el._chart.destroy();}
+    });
+  });
+  const isDark=()=>document.documentElement.getAttribute('data-theme')==='dark';
+  Chart.defaults.color=isDark()?'#8b949e':'#7a8299';
+  Chart.defaults.borderColor=isDark()?'#30363d':'#e5e7eb';
+  const gridColor=()=>isDark()?'#21262d':'#f0f2f4';
+
+  NUM_COLS.forEach((col,i)=>{
+    const s=cstats(col);
+    const v=vals(col).map(Number);
+    const hist=histogram(v);
+    const id='np_'+col;
+    const isActive=i===0;
+    const color=CHARTC[i%CHARTC.length];
+    const skewDir=Math.abs(s.skewness)<0.5?'Symmetric (|skew| < 0.5)':s.skewness>0?'Right-Skewed — positive tail':'Left-Skewed — negative tail';
+    const skewColor=Math.abs(s.skewness)<0.5?'var(--gh)':s.skewness>0?'var(--orange)':'var(--blue)';
+
+    tabBar.innerHTML+=`<button class="tab-btn${isActive?' active':''}" onclick="swNum('${id}',this)">${col}</button>`;
+
+    const statRows=[
+      ['Count',s.count,'','Count of non-null values'],
+      ['Mean (μ)',fmt(s.mean),'hl','Arithmetic average'],
+      ['Median',fmt(s.median),'hl','Middle value (50th percentile)'],
+      ['Std Dev (σ)',fmt(s.std),'','Average spread from mean'],
+      ['Minimum',fmt(s.min),'','Smallest observed value'],
+      ['Maximum',fmt(s.max),'','Largest observed value'],
+      ['Q1 (25%)',fmt(s.q1),'','25th percentile'],
+      ['Q3 (75%)',fmt(s.q3),'','75th percentile'],
+      ['IQR',fmt(s.iqr),'','Q3 − Q1 (interquartile range)'],
+      ['Skewness',s.skewness.toFixed(4),'hl',skewDir],
+      ['Outliers (Z>3)',s.outlierCount,s.outlierCount>0?'danger':'good','Z-score > 3 threshold'],
+      ['Outlier %',(s.outlierPct).toFixed(2)+'%',s.outlierCount>0?'danger':'good','% of non-null values'],
+      ['Missing',s.missing,s.missing>0?'danger':'good','Null/missing values'],
+      ['Missing %',pctStr(s.missing),s.missing>0?'danger':'good','% of all 1000 rows'],
+    ];
+
+    panes.innerHTML+=`<div class="tab-pane${isActive?' active':''}" id="${id}">
+      <div class="out-banner">
+        <span>🔴</span>
+        <span class="ob-main">Z-score outliers (|z| &gt; 3) detected in <strong>${col}</strong>: <strong>${s.outlierCount} rows</strong> out of ${s.count} non-null values.</span>
+        <span class="ob-val">${(s.outlierPct).toFixed(2)}%</span>
+      </div>
+      <div class="skew-banner">
+        <span>📐 Skewness:</span>
+        <span class="sv" style="color:${skewColor}">${s.skewness.toFixed(4)}</span>
+        <span style="font-weight:600;color:${skewColor}">${skewDir}</span>
+      </div>
+
+      <div class="xl-wrap" style="margin-bottom:14px">
+        <div class="xl-toolbar"><span class="tl">📊 Descriptive Statistics Table — ${col}</span></div>
+        <table class="stat-tbl">
+          <thead><tr><th>STATISTIC</th><th>VALUE</th><th>DESCRIPTION</th></tr></thead>
+          <tbody>${statRows.map(([l,v2,cls,desc])=>`<tr><td>${l}</td><td class="${cls}">${v2}</td><td class="note">${desc}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-box">
+          <h4>📈 Histogram — ${col} — frequency distribution</h4>
+          <canvas id="hist_${col}"></canvas>
+        </div>
+        <div class="chart-box">
+          <h4>📦 Box Plot — ${col} — 5-number summary</h4>
+          <canvas id="box_${col}"></canvas>
+        </div>
+      </div>
+    </div>`;
+
+    setTimeout(()=>{
+      const histEl=document.getElementById('hist_'+col);
+      const boxEl=document.getElementById('box_'+col);
+      if(!histEl||!boxEl)return;
+
+      const gc=gridColor();
+      new Chart(histEl,{type:'bar',data:{labels:hist.labels,datasets:[{label:'Frequency',data:hist.counts,
+        backgroundColor:color+'44',borderColor:color,borderWidth:1.5,borderRadius:2}]},
+        options:{plugins:{legend:{display:false}},scales:{
+          x:{title:{display:true,text:col,font:{size:10}},ticks:{font:{size:9}},grid:{color:gc}},
+          y:{title:{display:true,text:'Count',font:{size:10}},ticks:{font:{size:9}},grid:{color:gc}}}}});
+
+      new Chart(boxEl,{type:'bar',
+        data:{labels:['Min → Q1','Q1 → Median','Median → Q3','Q3 → Max'],
+          datasets:[{label:col,data:[
+            [Number(s.min),Number(s.q1)],
+            [Number(s.q1),Number(s.median)],
+            [Number(s.median),Number(s.q3)],
+            [Number(s.q3),Number(s.max)]
+          ],backgroundColor:[color+'28',color+'66',color+'cc',color+'38'],
+           borderColor:color,borderWidth:1.5,borderRadius:3}]},
+        options:{plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:ctx=>{const d=ctx.raw;return Array.isArray(d)?`${fmt(d[0])} → ${fmt(d[1])}`:fmt(d)}}}},
+          scales:{x:{ticks:{font:{size:9}},grid:{color:gc}},
+                  y:{title:{display:true,text:'Value',font:{size:10}},ticks:{font:{size:9}},grid:{color:gc}}}}});
+    },120);
+  });
+}
+renderNumerical();
+
+function swNum(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* CATEGORICAL */
+function renderCategorical(){
+  const grid=document.getElementById('catGrid');
+  grid.innerHTML='';
+  const isDarkCat=()=>document.documentElement.getAttribute('data-theme')==='dark';
+  Chart.defaults.color=isDarkCat()?'#8b949e':'#7a8299';
+  Chart.defaults.borderColor=isDarkCat()?'#30363d':'#e5e7eb';
+  const catGrid=()=>isDarkCat()?'#21262d':'#f0f2f4';
+
+  CAT_COLS.forEach((col,ci)=>{
+    const vc=valueCount(col);
+    const total=vc.reduce((s,x)=>s+x[1],0);
+    const divId='cat_'+col;
+
+    let tbl=`<table class="cat-tbl">
+      <thead><tr><th>RANK</th><th>VALUE</th><th class="r">COUNT</th><th class="r">% SHARE</th><th>FREQUENCY BAR</th></tr></thead>
+      <tbody>`;
+    vc.forEach(([k,cnt],vi)=>{
+      const p=(cnt/total*100).toFixed(2);
+      const w=Math.round(cnt/vc[0][1]*100);
+      tbl+=`<tr>
+        <td><span class="rnk" style="background:${PALETTE[vi%PALETTE.length]}">${vi+1}</span></td>
+        <td class="val-nm">${k}</td>
+        <td class="r">${cnt.toLocaleString()}</td>
+        <td class="pct-val" style="color:${PALETTE[ci%PALETTE.length]}">${p}%</td>
+        <td><span class="fbar" style="width:${w}px;background:${CHARTC[vi%CHARTC.length]}55;border:1px solid ${CHARTC[vi%CHARTC.length]}88"></span></td>
+      </tr>`;
+    });
+    tbl+='</tbody></table>';
+
+    grid.innerHTML+=`<div class="cat-card">
+      <div class="cat-head">${col.toUpperCase().replace(/_/g,' ')} <span class="cu">${vc.length} unique values · n=${total}</span></div>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%">
+        <canvas id="${divId}" style="min-width:320px"></canvas>
+      </div>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%">
+        ${tbl}
+      </div>
+    </div>`;
+
+    setTimeout(()=>{
+      const ctx=document.getElementById(divId);
+      if(!ctx)return;
+      new Chart(ctx,{type:'bar',
+        data:{labels:vc.map(x=>x[0]),datasets:[{label:'Count',data:vc.map(x=>x[1]),
+          backgroundColor:CHARTC.map(c=>c+'66'),borderColor:CHARTC,borderWidth:1.5,borderRadius:2}]},
+        options:{plugins:{legend:{display:false}},scales:{
+          x:{ticks:{font:{size:9}},grid:{color:catGrid()}},
+          y:{title:{display:true,text:'Count',font:{size:10}},ticks:{font:{size:9}},grid:{color:catGrid()}}}}});
+    },120);
+  });
+}
+renderCategorical();
+
+/* ── BIVARIATE ── */
+function renderBivariate(){
+  function pearson(a,b){
+    const n=a.length;
+    if(n<2)return{r:0,cov:0};
+    const ma=a.reduce((s,x)=>s+x,0)/n,mb=b.reduce((s,x)=>s+x,0)/n;
+    let num=0,da=0,db=0;
+    for(let i=0;i<n;i++){const xa=a[i]-ma,xb=b[i]-mb;num+=xa*xb;da+=xa*xa;db+=xb*xb;}
+    const denom=Math.sqrt(da*db);
+    return{r:denom>0?num/denom:0,cov:num/n};
+  }
+  function rClass(r){
+    const a=Math.abs(r);
+    if(a>=0.7)return r>0?['Strong Positive','str-sp']:['Strong Negative','str-sn'];
+    if(a>=0.4)return r>0?['Moderate Positive','str-mp']:['Moderate Negative','str-mn'];
+    if(a>=0.1)return r>0?['Weak Positive','str-wp']:['Weak Negative','str-wp'];
+    return['No Correlation','str-wp'];
+  }
+
+  /* ── NUM vs NUM TABLE ── */
+  const nnTbl=document.getElementById('nnTable');
+  const pairs=[];
+  for(let i=0;i<NUM_COLS.length;i++)for(let j=i+1;j<NUM_COLS.length;j++)pairs.push([NUM_COLS[i],NUM_COLS[j]]);
+  let nnHtml=`<thead><tr>
+    <th>#</th><th>COL A</th><th>COL B</th><th class="r">n</th>
+    <th class="r">COVARIANCE (raw)</th><th>DIRECTION <span style="font-weight:400;opacity:.6">← from Cov</span></th>
+    <th class="r">PEARSON r</th><th>STRENGTH <span style="font-weight:400;opacity:.6">← from r</span></th>
+  </tr></thead><tbody>`;
+  pairs.forEach(([cx,cy],i)=>{
+    const paired=DS.filter(r=>r[cx]!=null&&r[cy]!=null&&r[cx]===r[cx]&&r[cy]===r[cy]);
+    const ax=paired.map(r=>Number(r[cx])),ay=paired.map(r=>Number(r[cy]));
+    const validPairs=ax.map((v,i)=>({x:v,y:ay[i]})).filter(p=>!isNaN(p.x)&&!isNaN(p.y));
+    const vax=validPairs.map(p=>p.x),vay=validPairs.map(p=>p.y);
+    const {r,cov}=pearson(vax,vay);
+    const covFmt=Math.abs(cov)>=1e6?(cov/1e6).toFixed(2)+'M':Math.abs(cov)>=1000?(cov/1000).toFixed(2)+'K':cov.toFixed(2);
+    const dirLabel=cov>0?'▲ Positive':'▼ Negative';
+    const dirCls=cov>0?'str-sp':'str-sn';
+    const [strLabel,strCls]=rClass(r);
+    nnHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td class="pair">${cx}</td><td class="pair">${cy}</td>
+      <td class="r">${validPairs.length}</td>
+      <td class="r" style="color:var(--t2)">${covFmt}</td>
+      <td class="${dirCls}">${dirLabel}</td>
+      <td class="r" style="font-weight:700;color:${Math.abs(r)>=0.7?'#16a34a':Math.abs(r)>=0.4?'#d97706':'#7a8299'}">${r.toFixed(4)}</td>
+      <td class="${strCls}">${strLabel}</td>
+    </tr>`;
+  });
+  nnTbl.innerHTML=nnHtml+'</tbody>';
+
+  /* helpers for T-test & ANOVA */
+  function grpStats(arr){
+    const n=arr.length,m=arr.reduce((a,b)=>a+b,0)/n;
+    const v=arr.reduce((a,b)=>a+(b-m)**2,0)/(n-1||1);
+    return{n,m,v};
+  }
+  /* Welch t-test two-sided p-value approximation */
+  function tTest(a,b){
+    const ga=grpStats(a),gb=grpStats(b);
+    const se=Math.sqrt(ga.v/ga.n+gb.v/gb.n);
+    if(!se)return{t:0,p:1};
+    const t=Math.abs(ga.m-gb.m)/se;
+    const df=(ga.v/ga.n+gb.v/gb.n)**2/
+             ((ga.v/ga.n)**2/(ga.n-1||1)+(gb.v/gb.n)**2/(gb.n-1||1));
+    /* p-value via t-distribution approximation (Abramowitz & Stegun) */
+    const p=2*(1-tCDF(t,df));
+    return{t,p};
+  }
+  function tCDF(t,df){
+    const x=df/(df+t*t);
+    return 1-0.5*incompleteBeta(x,df/2,0.5);
+  }
+  function incompleteBeta(x,a,b){
+    /* continued fraction approximation */
+    if(x<=0)return 0;if(x>=1)return 1;
+    const lbeta=lgamma(a)+lgamma(b)-lgamma(a+b);
+    const front=Math.exp(Math.log(x)*a+Math.log(1-x)*b-lbeta)/a;
+    let f=1,c=1,d=1-((a+b)*x)/(a+1);d=d===0?1e-30:d;d=1/d;
+    let h=d;
+    for(let m2=1;m2<=50;m2++){
+      let m=m2/2;
+      let num=m*(b-m)*x/((a+2*m-1)*(a+2*m));
+      d=1+num*d;d=d===0?1e-30:d;c=1+num/c;c=c===0?1e-30:c;d=1/d;h*=d*c;
+      num=-(a+m)*(a+b+m)*x/((a+2*m)*(a+2*m+1));
+      d=1+num*d;d=d===0?1e-30:d;c=1+num/c;c=c===0?1e-30:c;d=1/d;h*=d*c;
+    }
+    return front*h;
+  }
+  function lgamma(z){
+    const c=[76.18009172947146,-86.50532032941677,24.01409824083091,
+             -1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y=z,x=z,tmp=x+5.5;tmp-=(x+0.5)*Math.log(tmp);
+    let ser=1.000000000190015;
+    for(let j=0;j<6;j++)ser+=c[j]/++y;
+    return -tmp+Math.log(2.5066282746310005*ser/x);
+  }
+  /* One-way ANOVA F-statistic & p-value approximation */
+  function anova(groups){
+    const allV=groups.flat(),N=allV.length,k=groups.length;
+    const grandM=allV.reduce((a,b)=>a+b,0)/N;
+    const ssBet=groups.reduce((s,g)=>{
+      const gm=g.reduce((a,b)=>a+b,0)/g.length;
+      return s+g.length*(gm-grandM)**2;
+    },0);
+    const ssWit=groups.reduce((s,g)=>{
+      const gm=g.reduce((a,b)=>a+b,0)/g.length;
+      return s+g.reduce((a,b)=>a+(b-gm)**2,0);
+    },0);
+    const dfB=k-1,dfW=N-k;
+    if(!dfW||!ssWit)return{F:0,p:1};
+    const F=(ssBet/dfB)/(ssWit/dfW);
+    /* p-value via F-distribution CDF approximation */
+    const p=1-fCDF(F,dfB,dfW);
+    return{F,p};
+  }
+  function fCDF(f,d1,d2){
+    const x=d1*f/(d1*f+d2);
+    return incompleteBeta(x,d1/2,d2/2);
+  }
+
+  /* ── CAT vs NUM TABLE ── */
+  const cnTbl=document.getElementById('cnTable');
+  let cnHtml=`<thead><tr>
+    <th>#</th><th>CAT COL</th><th>NUM COL</th><th class="r">GROUPS</th>
+    <th>TEST USED</th><th class="r">STATISTIC</th><th class="r">p-VALUE</th>
+    <th>GROUP MEANS</th><th>DECISION</th>
+  </tr></thead><tbody>`;
+  let cnIdx=1;
+  CAT_COLS.forEach(cat=>{
+    NUM_COLS.forEach(num=>{
+      const vc=valueCount(cat).slice(0,6);
+      const groups=vc.map(([k])=>DS.filter(r=>r[cat]===k&&r[num]!=null).map(r=>Number(r[num]))).filter(g=>g.length>1);
+      const k=groups.length;
+      let testName,stat,p;
+      if(k===2){
+        const res=tTest(groups[0],groups[1]);
+        testName='T-test';stat=res.t.toFixed(3);p=res.p;
+      } else {
+        const res=anova(groups);
+        testName='ANOVA';stat=res.F.toFixed(3);p=res.p;
+      }
+      const pFmt=p<0.001?'< 0.001':p.toFixed(3);
+      const sig=p<=0.05;
+      const pCls=sig?'keep':'drop';
+      const decision=sig?'✔ Significant (p≤0.05)':'✘ Not Significant (p>0.05)';
+      const groupStr=vc.slice(0,k).map(([k2],i)=>{
+        const m=groups[i]?groups[i].reduce((a,b)=>a+b,0)/groups[i].length:0;
+        return`<span style="margin-right:8px"><b>${k2}</b> ${fmt(m)}</span>`;
+      }).join('');
+      cnHtml+=`<tr>
+        <td style="color:var(--t3);font-size:.66rem">${String(cnIdx++).padStart(2,'0')}</td>
+        <td class="pair">${cat}</td><td class="pair">${num}</td>
+        <td class="r">${k}</td>
+        <td style="font-weight:700;color:${k===2?'var(--blue)':'var(--orange)'}">${testName}</td>
+        <td class="r" style="font-weight:700">${stat}</td>
+        <td class="r ${pCls}">${pFmt}</td>
+        <td style="font-size:.7rem">${groupStr}</td>
+        <td class="${pCls}">${decision}</td>
+      </tr>`;
+    });
+  });
+  cnTbl.innerHTML=cnHtml+'</tbody>';
+
+  /* ── CAT vs CAT TABLE ── */
+  const ccTbl=document.getElementById('ccTable');
+  const catPairs=[];
+  for(let i=0;i<CAT_COLS.length;i++)for(let j=i+1;j<CAT_COLS.length;j++)catPairs.push([CAT_COLS[i],CAT_COLS[j]]);
+  let ccHtml=`<thead><tr>
+    <th>#</th><th>COL 1</th><th>COL 2</th>
+    <th class="r">n</th><th class="r">χ²</th><th class="r">df</th>
+    <th class="r">CRAMÉR'S V</th><th>STRENGTH</th><th>DECISION</th>
+  </tr></thead><tbody>`;
+  catPairs.forEach(([c1,c2],i)=>{
+    const v1=valueCount(c1).slice(0,7).map(x=>x[0]);
+    const v2=valueCount(c2).slice(0,7).map(x=>x[0]);
+    const n=DS.filter(r=>r[c1]!=null&&r[c2]!=null).length;
+    const obs=v1.map(a=>v2.map(b=>DS.filter(r=>r[c1]===a&&r[c2]===b).length));
+    const rowSums=obs.map(row=>row.reduce((a,b)=>a+b,0));
+    const colSums=v2.map((_,j)=>obs.reduce((s,row)=>s+row[j],0));
+    let chi2=0;
+    obs.forEach((row,ri)=>row.forEach((o,ci)=>{
+      const e=rowSums[ri]*colSums[ci]/n;
+      if(e>0)chi2+=(o-e)**2/e;
+    }));
+    const df=(v1.length-1)*(v2.length-1);
+    const minDim=Math.min(v1.length-1,v2.length-1);
+    const V=minDim>0?Math.sqrt(chi2/(n*minDim)):0;
+    const [Vstr,Vcls]=V>=0.6?['Very Strong','str-vs']:V>=0.3?['Moderate–Strong','str-ms']:V>=0.1?['Weak–Moderate','str-wm']:['Negligible','str-ng'];
+    const decisionCls=V>=0.1?'keep':'drop';
+    const decision=V>=0.1?'✔ Associated':'✘ Independent';
+    ccHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td class="pair">${c1}</td><td class="pair">${c2}</td>
+      <td class="r">${n}</td>
+      <td class="r" style="font-weight:700">${chi2.toFixed(2)}</td>
+      <td class="r">${df}</td>
+      <td class="r" style="font-weight:700">${V.toFixed(4)}</td>
+      <td class="${Vcls}">${Vstr}</td>
+      <td class="${decisionCls}">${decision}</td>
+    </tr>`;
+  });
+  ccTbl.innerHTML=ccHtml+'</tbody>';
+}
+renderBivariate();
+
+function swBiv(id,btn){
+  document.querySelectorAll('.biv-pane').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.biv-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── MULTIVARIATE HEATMAP ── */
+function renderMultivariate(){
+  function pr(cx,cy){
+    const paired=DS.filter(r=>r[cx]!=null&&r[cy]!=null);
+    const ax=paired.map(r=>Number(r[cx])),ay=paired.map(r=>Number(r[cy]));
+    const n=ax.length,ma=ax.reduce((a,b)=>a+b,0)/n,mb=ay.reduce((a,b)=>a+b,0)/n;
+    let num=0,da=0,db=0;
+    for(let i=0;i<n;i++){const xa=ax[i]-ma,xb=ay[i]-mb;num+=xa*xb;da+=xa*xa;db+=xb*xb;}
+    return da&&db?num/Math.sqrt(da*db):0;
+  }
+
+  /* build full r matrix */
+  const M=NUM_COLS.length;
+  const R=NUM_COLS.map(cx=>NUM_COLS.map(cy=>cx===cy?1:pr(cx,cy)));
+
+  /* color: -1=blue, 0=white, +1=red */
+  function rColor(r){
+    if(r >= 0){
+      // Positive correlation: white (0) → light red (0.4-0.7) → dark red (1.0)
+      if(r >= 0.7){
+        // Dark red for strong positive (0.7 to 1.0)
+        const t = (r - 0.7) / 0.3; // normalize 0.7-1.0 to 0-1
+        const R = Math.round(252 - 60*t);  // 252 → 192 (#fc → #c0)
+        const G = Math.round(141 - 84*t);  // 141 → 57  (#8d → 39)
+        const B = Math.round(89 - 46*t);   // 89 → 43   (#59 → 2b)
+        return `rgb(${R},${G},${B})`;
+      } else if(r >= 0.4){
+        // Light red for moderate positive (0.4 to 0.7)
+        const t = (r - 0.4) / 0.3; // normalize 0.4-0.7 to 0-1
+        const R = Math.round(247 + 5*t);   // 247 → 252 (#f7 → #fc)
+        const G = Math.round(247 - 106*t); // 247 → 141 (#f7 → #8d)
+        const B = Math.round(247 - 158*t); // 247 → 89  (#f7 → #59)
+        return `rgb(${R},${G},${B})`;
+      } else {
+        // White for weak positive (0 to 0.4)
+        return '#f7f7f7';
+      }
+    } else {
+      // Negative correlation: white (0) → light blue (-0.4 to -0.7) → dark blue (-1.0)
+      const absR = Math.abs(r);
+      if(absR >= 0.7){
+        // Dark blue for strong negative (-0.7 to -1.0)
+        const t = (absR - 0.7) / 0.3; // normalize 0.7-1.0 to 0-1
+        const R = Math.round(107 - 86*t);  // 107 → 21  (#6b → #15)
+        const G = Math.round(174 - 86*t);  // 174 → 88  (#ae → #58)
+        const B = Math.round(214 - 46*t);  // 214 → 168 (#d6 → #a8)
+        return `rgb(${R},${G},${B})`;
+      } else if(absR >= 0.4){
+        // Light blue for moderate negative (-0.4 to -0.7)
+        const t = (absR - 0.4) / 0.3; // normalize 0.4-0.7 to 0-1
+        const R = Math.round(247 - 140*t); // 247 → 107 (#f7 → #6b)
+        const G = Math.round(247 - 73*t);  // 247 → 174 (#f7 → #ae)
+        const B = Math.round(247 - 33*t);  // 247 → 214 (#f7 → #d6)
+        return `rgb(${R},${G},${B})`;
+      } else {
+        // White for weak negative (0 to -0.4)
+        return '#f7f7f7';
+      }
+    }
+  }
+  function textColor(r){const dark=document.documentElement.getAttribute('data-theme')==='dark';return Math.abs(r)>0.55?'#fff':dark?'#e6edf3':'#1f2328';}
+
+  /* render heatmap table */
+  let html='<table class="hm-tbl"><thead><tr><th class="row-lbl"></th>';
+  NUM_COLS.forEach(c=>{html+=`<th>${c}</th>`;});
+  html+='</tr></thead><tbody>';
+  NUM_COLS.forEach((cx,i)=>{
+    html+=`<tr><td class="row-lbl">${cx}</td>`;
+    NUM_COLS.forEach((cy,j)=>{
+      const r=R[i][j];
+      const bg=rColor(r);
+      const fg=textColor(r);
+      const diag=i===j;
+      html+=`<td class="hm-cell" style="background:${bg};color:${fg}${diag?';outline:2px solid var(--border2)':''}"
+        title="${cx} vs ${cy}: r = ${r.toFixed(4)}">${r.toFixed(2)}</td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('hmWrap').innerHTML=html;
+
+  /* flags table — |r| >= 0.7, exclude diagonal */
+  const flags=[];
+  for(let i=0;i<M;i++)for(let j=i+1;j<M;j++){
+    const r=R[i][j];
+    if(Math.abs(r)>=0.7)flags.push({cx:NUM_COLS[i],cy:NUM_COLS[j],r});
+  }
+  flags.sort((a,b)=>Math.abs(b.r)-Math.abs(a.r));
+
+  const flagTbl=document.getElementById('hmFlagTbl');
+  if(!flags.length){
+    flagTbl.innerHTML=`<thead><tr><th>STATUS</th></tr></thead><tbody><tr><td style="color:var(--gh);font-family:'IBM Plex Mono',monospace;padding:10px 14px">✔ No multicollinearity detected — all |r| &lt; 0.7</td></tr></tbody>`;
+    return;
+  }
+  let fHtml=`<thead><tr>
+    <th>#</th><th>COL A</th><th>COL B</th><th>PEARSON r</th>
+    <th>ABS |r|</th><th>RISK LEVEL</th><th>RECOMMENDATION</th>
+  </tr></thead><tbody>`;
+  flags.forEach(({cx,cy,r},i)=>{
+    const a=Math.abs(r);
+    const [risk,riskCls,rec]=
+      a>=0.9?['Critical','drop','Drop one column — near-perfect collinearity']:
+      a>=0.8?['High','drop','Strongly consider dropping the weaker predictor']:
+             ['Moderate','keep','Monitor — use VIF to confirm before dropping'];
+    fHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td style="font-weight:700;color:var(--t1)">${cx}</td>
+      <td style="font-weight:700;color:var(--t1)">${cy}</td>
+      <td style="font-weight:700;color:${r>=0?'#c0392b':'#1558a8'}">${r.toFixed(4)}</td>
+      <td style="font-weight:700">${a.toFixed(4)}</td>
+      <td class="${riskCls}">${risk}</td>
+      <td style="color:var(--t2);font-size:.71rem;font-style:italic">${rec}</td>
+    </tr>`;
+  });
+  flagTbl.innerHTML=fHtml+'</tbody>';
+
+  /* ── FEATURE SELECTION DECISIONS ── */
+  const selTbl=document.getElementById('hmSelectTbl');
+
+  /* compute r for every num col vs selected target */
+  const targetCol=TARGET_COL;
+  const rWithTarget={};
+  NUM_COLS.forEach(col=>{
+    if(col===targetCol){rWithTarget[col]=1;return;}
+    const paired=DS.filter(r=>r[col]!=null&&r[targetCol]!=null);
+    const ax=paired.map(r=>Number(r[col])),ay=paired.map(r=>Number(r[targetCol]));
+    const n=ax.length,ma=ax.reduce((a,b)=>a+b,0)/n,mb=ay.reduce((a,b)=>a+b,0)/n;
+    let num=0,da=0,db=0;
+    for(let i=0;i<n;i++){const xa=ax[i]-ma,xb=ay[i]-mb;num+=xa*xb;da+=xa*xa;db+=xb*xb;}
+    rWithTarget[col]=da&&db?num/Math.sqrt(da*db):0;
+  });
+
+  /* build per-column decision rows */
+  const decisions=NUM_COLS.map(col=>{
+    const rTgt=rWithTarget[col];
+    /* find highest |r| with any other num col */
+    let maxPeer=0,maxPeerCol='';
+    NUM_COLS.forEach(other=>{
+      if(other===col)return;
+      const ri=Math.abs(R[NUM_COLS.indexOf(col)][NUM_COLS.indexOf(other)]);
+      if(ri>maxPeer){maxPeer=ri;maxPeerCol=other;}
+    });
+
+    let decision,decCls,why;
+    if(col===targetCol){
+      decision='TARGET';decCls='dec-keep';
+      why=`This is the target variable (${targetCol}). Keep as-is — never drop the target.`;
+    } else if(maxPeer>=0.9){
+      decision='⚠ DROP / COMBINE';decCls='dec-drop';
+      why=`r = ${R[NUM_COLS.indexOf(col)][NUM_COLS.indexOf(maxPeerCol)].toFixed(3)} with ${maxPeerCol} — near-perfect collinearity. `+
+          `Keep whichever has stronger correlation with ${targetCol} (r=${rTgt.toFixed(3)}). Consider combining as a ratio instead.`;
+    } else if(maxPeer>=0.7){
+      decision='⚠ REVIEW';decCls='dec-comb';
+      why=`r = ${R[NUM_COLS.indexOf(col)][NUM_COLS.indexOf(maxPeerCol)].toFixed(3)} with ${maxPeerCol} — high collinearity. `+
+          `Correlation with ${targetCol}: r=${rTgt.toFixed(3)}. Keep if it adds unique signal; otherwise engineer a combined feature (e.g. ratio or difference).`;
+    } else if(Math.abs(rTgt)<0.05){
+      decision='LOW SIGNAL';decCls='dec-drop';
+      why=`r = ${rTgt.toFixed(3)} with ${targetCol} — very weak relationship with the target. `+
+          `Low predictive value. Consider dropping unless domain knowledge justifies keeping it.`;
+    } else {
+      decision='✔ KEEP';decCls='dec-keep';
+      why=`r = ${rTgt.toFixed(3)} with ${targetCol} — meaningful signal. `+
+          `Max peer correlation is ${maxPeer.toFixed(3)} with ${maxPeerCol} — no multicollinearity concern. Safe to include.`;
+    }
+    return{col,rTgt,maxPeer,maxPeerCol,decision,decCls,why};
+  });
+
+  let selHtml=`<thead><tr>
+    <th>#</th><th>FEATURE</th>
+    <th class="r">r WITH TARGET<br><span style="font-weight:400;opacity:.6">(revenue)</span></th>
+    <th class="r">MAX PEER r</th><th>MOST CORRELATED WITH</th>
+    <th>DECISION</th><th>WHY</th>
+  </tr></thead><tbody>`;
+  decisions.forEach(({col,rTgt,maxPeer,maxPeerCol,decision,decCls,why},i)=>{
+    selHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td style="font-weight:700;color:var(--t1);font-family:'IBM Plex Mono',monospace">${col}</td>
+      <td class="r" style="font-weight:700;color:${Math.abs(rTgt)>=0.5?'#16a34a':Math.abs(rTgt)>=0.2?'#d97706':'#7a8299'}">${col===targetCol?'—':rTgt.toFixed(4)}</td>
+      <td class="r" style="font-weight:700;color:${maxPeer>=0.7?'#c0392b':maxPeer>=0.4?'#d97706':'#7a8299'}">${maxPeer.toFixed(4)}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--t2)">${maxPeerCol}</td>
+      <td class="${decCls}">${decision}</td>
+      <td style="font-size:.71rem;color:var(--t2);font-style:italic;white-space:normal;max-width:320px">${why}</td>
+    </tr>`;
+  });
+  selTbl.innerHTML=selHtml+'</tbody>';
+}
+renderMultivariate();
+
+/* ── FEATURE ENGINEERING ── */
+function renderFE(){
+
+  /* ── DYNAMIC REASON BOXES ── */
+  const nullColsWithData=ALL_COLS.filter(col=>DS.some(r=>r[col]==null));
+  const nullReasonEl=document.getElementById('feNullReason');
+  if(nullReasonEl){
+    let nr=`<div class="fr-title">💡 WHY NULL TREATMENT MUST HAPPEN FIRST — before any transformation, encoding or model</div>`;
+    if(nullColsWithData.length){
+      nullColsWithData.forEach(col=>{
+        const isNum=COL_META[col]&&COL_META[col].type==='num';
+        const cnt=DS.filter(r=>r[col]==null).length;
+        const pct=(cnt/N*100).toFixed(1);
+        nr+=`<div class="fr-row"><span class="fr-col">${col} (${pct}% nulls)</span><span class="fr-why"><b>Impute with ${isNum?'Median':'Mode'}</b> — ${isNum?'Numerical column — median is robust to skew and outliers.':'Categorical column — mode (most frequent value) is the only valid fill for non-numeric data.'}</span></div>`;
+      });
+    } else {
+      nr+=`<div class="fr-row"><span class="fr-col">No nulls found</span><span class="fr-why">This dataset has no missing values. Null treatment step can be skipped.</span></div>`;
+    }
+    nr+=`<div class="fr-row"><span class="fr-col">Why before log transform?</span><span class="fr-why">log1p(null) = error. Null treatment must always be step 1 in the pipeline before any transformation or model.</span></div>`;
+    nullReasonEl.innerHTML=nr;
+  }
+
+  const encReasonEl=document.getElementById('feEncReason');
+  if(encReasonEl){
+    let er=`<div class="fr-title">💡 WHY WE ENCODED THESE COLUMNS — based on detected column subtypes</div>`;
+    if(CAT_COLS.length){
+      CAT_COLS.forEach(col=>{
+        const isOrd=COL_META[col]&&COL_META[col].sub==='Ordinal';
+        const uniq=new Set(DS.map(r=>r[col]).filter(v=>v!=null)).size;
+        er+=`<div class="fr-row"><span class="fr-col">${col}</span><span class="fr-why"><b>${isOrd?'Label Encoding':'One-Hot Encoding'}</b> — ${isOrd?`Ordinal column (${uniq} unique values). Preserves natural order as integers 0–${uniq-1}.`:`Nominal column (${uniq} unique values). No natural order — One-Hot creates ${uniq} binary columns.`}</span></div>`;
+      });
+    } else {
+      er+=`<div class="fr-row"><span class="fr-col">No categorical columns</span><span class="fr-why">This dataset has no categorical columns to encode.</span></div>`;
+    }
+    encReasonEl.innerHTML=er;
+  }
+
+  const trnReasonEl=document.getElementById('feTrnReason');
+  if(trnReasonEl){
+    let tr=`<div class="fr-title">💡 WHY WE TRANSFORMED THESE COLUMNS — based on EDA skewness findings</div>`;
+    const skewed=NUM_COLS.filter(col=>{
+      const v=vals(col).map(Number).sort((a,b)=>a-b);
+      if(v.length<2)return false;
+      const mean=v.reduce((a,b)=>a+b,0)/v.length;
+      const med=v[Math.floor(v.length/2)];
+      const std=Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/v.length)||1;
+      return Math.abs(3*(mean-med)/std)>0.5;
+    });
+    if(skewed.length){
+      skewed.forEach(col=>{
+        const v=vals(col).map(Number).sort((a,b)=>a-b);
+        const mean=v.reduce((a,b)=>a+b,0)/v.length;
+        const med=v[Math.floor(v.length/2)];
+        const std=Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/v.length)||1;
+        const sk=(3*(mean-med)/std).toFixed(2);
+        tr+=`<div class="fr-row"><span class="fr-col">${col}</span><span class="fr-why"><b>${Number(sk)>0?'Right':'Left'}-skewed (skew=${sk})</b> — log1p(x) compresses extreme values and brings the distribution closer to normal, which is required for linear models.</span></div>`;
+      });
+    } else {
+      tr+=`<div class="fr-row"><span class="fr-col">No skewed columns</span><span class="fr-why">All numerical columns are approximately symmetric (|skew| &lt; 0.5). No log transform needed.</span></div>`;
+    }
+    tr+=`<div class="fr-row"><span class="fr-col">Why log1p not log?</span><span class="fr-why">log(0) is undefined. log1p(x) = log(x+1) safely handles zero values.</span></div>`;
+    trnReasonEl.innerHTML=tr;
+  }
+
+  const newReasonEl=document.getElementById('feNewReason');
+  if(newReasonEl){
+    let ner=`<div class="fr-title">💡 WHY WE CREATED THESE FEATURES — based on actual columns in this dataset</div>`;
+    if(NUM_COLS.length>=2){
+      ner+=`<div class="fr-row"><span class="fr-col">${NUM_COLS[0]}_x_${NUM_COLS[1]}</span><span class="fr-why"><b>Interaction term</b> — captures the combined effect of two numerical features that neither column expresses alone.</span></div>`;
+      ner+=`<div class="fr-row"><span class="fr-col">${NUM_COLS[0]}_per_${NUM_COLS[1]}</span><span class="fr-why"><b>Ratio feature</b> — normalises one feature by another, useful when relative scale matters more than absolute values.</span></div>`;
+    }
+    const dateCols=ALL_COLS.filter(c=>COL_META[c]&&COL_META[c].type==='date');
+    if(dateCols.length) ner+=`<div class="fr-row"><span class="fr-col">month, quarter</span><span class="fr-why"><b>Extracted from ${dateCols[0]}</b> — date columns are not usable by ML models directly. Month and quarter capture seasonality patterns.</span></div>`;
+    if(TARGET_COL) ner+=`<div class="fr-row"><span class="fr-col">is_high_${TARGET_COL}</span><span class="fr-why"><b>Binary flag</b> — flags rows above the median of ${TARGET_COL}. Lets tree models split on this boundary directly.</span></div>`;
+    newReasonEl.innerHTML=ner;
+  }
+
+  const sclReasonEl=document.getElementById('feSclReason');
+  if(sclReasonEl){
+    let sr=`<div class="fr-title">💡 WHY WE SCALED THESE COLUMNS — based on value range differences found in EDA</div>`;
+    if(NUM_COLS.length>=2){
+      const ranges=NUM_COLS.map(col=>{const v=vals(col).map(Number);return{col,range:Math.max(...v)-Math.min(...v)};}).sort((a,b)=>b.range-a.range);
+      sr+=`<div class="fr-row"><span class="fr-col">Range mismatch</span><span class="fr-why">Largest range: <b>${ranges[0].col}</b> (${fmt(ranges[0].range)}). Smallest: <b>${ranges[ranges.length-1].col}</b> (${fmt(ranges[ranges.length-1].range)}). Without scaling, models penalise large-range features unfairly.</span></div>`;
+    }
+    sr+=`<div class="fr-row"><span class="fr-col">Why Min-Max?</span><span class="fr-why">Min-Max scales all columns to [0,1] preserving relative distances. Preferred over Z-score when distributions are skewed or bounded.</span></div>`;
+    sclReasonEl.innerHTML=sr;
+  }
+
+  /* ── NULL TREATMENT ── dynamic: detect columns with nulls */
+  const nullCols=ALL_COLS
+    .map(col=>({col,type:COL_META[col]?COL_META[col].type:'cat',count:DS.filter(r=>r[col]==null).length}))
+    .filter(x=>x.count>0);
+  let nullHtml=`<thead><tr><th>#</th><th>COLUMN</th><th>TYPE</th><th>NULL COUNT</th><th>NULL %</th><th>STRATEGY</th><th>IMPUTE VALUE</th><th>BEFORE (sample nulls)</th><th>AFTER (imputed)</th><th>REASON</th></tr></thead><tbody>`;
+  if(!nullCols.length){
+    nullHtml+='<tr><td colspan="10" style="padding:10px 14px;color:var(--gh);font-family:\'IBM Plex Mono\',monospace">✔ No null values detected in this dataset.</td></tr>';
+  }
+  nullCols.forEach(({col,type,count},i)=>{
+    const isNum=type==='num';
+    const strategy=isNum?'Median':'Mode';
+    const typeLbl=isNum?'Numerical':'Categorical';
+    const reason=isNum?'Numerical — median is robust to skew and outliers':'Categorical — mode (most frequent value) is the safest fill';
+    const nullPct=(count/N*100).toFixed(1)+'%';
+    const nonNull=DS.map(r=>r[col]).filter(v=>v!=null);
+    let impVal='—';
+    if(nonNull.length>0){
+      if(isNum){
+        const sorted=nonNull.map(Number).sort((a,b)=>a-b);
+        const m=sorted.length;
+        impVal=fmt(m%2===0?(sorted[m/2-1]+sorted[m/2])/2:sorted[Math.floor(m/2)]);
+      } else {
+        const freq={};
+        nonNull.forEach(v=>{freq[v]=(freq[v]||0)+1;});
+        const top=Object.entries(freq).sort((a,b)=>b[1]-a[1]);
+        impVal=top.length?top[0][0]:'—';
+      }
+    }
+    const sampleNulls=DS.reduce((acc,r,idx)=>{if(r[col]==null&&acc.length<3)acc.push(`row#${idx+1}`);return acc;},[]).join(', ');
+    nullHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td class="fe-col">${col}</td>
+      <td style="color:${isNum?'var(--blue)':'var(--violet)'};font-weight:700">${typeLbl}</td>
+      <td style="color:var(--red);font-weight:700">${count}</td>
+      <td style="color:var(--orange);font-weight:700">${nullPct}</td>
+      <td><span class="fe-badge ${isNum?'fe-b-log':'fe-b-enc'}">${strategy}</span></td>
+      <td class="fe-new">${impVal}</td>
+      <td style="color:var(--t3);font-size:.7rem">${sampleNulls||'—'}</td>
+      <td style="color:var(--gh);font-size:.7rem">✔ Filled with ${impVal}</td>
+      <td class="fe-note">${reason}</td>
+    </tr>`;
+  });
+  document.getElementById('feNullTbl').innerHTML=nullHtml+'</tbody>';
+
+  /* ── ENCODING ── dynamic: show ordinal cats (<=6 unique) as label enc, nominal as one-hot */
+  const encRows=[];
+  CAT_COLS.forEach(col=>{
+    const vc=valueCount(col);
+    const isOrdinal=COL_META[col]&&COL_META[col].sub==='Ordinal';
+    const technique=isOrdinal?'Label Enc (Ordinal)':'One-Hot Enc';
+    DS.slice(0,3).forEach(r=>{
+      const orig=r[col]??'null';
+      let encoded,note;
+      if(isOrdinal){
+        const idx=vc.map(x=>x[0]).indexOf(String(orig));
+        encoded=idx>=0?String(idx):'null';
+        note=vc.map((x,i)=>`${x[0]}→${i}`).join(' · ');
+      } else {
+        encoded=vc.slice(0,4).map(x=>`${x[0]}=${r[col]===x[0]?1:0}`).join(' | ');
+        note=`One-Hot: ${vc.length} binary columns`;
+      }
+      encRows.push({col,type:technique,orig,encoded,note});
+    });
+  });
+
+  let encHtml=`<thead><tr><th>#</th><th>COLUMN</th><th>TECHNIQUE</th><th>ORIGINAL VALUE</th><th>ENCODED</th><th>REASON / MAPPING</th></tr></thead><tbody>`;
+  encRows.forEach(({col,type,orig,encoded,note},i)=>{
+    const isOHE=type.includes('One-Hot');
+    encHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td class="fe-col">${col}</td>
+      <td><span class="fe-badge fe-b-enc">${type}</span></td>
+      <td>${orig}</td>
+      <td class="fe-new">${encoded}</td>
+      <td class="fe-note">${note}</td>
+    </tr>`;
+  });
+  document.getElementById('feEncTbl').innerHTML=encHtml+'</tbody>';
+
+  /* ── TRANSFORMATION ── */
+  const skewCols=NUM_COLS.filter(col=>{
+    const v=vals(col).map(Number).sort((a,b)=>a-b);
+    const n=v.length,mean=v.reduce((a,b)=>a+b,0)/n;
+    const med=n%2===0?(v[n/2-1]+v[n/2])/2:v[Math.floor(n/2)];
+    const std=Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/n);
+    return Math.abs(3*(mean-med)/std)>0.5;
+  });
+
+  let trnHtml=`<thead><tr><th>#</th><th>COLUMN</th><th>SKEWNESS</th><th>TECHNIQUE</th><th>ORIGINAL (sample)</th><th>TRANSFORMED (sample)</th><th>REASON</th></tr></thead><tbody>`;
+  skewCols.forEach((col,i)=>{
+    const v=vals(col).map(Number).sort((a,b)=>a-b);
+    const n=v.length,mean=v.reduce((a,b)=>a+b,0)/n;
+    const med=n%2===0?(v[n/2-1]+v[n/2])/2:v[Math.floor(n/2)];
+    const std=Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/n);
+    const skew=(3*(mean-med)/std).toFixed(3);
+    const samples=DS.filter(r=>r[col]!=null).slice(0,4).map(r=>Number(r[col]));
+    const origStr=samples.map(x=>fmt(x)).join(' · ');
+    const logStr=samples.map(x=>Math.log1p(x).toFixed(3)).join(' · ');
+    const dir=Number(skew)>0?'Right-skewed':'Left-skewed';
+    trnHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td class="fe-col">${col}</td>
+      <td style="color:${Number(skew)>0?'var(--orange)':'var(--blue)'};font-weight:700">${skew} (${dir})</td>
+      <td><span class="fe-badge fe-b-log">log1p(x)</span></td>
+      <td class="fe-val">${origStr}</td>
+      <td class="fe-new">${logStr}</td>
+      <td class="fe-note">Compresses large values, reduces right skew. log1p handles zeros safely.</td>
+    </tr>`;
+  });
+  document.getElementById('feTrnTbl').innerHTML=trnHtml+'</tbody>';
+
+  /* ── NEW FEATURES ── dynamic: show interaction features from actual num cols */
+  const newDefs=[];
+  if(NUM_COLS.length>=2){
+    const [c1,c2]=NUM_COLS;
+    newDefs.push({name:`${c1}_x_${c2}`,formula:`${c1} × ${c2}`,note:'Interaction term between two numerical features'});
+    newDefs.push({name:`${c1}_per_${c2}`,formula:`${c1} ÷ ${c2}`,note:'Ratio feature — captures relative scale'});
+  }
+  if(NUM_COLS.length>=1){
+    newDefs.push({name:`log_${NUM_COLS[0]}`,formula:`log1p(${NUM_COLS[0]})`,note:'Log transform to reduce skew'});
+    newDefs.push({name:`${NUM_COLS[0]}_sq`,formula:`${NUM_COLS[0]}^2`,note:'Squared term for non-linear signal'});
+  }
+  const dateCols=ALL_COLS.filter(c=>COL_META[c]&&COL_META[c].type==='date');
+  if(dateCols.length){
+    newDefs.push({name:'month',formula:`month(${dateCols[0]})`,note:'Monthly seasonality (1–12)'});
+    newDefs.push({name:'quarter',formula:`quarter(${dateCols[0]})`,note:'Quarterly trend (Q1–Q4)'});
+  }
+  if(TARGET_COL&&NUM_COLS.includes(TARGET_COL)){
+    const tVals=vals(TARGET_COL).map(Number);
+    const tMed=tVals.sort((a,b)=>a-b)[Math.floor(tVals.length/2)];
+    newDefs.push({name:`is_high_${TARGET_COL}`,formula:`${TARGET_COL} > ${fmt(tMed)} → 1 else 0`,note:`Binary flag: above-median ${TARGET_COL}`});
+  }
+  let newHtml=`<thead><tr><th>#</th><th>NEW FEATURE</th><th>FORMULA</th><th>SAMPLE VALUES (first 5 rows)</th><th>REASON</th></tr></thead><tbody>`;
+  if(!newDefs.length){
+    newHtml+='<tr><td colspan="5" style="padding:10px 14px;color:var(--t2)">No numerical columns available for feature engineering.</td></tr>';
+  }
+  newDefs.forEach(({name,formula,note},i)=>{
+    const [c1,c2]=NUM_COLS;
+    const samples=DS.slice(0,5).map(r=>{
+      if(name===`${c1}_x_${c2}`)return fmt((Number(r[c1]||0))*(Number(r[c2]||0)));
+      if(name===`${c1}_per_${c2}`)return Number(r[c2])?fmt(Number(r[c1]||0)/Number(r[c2])):'—';
+      if(name.startsWith('log_'))return Math.log1p(Number(r[NUM_COLS[0]]||0)).toFixed(3);
+      if(name.endsWith('_sq'))return fmt(Math.pow(Number(r[NUM_COLS[0]]||0),2));
+      if(name==='month'){const d=new Date(r[dateCols[0]]);return isNaN(d)?'—':d.getMonth()+1;}
+      if(name==='quarter'){const d=new Date(r[dateCols[0]]);return isNaN(d)?'—':'Q'+(Math.floor(d.getMonth()/3)+1);}
+      if(name.startsWith('is_high_')){
+        const tVals2=vals(TARGET_COL).map(Number).sort((a,b)=>a-b);
+        const med=tVals2[Math.floor(tVals2.length/2)];
+        return Number(r[TARGET_COL])>med?1:0;
+      }
+      return '—';
+    }).join(' · ');
+    newHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td class="fe-new">${name}</td>
+      <td><span class="fe-badge fe-b-new">${formula}</span></td>
+      <td style="font-size:.7rem;color:var(--t2)">${samples}</td>
+      <td class="fe-note">${note}</td>
+    </tr>`;
+  });
+  document.getElementById('feNewTbl').innerHTML=newHtml+'</tbody>';
+
+  /* ── SCALING ── */
+  const minMax={};
+  NUM_COLS.forEach(col=>{
+    const v=vals(col).map(Number);
+    minMax[col]={min:Math.min(...v),max:Math.max(...v)};
+  });
+  function mmScale(col,val){
+    const {min,max}=minMax[col];
+    return max===min?0:((val-min)/(max-min)).toFixed(4);
+  }
+
+  let sclHtml=`<thead><tr><th>#</th><th>COLUMN</th><th class="fe-val">MIN</th><th class="fe-val">MAX</th>`;
+  sclHtml+=`<th>ORIGINAL SAMPLES</th><th>SCALED [0–1] SAMPLES</th><th>FORMULA</th></tr></thead><tbody>`;
+  NUM_COLS.forEach((col,i)=>{
+    const {min,max}=minMax[col];
+    const samples=DS.filter(r=>r[col]!=null).slice(0,5).map(r=>Number(r[col]));
+    const origStr=samples.map(x=>fmt(x)).join(' · ');
+    const scaledStr=samples.map(x=>mmScale(col,x)).join(' · ');
+    sclHtml+=`<tr>
+      <td style="color:var(--t3);font-size:.66rem">${String(i+1).padStart(2,'0')}</td>
+      <td class="fe-col">${col}</td>
+      <td class="fe-val">${fmt(min)}</td>
+      <td class="fe-val">${fmt(max)}</td>
+      <td style="font-size:.7rem;color:var(--t2)">${origStr}</td>
+      <td class="fe-new">${scaledStr}</td>
+      <td><span class="fe-badge fe-b-scl">(x−min)÷(max−min)</span></td>
+    </tr>`;
+  });
+  document.getElementById('feSclTbl').innerHTML=sclHtml+'</tbody>';
+}
+renderFE();
+
+/* ── MODEL RECOMMENDATION ── */
+function renderModelRec(){
+  const target = TARGET_COL;
+  const isRegression = NUM_COLS.includes(target);
+  const total = N;
+  const numCount = NUM_COLS.length;
+  const catCount = CAT_COLS.length;
+
+  const targetVals = DS.map(r => r[target]).filter(v => v != null && (isRegression ? !isNaN(v) : true));
+  const missingPct = total ? ((total - targetVals.length) / total * 100).toFixed(1) : '0.0';
+
+  /* Calculate target skewness */
+  let targetSkew = 'N/A', targetSkewNum = 0;
+  if(isRegression && targetVals.length > 2){
+    const mean = targetVals.reduce((a,b) => a + Number(b), 0) / targetVals.length;
+    const variance = targetVals.reduce((a,b) => a + Math.pow(Number(b) - mean,2), 0) / targetVals.length;
+    const std = Math.sqrt(variance);
+    const skew = std>0 ? targetVals.reduce((a,b) => a + Math.pow(Number(b)-mean,3), 0) / targetVals.length / Math.pow(std,3) : 0;
+    targetSkew = skew.toFixed(2);
+    targetSkewNum = skew;
+  }
+
+  const skewLabel = numericOrNaN(targetSkew) ? (Math.abs(Number(targetSkew)) < 0.5 ? 'low' : Math.abs(Number(targetSkew)) < 1 ? 'moderate' : 'high') : 'N/A';
+
+  /* Check for multicollinearity */
+  let highCorr = false, corrPairCount = 0;
+  if(NUM_COLS.length >= 2){
+    for(let i=0; i<NUM_COLS.length; i++){
+      for(let j=i+1; j<NUM_COLS.length; j++){
+        const paired = DS.filter(r => r[NUM_COLS[i]]!=null && r[NUM_COLS[j]]!=null);
+        const ax = paired.map(r => Number(r[NUM_COLS[i]]));
+        const ay = paired.map(r => Number(r[NUM_COLS[j]]));
+        const n = ax.length;
+        if(n < 2) continue;
+        const ma = ax.reduce((a,b)=>a+b,0)/n, mb = ay.reduce((a,b)=>a+b,0)/n;
+        let num=0, da=0, db=0;
+        for(let k=0; k<n; k++){
+          const xa = ax[k]-ma, xb = ay[k]-mb;
+          num += xa*xb; da += xa*xa; db += xb*xb;
+        }
+        const r = (da && db) ? num/Math.sqrt(da*db) : 0;
+        if(Math.abs(r) >= 0.7){
+          highCorr = true;
+          corrPairCount++;
+        }
+      }
+    }
+  }
+
+  /* Count outliers across all numerical columns */
+  let totalOutliers = 0;
+  NUM_COLS.forEach(col => {
+    const s = cstats(col);
+    totalOutliers += s.outlierCount || 0;
+  });
+  const hasOutliers = totalOutliers > 0;
+
+  /* Check for class imbalance (classification only) */
+  let isImbalanced = false, classRatio = 'N/A';
+  if(!isRegression && targetVals.length > 0){
+    const freq = {};
+    targetVals.forEach(v => freq[v] = (freq[v]||0) + 1);
+    const counts = Object.values(freq).sort((a,b) => b-a);
+    if(counts.length >= 2){
+      const ratio = counts[0] / counts[counts.length-1];
+      classRatio = ratio.toFixed(1) + ':1';
+      isImbalanced = ratio > 3;
+    }
+  }
+
+  /* Dataset size category */
+  const sizeCategory = total < 500 ? 'small' : total < 5000 ? 'medium' : total < 50000 ? 'large' : 'very large';
+
+  /* Feature complexity */
+  const hasHighDim = (numCount + catCount) > 20;
+  const hasMixedTypes = numCount > 0 && catCount > 0;
+
+  /* ── INTELLIGENT MODEL SELECTION ── */
+  const candidates = [];
+  let topModel = '', topReason = '';
+
+  if(isRegression){
+    /* Regression task */
+    let scores = {
+      'XGBoost Regressor': 0,
+      'Random Forest Regressor': 0,
+      'Ridge Regression': 0,
+      'Linear Regression': 0,
+      'Gradient Boosting Regressor': 0,
+      'SVR (Support Vector Regression)': 0
+    };
+
+    /* Scoring logic based on dataset characteristics */
+    if(hasMixedTypes){ scores['XGBoost Regressor'] += 3; scores['Random Forest Regressor'] += 3; }
+    if(Math.abs(targetSkewNum) > 0.5){ scores['XGBoost Regressor'] += 2; scores['Random Forest Regressor'] += 2; }
+    if(hasOutliers){ scores['XGBoost Regressor'] += 2; scores['Random Forest Regressor'] += 2; scores['Ridge Regression'] += 1; }
+    if(highCorr){ scores['Ridge Regression'] += 3; scores['XGBoost Regressor'] += 1; }
+    if(sizeCategory === 'small'){ scores['Ridge Regression'] += 2; scores['Linear Regression'] += 1; }
+    if(sizeCategory === 'medium' || sizeCategory === 'large'){ scores['XGBoost Regressor'] += 2; scores['Gradient Boosting Regressor'] += 1; }
+    if(hasHighDim){ scores['Ridge Regression'] += 2; scores['XGBoost Regressor'] += 1; }
+    if(catCount > numCount){ scores['XGBoost Regressor'] += 2; scores['Random Forest Regressor'] += 1; }
+
+    /* Sort by score */
+    const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+    topModel = sorted[0][0];
+
+    /* Build candidate list with reasons */
+    sorted.forEach(([model, score], idx) => {
+      let reason = '';
+      if(model === 'XGBoost Regressor'){
+        reason = 'Handles mixed types, skewness, outliers, and nonlinearity. Best for complex datasets.';
+      } else if(model === 'Random Forest Regressor'){
+        reason = 'Robust to outliers and skew. Good baseline for nonlinear relationships.';
+      } else if(model === 'Ridge Regression'){
+        reason = 'Excellent for multicollinearity. Fast and interpretable linear baseline.';
+      } else if(model === 'Linear Regression'){
+        reason = 'Simple interpretable baseline. Sensitive to outliers and multicollinearity.';
+      } else if(model === 'Gradient Boosting Regressor'){
+        reason = 'Strong performance on medium-large datasets. Similar to XGBoost but slower.';
+      } else if(model === 'SVR (Support Vector Regression)'){
+        reason = 'Good for small-medium datasets with nonlinear patterns. Requires scaling.';
+      }
+
+      candidates.push({
+        model,
+        reason,
+        priority: idx === 0 ? 'recommended' : idx === 1 ? 'alternative' : 'consider',
+        score
+      });
+    });
+
+    /* Build top reason */
+    const reasons = [];
+    if(hasMixedTypes) reasons.push('mixed numerical + categorical features');
+    if(Math.abs(targetSkewNum) > 0.5) reasons.push(`${skewLabel} target skewness (${targetSkew})`);
+    if(hasOutliers) reasons.push(`${totalOutliers} outliers detected`);
+    if(highCorr) reasons.push(`multicollinearity (${corrPairCount} high-corr pairs)`);
+    reasons.push(`${sizeCategory} dataset (${total} rows)`);
+    topReason = reasons.join(', ');
+
+  } else {
+    /* Classification task */
+    let scores = {
+      'XGBoost Classifier': 0,
+      'Random Forest Classifier': 0,
+      'Logistic Regression': 0,
+      'Gradient Boosting Classifier': 0,
+      'SVC (Support Vector Classifier)': 0,
+      'Naive Bayes': 0
+    };
+
+    /* Scoring logic */
+    if(hasMixedTypes){ scores['XGBoost Classifier'] += 3; scores['Random Forest Classifier'] += 3; }
+    if(hasOutliers){ scores['XGBoost Classifier'] += 2; scores['Random Forest Classifier'] += 2; }
+    if(highCorr){ scores['Logistic Regression'] += 2; scores['XGBoost Classifier'] += 1; }
+    if(isImbalanced){ scores['XGBoost Classifier'] += 2; scores['Random Forest Classifier'] += 1; }
+    if(sizeCategory === 'small'){ scores['Logistic Regression'] += 2; scores['Naive Bayes'] += 1; }
+    if(sizeCategory === 'medium' || sizeCategory === 'large'){ scores['XGBoost Classifier'] += 2; scores['Gradient Boosting Classifier'] += 1; }
+    if(hasHighDim){ scores['Logistic Regression'] += 2; scores['XGBoost Classifier'] += 1; }
+    if(catCount > numCount){ scores['XGBoost Classifier'] += 2; scores['Random Forest Classifier'] += 1; }
+
+    const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+    topModel = sorted[0][0];
+
+    sorted.forEach(([model, score], idx) => {
+      let reason = '';
+      if(model === 'XGBoost Classifier'){
+        reason = 'Handles imbalance, mixed types, and complex patterns. Best for most classification tasks.';
+      } else if(model === 'Random Forest Classifier'){
+        reason = 'Robust ensemble method. Good for imbalanced classes and mixed features.';
+      } else if(model === 'Logistic Regression'){
+        reason = 'Fast interpretable baseline. Works well with multicollinearity when regularized.';
+      } else if(model === 'Gradient Boosting Classifier'){
+        reason = 'Strong performance on medium-large datasets. Similar to XGBoost.';
+      } else if(model === 'SVC (Support Vector Classifier)'){
+        reason = 'Good for small-medium datasets with clear margins. Requires scaling.';
+      } else if(model === 'Naive Bayes'){
+        reason = 'Fast probabilistic classifier. Works well with small datasets and text features.';
+      }
+
+      candidates.push({
+        model,
+        reason,
+        priority: idx === 0 ? 'recommended' : idx === 1 ? 'alternative' : 'consider',
+        score
+      });
+    });
+
+    const reasons = [];
+    if(hasMixedTypes) reasons.push('mixed feature types');
+    if(isImbalanced) reasons.push(`class imbalance (${classRatio})`);
+    if(hasOutliers) reasons.push(`${totalOutliers} outliers`);
+    if(highCorr) reasons.push(`${corrPairCount} high-corr pairs`);
+    reasons.push(`${sizeCategory} dataset (${total} rows)`);
+    topReason = reasons.join(', ');
+  }
+
+  /* ── RENDER MODEL COMPARISON TABLE ── */
+  const modelHtml = candidates.slice(0, 6).map(m => {
+    const label = m.priority === 'recommended' ? '🚀 RECOMMENDED' : m.priority === 'alternative' ? '⭐ STRONG ALTERNATIVE' : '✅ CONSIDER';
+    const cls = m.priority === 'recommended' ? 'ms-rec' : m.priority === 'alternative' ? 'ms-good' : 'ms-base';
+    return `<tr>
+      <td class='fe-col'>${m.model}</td>
+      <td class='fe-note'>${m.reason}</td>
+      <td class='${cls}'>${label}</td>
+      <td style='text-align:center;font-family:"IBM Plex Mono",monospace;color:var(--t3)'>${m.score}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('modelComparisonTbl').innerHTML = `
+    <thead><tr>
+      <th>MODEL</th>
+      <th>WHY THIS MODEL</th>
+      <th>RECOMMENDATION</th>
+      <th style='text-align:center'>SCORE</th>
+    </tr></thead>
+    <tbody>${modelHtml}</tbody>
+  `;
+
+  /* ── UPDATE TOP MODEL CARD ── */
+  document.querySelector('#modelrec .fp-name').textContent = topModel;
+  document.querySelector('#modelrec .fp-task').textContent = `Recommended for this ${isRegression ? 'regression' : 'classification'} task`;
+
+  const details = `
+    <div class='fp-title'>📊 WHY ${topModel.toUpperCase()} IS RECOMMENDED</div>
+    <div class='fp-row'>
+      <span class='fp-label'>Dataset Profile</span>
+      <span class='fp-val'>${total} rows × ${numCount + catCount} features (${numCount} numerical, ${catCount} categorical)</span>
+    </div>
+    <div class='fp-row'>
+      <span class='fp-label'>Task Type</span>
+      <span class='fp-val'>${isRegression ? 'Regression' : 'Classification'} — predicting <strong>${target}</strong></span>
+    </div>
+    <div class='fp-row'>
+      <span class='fp-label'>Key Characteristics</span>
+      <span class='fp-val'>${topReason}</span>
+    </div>
+    ${isRegression ? `
+    <div class='fp-row'>
+      <span class='fp-label'>Target Skewness</span>
+      <span class='fp-val'>${targetSkew} (${skewLabel}) — ${Math.abs(targetSkewNum) > 0.5 ? 'tree-based models handle this naturally' : 'well-distributed target'}</span>
+    </div>
+    ` : `
+    <div class='fp-row'>
+      <span class='fp-label'>Class Balance</span>
+      <span class='fp-val'>${classRatio} — ${isImbalanced ? 'imbalanced classes detected, use class_weight or SMOTE' : 'balanced classes'}</span>
+    </div>
+    `}
+    <div class='fp-row'>
+      <span class='fp-label'>Multicollinearity</span>
+      <span class='fp-val'>${highCorr ? `Yes (${corrPairCount} pairs with |r| ≥ 0.7) — ${topModel.includes('Ridge') || topModel.includes('Logistic') ? 'this model handles it well' : 'tree-based models are robust to this'}` : 'No — features are independent'}</span>
+    </div>
+    <div class='fp-row'>
+      <span class='fp-label'>Outliers</span>
+      <span class='fp-val'>${hasOutliers ? `${totalOutliers} outliers detected — ${topModel.includes('XGBoost') || topModel.includes('Random Forest') ? 'tree-based models are robust' : 'consider outlier treatment'}` : 'No significant outliers'}</span>
+    </div>
+    <div class='fp-row'>
+      <span class='fp-label'>Expected Performance</span>
+      <span class='fp-val'>
+        ${isRegression ? 
+          `<span class='tg'>R² > ${sizeCategory === 'small' ? '0.70' : '0.80'}</span> with proper tuning. Key predictors: ${NUM_COLS.slice(0,3).join(', ')}` :
+          `<span class='tg'>Accuracy > ${isImbalanced ? '75' : '85'}%</span> with proper tuning and ${isImbalanced ? 'class balancing' : 'cross-validation'}`
+        }
+      </span>
+    </div>
+    <div class='fp-row'>
+      <span class='fp-label'>Alternatives</span>
+      <span class='fp-val'>
+        ${candidates.slice(1,3).map(c => `<span class='to'>${c.model}</span>`).join(' • ')}
+      </span>
+    </div>
+  `;
+
+  document.querySelector('#modelrec .fp-body').innerHTML = details;
+
+  /* ── DYNAMIC IMPLEMENTATION NOTES ── */
+  document.getElementById('implNotesTitle').textContent = `💡 Implementation Notes — how to train ${topModel}`;
+  
+  const idCols = ALL_COLS.filter(c => COL_META[c] && COL_META[c].type === 'id');
+  const dateCols = ALL_COLS.filter(c => COL_META[c] && COL_META[c].type === 'date');
+  const excludeCols = [...idCols, ...dateCols].filter(c => c !== target);
+  const featureCols = ALL_COLS.filter(c => c !== target && !excludeCols.includes(c));
+
+  let hyperparams = '';
+  let objective = '';
+  let metric = '';
+  let expectedPerf = '';
+
+  if(topModel.includes('XGBoost')){
+    if(isRegression){
+      objective = "'reg:squarederror'";
+      metric = 'RMSE or R²';
+      expectedPerf = `R² > ${sizeCategory === 'small' ? '0.70' : '0.80'}`;
+      hyperparams = `
+        • <strong>n_estimators:</strong> 100-500<br>
+        • <strong>max_depth:</strong> 3-6<br>
+        • <strong>learning_rate:</strong> 0.1-0.3<br>
+        • <strong>objective:</strong> '${objective}'<br>
+        • <strong>eval_metric:</strong> 'rmse'<br>
+        • <strong>early_stopping_rounds:</strong> 10
+      `;
+    } else {
+      objective = "'binary:logistic' or 'multi:softmax'";
+      metric = 'Accuracy, F1-score, AUC-ROC';
+      expectedPerf = `Accuracy > ${isImbalanced ? '75' : '85'}%`;
+      hyperparams = `
+        • <strong>n_estimators:</strong> 100-500<br>
+        • <strong>max_depth:</strong> 3-6<br>
+        • <strong>learning_rate:</strong> 0.1-0.3<br>
+        • <strong>objective:</strong> ${objective}<br>
+        • <strong>eval_metric:</strong> 'logloss' or 'auc'<br>
+        ${isImbalanced ? "• <strong>scale_pos_weight:</strong> balance classes<br>" : ''}
+        • <strong>early_stopping_rounds:</strong> 10
+      `;
+    }
+  } else if(topModel.includes('Random Forest')){
+    if(isRegression){
+      metric = 'RMSE or R²';
+      expectedPerf = `R² > ${sizeCategory === 'small' ? '0.65' : '0.75'}`;
+      hyperparams = `
+        • <strong>n_estimators:</strong> 100-300<br>
+        • <strong>max_depth:</strong> None or 10-20<br>
+        • <strong>min_samples_split:</strong> 2-5<br>
+        • <strong>min_samples_leaf:</strong> 1-2<br>
+        • <strong>max_features:</strong> 'sqrt' or 'log2'<br>
+        • <strong>random_state:</strong> 42
+      `;
+    } else {
+      metric = 'Accuracy, F1-score';
+      expectedPerf = `Accuracy > ${isImbalanced ? '70' : '80'}%`;
+      hyperparams = `
+        • <strong>n_estimators:</strong> 100-300<br>
+        • <strong>max_depth:</strong> None or 10-20<br>
+        • <strong>min_samples_split:</strong> 2-5<br>
+        • <strong>min_samples_leaf:</strong> 1-2<br>
+        • <strong>max_features:</strong> 'sqrt'<br>
+        ${isImbalanced ? "• <strong>class_weight:</strong> 'balanced'<br>" : ''}
+        • <strong>random_state:</strong> 42
+      `;
+    }
+  } else if(topModel.includes('Ridge') || topModel.includes('Logistic')){
+    if(isRegression){
+      metric = 'RMSE or R²';
+      expectedPerf = `R² > ${sizeCategory === 'small' ? '0.60' : '0.70'}`;
+      hyperparams = `
+        • <strong>alpha:</strong> 0.1, 1.0, 10.0 (try GridSearchCV)<br>
+        • <strong>solver:</strong> 'auto' or 'saga'<br>
+        • <strong>max_iter:</strong> 1000<br>
+        • <strong>normalize:</strong> False (use StandardScaler instead)<br>
+        • <strong>random_state:</strong> 42
+      `;
+    } else {
+      metric = 'Accuracy, F1-score, AUC-ROC';
+      expectedPerf = `Accuracy > ${isImbalanced ? '70' : '80'}%`;
+      hyperparams = `
+        • <strong>C:</strong> 0.1, 1.0, 10.0 (inverse regularization)<br>
+        • <strong>penalty:</strong> 'l2' (Ridge) or 'l1' (Lasso)<br>
+        • <strong>solver:</strong> 'lbfgs' or 'saga'<br>
+        • <strong>max_iter:</strong> 1000<br>
+        ${isImbalanced ? "• <strong>class_weight:</strong> 'balanced'<br>" : ''}
+        • <strong>random_state:</strong> 42
+      `;
+    }
+  } else {
+    // Generic for other models
+    metric = isRegression ? 'RMSE or R²' : 'Accuracy, F1-score';
+    expectedPerf = isRegression ? 'R² > 0.70' : 'Accuracy > 75%';
+    hyperparams = `
+      • Refer to scikit-learn documentation for ${topModel}<br>
+      • Use GridSearchCV or RandomizedSearchCV for hyperparameter tuning<br>
+      • Apply cross-validation (5-fold or 10-fold)<br>
+      ${isImbalanced && !isRegression ? "• Consider class balancing techniques<br>" : ''}
+      • Set random_state for reproducibility
+    `;
+  }
+
+  const implNotes = `
+    <div style="font-size:.82rem;color:var(--t2);line-height:1.6;margin-bottom:14px;">
+      After running this analysis, you now have a clean, processed dataset ready for modeling. Here's how to implement <strong>${topModel}</strong>:
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--t1);margin-bottom:8px;">📋 Training Steps</div>
+        <div style="font-size:.78rem;color:var(--t2);line-height:1.5;">
+          1. <strong>Use the processed data</strong> from Feature Engineering tab<br>
+          2. <strong>Split 80/20</strong> for train/validation${sizeCategory === 'small' ? ' (or use cross-validation)' : ''}<br>
+          3. <strong>Target:</strong> ${target} (${isRegression ? 'continuous regression' : 'classification'})<br>
+          4. <strong>Features:</strong> ${featureCols.length} columns${excludeCols.length > 0 ? ` (exclude ${excludeCols.join(', ')})` : ''}<br>
+          5. <strong>Metric:</strong> ${metric}
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--t1);margin-bottom:8px;">🔧 Key Hyperparameters</div>
+        <div style="font-size:.78rem;color:var(--t2);line-height:1.5;">
+          ${hyperparams}
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:12px;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:4px;">
+      <div style="font-size:.75rem;font-weight:700;color:var(--accent);margin-bottom:6px;">🎯 Expected Performance</div>
+      <div style="font-size:.78rem;color:var(--t2);">
+        With proper feature engineering (completed above), <strong>${topModel}</strong> should achieve <strong>${expectedPerf}</strong> with proper tuning.
+        ${isRegression ? 
+          `The strongest predictors will likely be: <strong>${NUM_COLS.slice(0, Math.min(4, NUM_COLS.length)).filter(c => c !== target).join(' → ')}</strong>.` :
+          `${isImbalanced ? 'Use class balancing techniques (SMOTE, class_weight) to handle imbalance.' : 'Monitor precision and recall for each class.'}`
+        }
+      </div>
+    </div>
+  `;
+
+  document.getElementById('implNotesContent').innerHTML = implNotes;
+}
+
+function numericOrNaN(value){
+  return typeof value === 'string' && !isNaN(Number(value));
+}
+
+function swFE(id,btn){
+  document.querySelectorAll('.fe-pane').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.fe-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+
+
+
+
+
+/* SIDEBAR TOGGLE */
+function toggleSB(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+/* AUTO-CLOSE SIDEBAR ON MOBILE */
+// Close sidebar when clicking a navigation link on mobile
+document.querySelectorAll('#sidebar .sb-item').forEach(link => {
+  link.addEventListener('click', function() {
+    if (window.innerWidth <= 768) {
+      toggleSB();
+    }
+  });
+});
+
+// Close sidebar when scrolling on mobile
+let lastScrollTop = 0;
+let scrollTimeout;
+window.addEventListener('scroll', function() {
+  if (window.innerWidth <= 768) {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const menuBtn = document.getElementById('menu-btn');
+    const currentScroll = window.scrollY;
+    
+    // Show/hide menu button based on scroll direction
+    if (currentScroll > lastScrollTop && currentScroll > 100) {
+      // Scrolling down - hide menu button
+      menuBtn.classList.add('hide');
+    } else if (currentScroll < lastScrollTop) {
+      // Scrolling up - show menu button
+      menuBtn.classList.remove('hide');
+    }
+    
+    // Close sidebar if open and scrolled
+    if (sidebar.classList.contains('open')) {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function() {
+        // Close sidebar if scrolled more than 50px
+        if (Math.abs(currentScroll - lastScrollTop) > 50) {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('show');
+        }
+      }, 100);
+    }
+    
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }
+}, {passive: true});
+
+/* THEME TOGGLE */
+function toggleTheme(){
+  const html=document.documentElement;
+  const wasDark=html.getAttribute('data-theme')==='dark';
+  const next=wasDark?'light':'dark';
+  html.setAttribute('data-theme',next);
+  document.getElementById('theme-label').textContent=wasDark?'☀️ Light Mode':'🌙 Dark Mode';
+  localStorage.setItem('ml-theme',next);
+  const nowDark=!wasDark;
+  const tc=nowDark?'#8b949e':'#7a8299';
+  const gc=nowDark?'#21262d':'#e5e7eb';
+  Chart.defaults.color=tc;
+  Chart.defaults.borderColor=gc;
+  if(typeof Chart!=='undefined'&&Chart.instances){
+    Object.values(Chart.instances).forEach(function(ch){
+      if(ch.options.scales){
+        Object.values(ch.options.scales).forEach(function(ax){
+          if(ax.ticks)ax.ticks.color=tc;
+          if(ax.grid)ax.grid.color=gc;
+          if(ax.title)ax.title.color=tc;
+        });
+      }
+      ch.update();
+    });
+  }
+}
+
+/* LOAD SAVED THEME ON PAGE LOAD */
+(function(){
+  const saved=localStorage.getItem('ml-theme');
+  if(saved){
+    document.documentElement.setAttribute('data-theme',saved);
+    const label=document.getElementById('theme-label');
+    if(label) label.textContent=saved==='light'?'☀️ Light Mode':'🌙 Dark Mode';
+  }
+})();
+
+/* PROGRESS BAR + FAST SCROLL + BACK TO TOP */
+(function(){
+  const bar=document.getElementById('progress-bar');
+  const thumb=document.getElementById('fs-thumb');
+  const btn=document.getElementById('back-top');
+  const fs=document.getElementById('fast-scroll');
+  function update(){
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=h>0?window.scrollY/h:0;
+    bar.style.width=(pct*100)+'%';
+    thumb.style.height=(pct*100)+'%';
+    thumb.style.top=(pct*(window.innerHeight-30))+'px';
+    btn.classList.toggle('show',window.scrollY>300);
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  fs.addEventListener('click',e=>{
+    const pct=e.clientY/window.innerHeight;
+    window.scrollTo({top:pct*(document.documentElement.scrollHeight-window.innerHeight),behavior:'smooth'});
+  });
+})();
+
+/* SIDEBAR NAV HIGHLIGHT */
+const SIDS=['preview','info','nulldup','numerical','categorical','bivariate','multivariate','feateng','modelrec'];
+const navLinks=document.querySelectorAll('#sidebar a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  SIDS.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-70)cur=id});
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+/* STICKY TITLE BAR - Show on scroll up */
+(function(){
+  const bar = document.getElementById('sticky-title');
+  const label = document.getElementById('st-label');
+  const sections = [
+    {id:'preview',label:'Dataset Preview'},
+    {id:'info',label:'Column Info'},
+    {id:'nulldup',label:'Null & Duplicates'},
+    {id:'numerical',label:'Numerical Analysis'},
+    {id:'categorical',label:'Categorical Analysis'},
+    {id:'bivariate',label:'Bivariate Analysis'},
+    {id:'multivariate',label:'Multivariate Analysis'},
+    {id:'feateng',label:'Feature Engineering'},
+    {id:'modelrec',label:'Model Recommendation'}
+  ];
+  const els = sections.map(s => ({el:document.getElementById(s.id),label:s.label})).filter(s => s.el);
+  let current = null;
+  let lastScrollY = 0;
+  let ticking = false;
+  
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      window.requestAnimationFrame(function(){
+        const sy = window.scrollY;
+        const hero = document.querySelector('.page-hero');
+        const heroBottom = hero ? hero.getBoundingClientRect().bottom + sy : 200;
+        
+        // Hide if at top
+        if(sy < heroBottom - 60){
+          bar.classList.remove('visible');
+          current = null;
+          ticking = false;
+          return;
+        }
+        
+        // Find active section
+        let active = null;
+        for(let i = 0; i < els.length; i++){
+          if(sy >= els[i].el.getBoundingClientRect().top + sy - 60) active = els[i];
+        }
+        
+        // Update label if changed
+        if(active && active !== current){
+          label.textContent = active.label;
+          current = active;
+        }
+        
+        // Show/hide based on scroll direction
+        if(sy > lastScrollY && sy > heroBottom + 100){
+          // Scrolling down - hide
+          bar.classList.remove('visible');
+        } else if(sy < lastScrollY && active){
+          // Scrolling up - show
+          bar.classList.add('visible');
+        }
+        
+        lastScrollY = sy;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
